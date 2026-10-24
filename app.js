@@ -1,10 +1,11 @@
 import {cleanSeason,chronological,predict,backtest,csv,percent,MODEL_VERSION,chooseProfilePicks,buildSafeCombos} from './model.js';
-import {freshnessStatus,mergeVerifiedResults,applyOfficialFixtures} from './freshness.js';
+import {freshnessStatus,mergeVerifiedResults,applyOfficialFixtures,parisDate} from './freshness.js';
 import {mountBuilder} from './builder.js';
+import {mountAutomaticOdds} from './auto.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=['2022-23','2023-24','2024-25','2025-26','2026-27'];
 const BASE='https://raw.githubusercontent.com/openfootball/football.json/master/';
-const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const today=()=>parisDate(new Date());
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let all=[],upcoming=[],selected=null,bt=null,lastFetched=null,archive=[],dataReady=false;
 try{archive=JSON.parse(localStorage.getItem('probalia-v2-journal')||'[]')}catch{}
@@ -87,6 +88,10 @@ async function reload(){selected=null;dataReady=false;$('refresh').disabled=true
   all.sort(chronological);lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
   const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&fixtureReady&&!errors.length;
   splitList();showBacktest();renderList();renderProfiles();renderCombos();mountBuilder(upcoming,all,dataReady);
+  let oddsFeed=null;
+  try{const res=await fetch('./data/odds.json',{cache:'no-store',signal:AbortSignal.timeout(10000)});if(res.ok)oddsFeed=await res.json()}
+  catch{}
+  mountAutomaticOdds(upcoming,all,oddsFeed,dataReady);
   const age=Number.isFinite(fresh.ageDays)?fresh.ageDays+' jour(s)':'inconnu';
   status(`${dataReady?'✓ Résultats et calendrier contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} résultats recoupés · ${fixtureCount} rencontres calendaires · ${fixtureFeed?.fetchedAt?'calendrier '+new Date(fixtureFeed.fetchedAt).toLocaleString('fr-FR'):'calendrier indisponible'}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
   $('refresh').disabled=false;

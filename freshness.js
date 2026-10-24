@@ -3,6 +3,12 @@ const DAY = 86400000;
 export const MAX_RESULT_AGE_DAYS = 10;
 export const MAX_SYNC_AGE_HOURS = 48;
 
+export function parisDate(value){
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(value);
+  const map=Object.fromEntries(parts.filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
+  return `${map.year}-${map.month}-${map.day}`;
+}
+
 export function freshnessStatus(matches, now = new Date(), syncAt = null) {
   const played = matches.filter(m => m.played && Number.isFinite(Date.parse(m.date + 'T12:00:00Z')));
   const latest = played.reduce((date, m) => !date || m.date > date ? m.date : date, null);
@@ -14,14 +20,14 @@ export function freshnessStatus(matches, now = new Date(), syncAt = null) {
 
 const NAME_ALIASES = {
   psg: 'paris saint germain', 'paris sg': 'paris saint germain', 'paris saint germain fc': 'paris saint germain',
-  marseille: 'olympique de marseille', lyon: 'olympique lyonnais', lyonnais: 'olympique lyonnais',
+  marseille: 'olympique de marseille', 'olympique marseille': 'olympique de marseille', lyon: 'olympique lyonnais', lyonnais: 'olympique lyonnais',
   lille: 'lille osc', lens: 'rc lens', rennes: 'stade rennais', nice: 'ogc nice',
   monaco: 'as monaco', toulouse: 'toulouse fc', nantes: 'fc nantes',
   strasbourg: 'rc strasbourg', 'rc strasbourg alsace': 'rc strasbourg', brest: 'stade brestois', 'stade brestois 29': 'stade brestois', auxerre: 'aj auxerre',
   'le havre': 'le havre ac', lorient: 'fc lorient', angers: 'angers sco',
   metz: 'fc metz', montpellier: 'montpellier hsc', reims: 'stade de reims',
   'paris fc': 'paris fc', 'saint etienne': 'as saint etienne',
-  'stade rennais fc': 'stade rennais', 'as monaco fc': 'as monaco',
+  'stade rennais fc': 'stade rennais', 'as monaco fc': 'as monaco', 'strasbourg alsace': 'rc strasbourg',
 };
 export function teamKey(name) {
   const basic = String(name).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -60,7 +66,7 @@ export function applyOfficialFixtures(matches, feed, now = new Date()) {
     if(!Number.isFinite(millis)||millis<=now.getTime()||m.status!=='TIMED'||!m.home||!m.away)continue;
     const home=existingTeams.get(teamKey(m.home)),away=existingTeams.get(teamKey(m.away));
     if(!home||!away||home===away)continue; // Never invent a team mapping.
-    const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(millis));
+    const date=parisDate(new Date(millis));
     const time=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(millis));
     scheduled.push({id:`official:${m.id}`,season:'2026-27',date,time,home,away,played:false,hg:null,ag:null,fixtureSource:'football-data.org',fixtureStatus:m.status});
   }

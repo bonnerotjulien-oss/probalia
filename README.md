@@ -1,15 +1,16 @@
-# PROBALIA V2.2 — application web installable (PWA)
+# PROBALIA V3 — analyse et cotes automatiques (PWA)
 
-Application statique gratuite. L'historique vient d'OpenFootball, les scores récents de Football-Data.co.uk, et le calendrier/horaire officiel de l'API football-data.org. GitHub Actions synchronise les deux flux dans `data/results.json` et `data/fixtures.json` trois fois par jour. **La clé football-data.org est stockée uniquement dans les GitHub Actions Secrets**, jamais dans le HTML ou JavaScript public.
+Application statique gratuite. L'historique vient d'OpenFootball, les scores récents de Football-Data.co.uk, et le calendrier/horaire officiel de l'API football-data.org. Les cotes 1N2 européennes viennent de The Odds API. GitHub Actions synchronise ces flux dans `data/results.json`, `data/fixtures.json` et `data/odds.json` trois fois par jour. **Les clés API sont stockées uniquement dans les GitHub Actions Secrets**, jamais dans le HTML ou JavaScript public.
 
 ## Activer la synchronisation automatique sur GitHub Pages
 
 1. Publier **tous** les fichiers de cette archive à la racine de `main`, y compris le dossier caché `.github/workflows` et le dossier `scripts` (important). Si la mise à jour de GitHub a été faite via le navigateur et n'a pas importé le dossier caché, modifier manuellement `.github/workflows/sync-results.yml` avec le contenu fourni dans cette archive.
 2. Dans **Settings → Secrets and variables → Actions**, créer un secret de dépôt nommé exactement `FOOTBALL_DATA_TOKEN` contenant la clé API gratuite [football-data.org](https://www.football-data.org/client/register). Ne jamais coller la clé dans le dépôt public.
-3. Dans le dépôt GitHub, ouvrir **Actions** → **PROBALIA - Synchroniser les résultats** → **Run workflow** → **Run workflow**. Cela génère `data/results.json` ET `data/fixtures.json` puis les publie sur `main` ; attendre le job et le déploiement Pages.
-4. Dans **Settings → Actions → General → Workflow permissions**, cocher **Read and write permissions** si la tâche ne peut pas pousser les fichiers de données.
-5. Les synchronisations suivantes sont programmées à 06h18, 12h18 et 19h18 UTC, sous réserve de la disponibilité des GitHub Actions (les jobs programmés peuvent être retardés ou désactivés après inactivité prolongée).
-6. Si un des deux flux manque ou date de plus de 48 heures, ou si le dernier score déclaré dépasse 10 jours, les pronostics, comparateurs et simulateurs sont suspendus.
+3. Créer un deuxième secret `ODDS_API_KEY` avec une clé [The Odds API](https://the-odds-api.com/) gratuite (500 crédits/mois au moment de l'intégration). La tâche utilise uniquement `h2h` et la région `eu` — soit normalement 1 crédit par appel effectif, environ 90/mois à 3 appels par jour. Les headers de réponse consignent les crédits restants dans le fichier de synthèse. Les données ne sont pas en temps réel.
+4. Dans le dépôt GitHub, ouvrir **Actions** → **PROBALIA - Synchroniser les résultats** → **Run workflow** → **Run workflow**. Cela génère `data/results.json`, `data/fixtures.json` et, si la clé est valide, `data/odds.json`, puis les publie sur `main` ; attendre le job et le déploiement Pages.
+5. Dans **Settings → Actions → General → Workflow permissions**, cocher **Read and write permissions** si la tâche ne peut pas pousser les fichiers de données.
+6. Les synchronisations suivantes sont programmées à 06h18, 12h18 et 19h18 UTC, sous réserve de la disponibilité des GitHub Actions (les jobs programmés peuvent être retardés ou désactivés après inactivité prolongée).
+7. Si résultats/calendrier manquent ou datent de plus de 48 heures, ou si le dernier score déclaré dépasse 10 jours, les pronostics et simulateurs sont suspendus. Si seuls les bookmaker odds échouent, le site garde ses statistiques et cache le radar automatisé ; les cotes de plus de 18h ne sont pas affichées.
 
 Le CSV Football-Data fournit uniquement les scores terminés ; le calendrier actuel vient de l'API football-data.org. Seuls les matchs `TIMED` (heure annoncée) sont proposés dans les analyses, avec conversion Europe/Paris. Les matchs simplement `SCHEDULED` (date provisoire), en cours ou reportés sont exclus des scénarios : vérifier malgré tout auprès de la LFP avant usage.
 
@@ -48,12 +49,16 @@ Un double-clic sur `index.html` peut fonctionner, mais un petit serveur local es
 - Onglet **Combinés prudents** : propositions à deux ou trois rencontres dans les 7 jours après la première rencontre à venir, avec une seule sélection par match, sans répétition d'équipe et une estimation de probabilité conjointe. Le produit des probabilités suppose l'indépendance entre matchs, approximation pouvant sous-estimer les corrélations. La cote combinée du bookmaker est saisie manuellement pour calculer l'EV théorique ; aucun ticket n'est placé automatiquement.
 - **Mes combinés** : constructeur de 2 à 5 rencontres avec choix du marché et saisie des cotes bookmaker, simulation de mise, cote cumulée, retour brut, gain net conditionnel et probabilité estimée. Aucune mise n'est effectuée.
 - **Comparateur de cotes** : propositions de marchés à forte probabilité ; saisie des véritables cotes proposées et classement des écarts de rendement *théorique*. Aucune cote de bookmaker n'est collectée automatiquement.
+- **Radar de cotes 1N2 automatisé** : rapproche les rencontres de l'API football-data.org avec les cotes de The Odds API, conserve uniquement la meilleure cote par résultat avec la provenance bookmaker et l'horodatage, et classe les écarts de gain théorique `EV = P_modèle × cote − 1`. Si aucun marché ne dépasse +2 % d'EV théorique, affiche honnêtement l'absence de sélection.
+- **Combinés automatisés** : calcul automatique de tickets à 2 et 3 rencontres sur résultats 1N2, uniquement lorsque chaque sélection présente une probabilité calculée d'au moins 40 % et une EV théorique d'au moins +2 % (non calibrée). Interdit les équipes répétées. Simule le gain brut et net sur une mise libre sans placement de pari. Le produit des probabilités ignore les dépendances entre matchs et ne démontre pas d'avantage bookmaker.
 
 ## Limites scientifiques et opérationnelles
 
 Ce n'est **pas** un modèle entraîné et calibré sur tous les paramètres possibles. Les hyperparamètres actuels sont préfixés et doivent être validés sur des périodes de test indépendantes. Le rho Dixon-Coles n'est pas optimisé ; la calibration des probabilités (fiabilité de p=60 %, etc.) reste à implémenter. La comparaison au modèle de référence aide au diagnostic, mais une bonne log loss ne garantit pas une EV positive face au marché.
 
-Les horaires de football-data.org sont des données externes susceptibles de changer et doivent être contrôlés avant le match. Aucun API de blessures, de composition, de xG ou de **cotes bookmaker** n'est branché. Les effets météo, déplacement, calendrier européen, arbitres et enjeu ne sont pas ajustés arbitrairement.
+Les horaires de football-data.org sont susceptibles de changer ; les cotes de The Odds API sont également des instantanés susceptibles de changer. Seul le marché **1N2** (victoire/nul/défaite) est relié à des cotes automatiques ; les autres marchés restent manuels. Aucune API de blessures, de composition ou de xG n'est branchée. Les effets météo, déplacement, calendrier européen, arbitres et enjeu ne sont pas ajustés arbitrairement.
+
+The Odds API autorise l'affichage des prix dans les applications et la conservation des données, mais pas leur redistribution comme produit brut concurrent. Le script ne publie qu'une synthèse de la meilleure cote par résultat, contextualisée avec la comparaison PROBALIA, et non le flux bookmaker complet. Voir [conditions](https://the-odds-api.com/terms-and-conditions.html). Les noms et cotes des bookmakers ont vocation à être vérifiés auprès des opérateurs avant usage.
 
 Les données de la seconde source sont synchronisées par GitHub Actions dans le dépôt, avec historique Git. L'historique des prévisions à venir reste stocké **sur l'appareil** ; il n'est pas encore synchronisé entre appareils.
 

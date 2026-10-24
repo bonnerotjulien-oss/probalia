@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import {cleanSeason,chronological,predict,backtest,csv,chooseProfilePicks,PROFILE_RULES,buildSafeCombos} from './model.js';
-import {freshnessStatus,mergeVerifiedResults,teamKey,applyOfficialFixtures} from './freshness.js';
+import {freshnessStatus,mergeVerifiedResults,teamKey,applyOfficialFixtures,parisDate} from './freshness.js';
 import {parseResults} from './scripts/sync-results.mjs';
 import {simulateTicket} from './builder.js';
+import {compactOdds} from './scripts/sync-odds.mjs';
+import {calculateOddsRadar,automaticCombos,currentOdds} from './odds.js';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
 sample.sort(chronological);
@@ -43,7 +45,25 @@ const fixtureFeed={fetchedAt:'2026-10-24T08:00:00Z',matches:[
 const fixtureList=applyOfficialFixtures([{id:'old',season:'2026-27',date:'2026-11-02',home:'RC Strasbourg Alsace',away:'Olympique Lyonnais',played:false},{id:'historical',season:'2026-27',date:'2026-10-10',home:'RC Strasbourg Alsace',away:'Olympique Lyonnais',played:true,hg:1,ag:0}],fixtureFeed,new Date('2026-10-24T12:00:00Z'));
 assert.equal(fixtureList.ok,true);assert.equal(fixtureList.upcoming,1);assert.equal(fixtureList.matches.length,2);
 assert.equal(fixtureList.matches.find(m=>!m.played).time,'20:45');
+assert.equal(parisDate(new Date('2026-10-24T10:00:00Z')),'2026-10-24');
 assert.equal(applyOfficialFixtures(fixtureList.matches,fixtureFeed,new Date('2026-10-28T12:00:00Z')).ok,false,'stale fixture feed must fail closed');
 const ticket=simulateTicket([{p:.70,odds:1.80},{p:.80,odds:1.60}],10);
 assert.ok(ticket);assert.ok(Math.abs(ticket.gross-28.8)<1e-10);assert.ok(Math.abs(ticket.probability-.56)<1e-12);assert.equal(simulateTicket([{p:.9,odds:1.2}],10),null);
+const oddNow=new Date('2026-10-24T10:00:00Z');
+const bookmakerEvents=[{home_team:'Lens',away_team:'Paris FC',commence_time:'2026-11-01T19:45:00Z',bookmakers:[{key:'bk1',title:'Bookmaker exemple',markets:[{key:'h2h',last_update:'2026-10-24T09:50:00Z',outcomes:[{name:'Lens',price:2.1},{name:'Paris FC',price:4.2},{name:'Draw',price:3.5}]}]}]}];
+const compact=compactOdds(bookmakerEvents,oddNow);
+assert.equal(compact[0].best.draw.price,3.5);assert.equal(compact[0].best.home.bookmaker,'Bookmaker exemple');
+const oddFeed={fetchedAt:oddNow.toISOString(),events:compact};
+assert.equal(currentOdds(oddFeed,oddNow),true);
+assert.equal(currentOdds(oddFeed,new Date('2026-10-26T10:00:00Z')),false);
+const oddFix=[{id:'o1',home:'Lens',away:'Paris FC',date:'2026-11-01',time:'20:45'}];
+const scan=calculateOddsRadar(oddFix,sample,oddFeed,oddNow);
+assert.equal(scan.length,3);assert.ok(Number.isFinite(scan[0].ev));
+assert.equal(automaticCombos(scan,2),null,'never combine two selections from the same game');
+const testOffers=[
+  {fixture:{id:'1',home:'Lens',away:'Paris FC'},market:'home',probability:.6,odds:1.9,ev:.14},
+  {fixture:{id:'2',home:'Lille',away:'Lyon'},market:'home',probability:.62,odds:1.8,ev:.116},
+];
+const generated=automaticCombos(testOffers,2);
+assert.ok(generated);assert.ok(Math.abs(generated.p-.372)<1e-10);assert.ok(Math.abs(generated.odds-3.42)<1e-10);
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');
