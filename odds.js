@@ -7,7 +7,7 @@ export function currentOdds(feed,now=new Date()){
   return age>=0&&age<=18;
 }
 
-export function calculateOddsRadar(upcoming,history,feed,now=new Date()){
+export function calculateOddsRadar(upcoming,history,feed,now=new Date(),predictor=(h,a,d)=>predict(h,a,d,history)){
   if(!currentOdds(feed,now))return [];
   const marketKey={home:0,draw:1,away:2};
   const result=[];
@@ -20,14 +20,16 @@ export function calculateOddsRadar(upcoming,history,feed,now=new Date()){
       return date===fixture.date&&(!fixture.time||Math.abs(Number(time.slice(0,2))*60+Number(time.slice(3,5))-Number(fixture.time.slice(0,2))*60-Number(fixture.time.slice(3,5)))<=90);
     });
     if(!oddsEvent)continue;
-    const prediction=predict(fixture.home,fixture.away,fixture.date,history);
+    const prediction=predictor(fixture.home,fixture.away,fixture.date);
     if(!prediction||prediction.homeMatches<6||prediction.awayMatches<6)continue;
     for(const [market,index] of Object.entries(marketKey)){
       const quote=oddsEvent.best?.[market];if(!quote||!Number.isFinite(quote.price)||quote.price<=1||!Number.isFinite(Date.parse(quote.updatedAt)))continue;
       const minutes=(now-new Date(quote.updatedAt))/60000;
       if(minutes<0||minutes>24*60)continue;
       const p=prediction.prob[index];
-      result.push({fixture,market,probability:p,odds:quote.price,bookmaker:quote.bookmaker,updatedAt:quote.updatedAt,ev:p*quote.price-1,fairOdds:1/p});
+      const marketProbability=oddsEvent.consensus?.probabilities?.[market];
+      result.push({fixture,market,probability:p,odds:quote.price,bookmaker:quote.bookmaker,updatedAt:quote.updatedAt,ev:p*quote.price-1,fairOdds:1/p,
+        marketProbability:Number.isFinite(marketProbability)?marketProbability:null,bookmakerCount:oddsEvent.consensus?.bookmakers??null});
     }
   }
   return result.sort((a,b)=>b.ev-a.ev);

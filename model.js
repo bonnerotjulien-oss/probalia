@@ -1,5 +1,5 @@
-/* PROBALIA 2: transparent, deterministic model. No third-party runtime dependencies. */
-export const MODEL_VERSION = '2.2.0-rolling-dc';
+/* PROBALIA: transparent, deterministic scoring model, with separate time-split calibration. */
+export const MODEL_VERSION = '4.0.0-rolling-dc-audited';
 export const SETTINGS = Object.freeze({halfLifeDays:210,priorMatches:9,eloK:18,eloHomeAdvantage:65,eloGoalInfluence:0.10,rho:-0.06,maxGoals:10,minHistory:60});
 const DAY=86400000;
 export function dayNumber(s){return Date.parse(`${s}T12:00:00Z`)}
@@ -60,7 +60,7 @@ export function predict(home,away,atDate,all,config=SETTINGS){
   }
   grid.sort((a,b)=>b.p-a.p);
   const daysSince=date=>date===null?null:Math.max(0,Math.floor((cutoff-dayNumber(date))/DAY));
-  return {home,away,atDate,lambdaH,lambdaA,prob:[win,draw,loss],over,btts,markets:{'home':win,'draw':draw,'away':loss,'1X':win+draw,'X2':loss+draw,'12':win+loss,'over05':over05,'over15':over15,'over25':over,'under25':1-over,'under45':under45,'bttsYes':btts,'bttsNo':1-btts,'homeScore':homeScore,'awayScore':awayScore,'homeOver25':homeAndOver25,'awayOver25':awayAndOver25,'homeBtts':homeAndBtts,'awayBtts':awayAndBtts},scores:grid.slice(0,8),historyCount:history.length,homeMatches:H.played,awayMatches:A.played,homeRestDays:daysSince(H.last),awayRestDays:daysSince(A.last),eloHome:elo.get(home)??1500,eloAway:elo.get(away)??1500,uncertainty:(H.played<6||A.played<6)?'élevée':(H.played<14||A.played<14)?'modérée':'non quantifiée',leagueH,leagueA,modelVersion:MODEL_VERSION};
+  return {home,away,atDate,lambdaH,lambdaA,prob:[win,draw,loss],over,btts,markets:{'home':win,'draw':draw,'away':loss,'1X':win+draw,'X2':loss+draw,'12':win+loss,'over05':over05,'over15':over15,'over25':over,'under25':1-over,'under45':under45,'bttsYes':btts,'bttsNo':1-btts,'homeScore':homeScore,'awayScore':awayScore,'homeOver25':homeAndOver25,'awayOver25':awayAndOver25,'homeBtts':homeAndBtts,'awayBtts':awayAndBtts},scores:grid.slice(0,8),scoreGrid:grid,historyCount:history.length,homeMatches:H.played,awayMatches:A.played,homeRestDays:daysSince(H.last),awayRestDays:daysSince(A.last),eloHome:elo.get(home)??1500,eloAway:elo.get(away)??1500,uncertainty:(H.played<6||A.played<6)?'élevée':(H.played<14||A.played<14)?'modérée':'non quantifiée',leagueH,leagueA,modelVersion:MODEL_VERSION};
 }
 export const MARKET_LABELS=Object.freeze({home:'Victoire domicile',draw:'Match nul',away:'Victoire extérieur','1X':'Domicile ou nul','X2':'Extérieur ou nul','12':'Pas de nul',over05:'Plus de 0,5 but',over15:'Plus de 1,5 but',over25:'Plus de 2,5 buts',under25:'Moins de 2,5 buts',under45:'Moins de 4,5 buts',bttsYes:'Les deux marquent',bttsNo:'Au moins une équipe ne marque pas',homeScore:'Domicile marque',awayScore:'Extérieur marque',homeOver25:'Domicile gagne + plus de 2,5 buts',awayOver25:'Extérieur gagne + plus de 2,5 buts',homeBtts:'Domicile gagne + les deux marquent',awayBtts:'Extérieur gagne + les deux marquent'});
 export const PROFILE_RULES=Object.freeze({prudent:{min:.78,max:1,markets:['1X','X2','over05','under45','homeScore','awayScore']},equilibre:{min:.54,max:.78,markets:['home','away','over15','under25','over25','bttsYes','bttsNo','12','1X','X2']},audacieux:{min:.12,max:.42,markets:['home','draw','away','homeOver25','awayOver25','homeBtts','awayBtts']}});

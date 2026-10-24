@@ -1,4 +1,5 @@
 // Rules shared by the browser and automated tests; no external dependencies.
+import {currentSeasonTag,seasonStart} from './season.js';
 const DAY = 86400000;
 export const MAX_RESULT_AGE_DAYS = 10;
 export const MAX_SYNC_AGE_HOURS = 48;
@@ -35,28 +36,39 @@ export function teamKey(name) {
   return NAME_ALIASES[basic] || basic;
 }
 
-export function mergeVerifiedResults(matches, feed) {
+export function mergeVerifiedResults(matches, feed, now=new Date()) {
   if (!feed || !Array.isArray(feed.results) || !Number.isFinite(Date.parse(feed.fetchedAt))) return {matches, merged:0};
   const index = new Map();
   for (const r of feed.results) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(r.date) || !Number.isInteger(r.hg) || !Number.isInteger(r.ag) || r.hg < 0 || r.ag < 0) continue;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(r.date) || r.date>parisDate(now) || !Number.isInteger(r.hg) || !Number.isInteger(r.ag) || r.hg < 0 || r.ag < 0 || !r.home || !r.away) continue;
     index.set([r.season, teamKey(r.home), teamKey(r.away)].join('|'), r);
   }
   let merged = 0;
+  const seen=new Set();
+  const loadedSeasons=new Set(matches.map(m=>m.season));
   const updated = matches.map(m => {
-    const r = index.get([m.season, teamKey(m.home), teamKey(m.away)].join('|'));
+    const key=[m.season, teamKey(m.home), teamKey(m.away)].join('|');
+    const r = index.get(key);
     if (!r) return m;
-    merged++;
+    merged++;seen.add(key);
     // When sources disagree, use the fresh result source for score and actual match date.
     return {...m, date:r.date, hg:r.hg, ag:r.ag, played:true, resultSource:'football-data.co.uk'};
   });
+  // If OpenFootball has not yet published its next season, the verified finished
+  // CSV matches can still seed the current-season history without fabricating fixtures.
+  for(const [key,r] of index){
+    if(seen.has(key)||loadedSeasons.has(r.season))continue;
+    updated.push({id:`verified:${key}`,season:r.season,date:r.date,time:null,home:r.home,away:r.away,hg:r.hg,ag:r.ag,played:true,resultSource:'football-data.co.uk'});
+    merged++;
+  }
   return {matches:updated, merged};
 }
 
 export function applyOfficialFixtures(matches, feed, now = new Date()) {
-  if (!feed || !Array.isArray(feed.matches) || !Number.isFinite(Date.parse(feed.fetchedAt))) return {matches:matches.filter(m=>m.played||m.season!=='2026-27'),upcoming:0,ok:false};
+  const season=currentSeasonTag(now);
+  if (!feed || !Array.isArray(feed.matches) || !Number.isFinite(Date.parse(feed.fetchedAt)) || (feed.season!==undefined&&Number(feed.season)!==seasonStart(now))) return {matches:matches.filter(m=>m.played||m.season!==season),upcoming:0,ok:false};
   const hours=(now-new Date(feed.fetchedAt))/3600000;
-  if (hours<0 || hours>MAX_SYNC_AGE_HOURS) return {matches:matches.filter(m=>m.played||m.season!=='2026-27'),upcoming:0,ok:false};
+  if (hours<0 || hours>MAX_SYNC_AGE_HOURS) return {matches:matches.filter(m=>m.played||m.season!==season),upcoming:0,ok:false};
   const existingTeams=new Map();
   for(const m of matches) for(const name of [m.home,m.away]) existingTeams.set(teamKey(name),name);
   const scheduled=[];
@@ -68,8 +80,8 @@ export function applyOfficialFixtures(matches, feed, now = new Date()) {
     if(!home||!away||home===away)continue; // Never invent a team mapping.
     const date=parisDate(new Date(millis));
     const time=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(millis));
-    scheduled.push({id:`official:${m.id}`,season:'2026-27',date,time,home,away,played:false,hg:null,ag:null,fixtureSource:'football-data.org',fixtureStatus:m.status});
+    scheduled.push({id:`official:${m.id}`,season,date,time,home,away,played:false,hg:null,ag:null,fixtureSource:'football-data.org',fixtureStatus:m.status});
   }
   const unique=new Map(scheduled.map(m=>[m.id,m]));
-  return {matches:[...matches.filter(m=>m.played||m.season!=='2026-27'),...unique.values()],upcoming:unique.size,ok:unique.size>0};
+  return {matches:[...matches.filter(m=>m.played||m.season!==season),...unique.values()],upcoming:unique.size,ok:unique.size>0};
 }

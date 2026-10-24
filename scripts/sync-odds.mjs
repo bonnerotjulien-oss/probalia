@@ -12,19 +12,29 @@ export function compactOdds(events,now=new Date()) {
   for(const event of events){
     const eventTime=Date.parse(event.commence_time);
     if(!Number.isFinite(eventTime)||eventTime<=now.getTime()||!event.home_team||!event.away_team)continue;
-    const best={home:null,draw:null,away:null};
+    const best={home:null,draw:null,away:null},completeMarkets=[];
     for(const bookmaker of event.bookmakers||[])for(const market of bookmaker.markets||[]){
       if(market.key!=='h2h')continue;
       const observed=Date.parse(market.last_update);
       if(!Number.isFinite(observed)||now.getTime()-observed>24*3600000||observed>now.getTime()+5*60000)continue;
+      const prices={};
       for(const outcome of market.outcomes||[]){
         const resultType=String(outcome.name).toLowerCase()==='draw'?'draw':outcome.name===event.home_team?'home':outcome.name===event.away_team?'away':null;
         const price=Number(outcome.price);
         if(!resultType||!wanted.includes(resultType)||!Number.isFinite(price)||price<=1||price>150)continue;
+        prices[resultType]=price;
         if(!best[resultType]||price>best[resultType].price)best[resultType]={price,bookmaker:bookmaker.title||bookmaker.key||'Non renseigné',updatedAt:market.last_update};
       }
+      if(wanted.every(x=>prices[x]>1))completeMarkets.push(prices);
     }
-    if(Object.values(best).some(Boolean))result.push({home:event.home_team,away:event.away_team,commenceTime:event.commence_time,best});
+    const median=a=>{const xs=a.slice().sort((a,b)=>a-b);return xs.length%2?xs[(xs.length-1)/2]:(xs[xs.length/2-1]+xs[xs.length/2])/2};
+    let consensus=null;
+    if(completeMarkets.length>=3){
+      const medians=Object.fromEntries(wanted.map(type=>[type,median(completeMarkets.map(m=>m[type]))]));
+      const total=wanted.reduce((s,k)=>s+1/medians[k],0);
+      consensus={bookmakers:completeMarkets.length,probabilities:Object.fromEntries(wanted.map(k=>[k,(1/medians[k])/total]))};
+    }
+    if(Object.values(best).some(Boolean))result.push({home:event.home_team,away:event.away_team,commenceTime:event.commence_time,best,consensus});
   }
   return result;
 }

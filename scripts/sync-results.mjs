@@ -1,9 +1,10 @@
 import {mkdir, writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
+import {rollingSeasons} from '../season.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const seasons = ['2022-23','2023-24','2024-25','2025-26','2026-27'];
+const seasons = rollingSeasons();
 
 export function parseCSV(text) {
   const rows=[]; let row=[], value='', quoted=false;
@@ -46,9 +47,11 @@ async function run() {
     const code=season.slice(2,4)+season.slice(5,7);
     const url=`https://www.football-data.co.uk/mmz4281/${code}/F1.csv`;
     const response=await fetch(url,{signal:AbortSignal.timeout(30000),headers:{'User-Agent':'PROBALIA data update (personal analytical app)'}});
+    // A just-started season may not have a public CSV yet.
+    if (!response.ok&&season===seasons.at(-1)&&response.status===404){console.warn(`${season}: CSV non encore publié, saison ignorée temporairement`);continue}
     if (!response.ok) throw Error(`${season} HTTP ${response.status}`);
     const parsed=parseResults(await response.text(),season);
-    if (parsed.length<30) throw Error(`${season}: suspiciously few results (${parsed.length}); refusing to publish`);
+    if (parsed.length<(season===seasons.at(-1)?0:30)) throw Error(`${season}: suspiciously few results (${parsed.length}); refusing to publish`);
     results.push(...parsed);
     process.stdout.write(`${season}: ${parsed.length} results\n`);
   }

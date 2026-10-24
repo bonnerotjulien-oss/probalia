@@ -1,0 +1,4 @@
+.calibration-status{margin:17px 0;padding:16px 18px;background:linear-gradient(125deg,#12272b,#16272a);border:1px solid #44665e;border-left:4px solid #c8f68e;border-radius:12px;color:#d5e8e0;font-size:14px;line-height:1.65}
+.auto-caution{padding:11px 13px;background:#182c30;border:1px solid #48685b;border-radius:9px}
+.auto-line small.bad{color:#ffbf9e;font-weight:600}
+@media(max-width:520px){.calibration-status{padding:13px 14px;font-size:13px}.auto-line{gap:9px}.auto-line div:first-child{grid-column:span 2}}
