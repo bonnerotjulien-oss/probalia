@@ -1,6 +1,16 @@
 # PROBALIA V2 — application web installable (PWA)
 
-Projet statique privé, sans dépendance de programmation ni clé API. Les données publiques des résultats de Ligue 1 sont récupérées au chargement depuis `openfootball/football.json` (domaine public, données communautaires).
+Application statique gratuite, sans clé API. Le calendrier indicatif et l'historique viennent d'OpenFootball. Une tâche GitHub Actions télécharge les résultats de Ligue 1 de [Football-Data](https://www.football-data.co.uk/francem.php) trois fois par jour et crée `data/results.json`, consommé par le site. Attention : la mise à jour du calendrier et des horaires ne dispose pas encore d'une source officielle vérifiée.
+
+## Activer la synchronisation automatique sur GitHub Pages
+
+1. Publier **tous** les fichiers de cette archive à la racine de `main`, y compris le dossier caché `.github/workflows` et le dossier `scripts` (important).
+2. Dans le dépôt GitHub, ouvrir **Actions** → **PROBALIA - Synchroniser les résultats** → **Run workflow** → **Run workflow**. Cela génère automatiquement `data/results.json` et le publie sur `main` ; attendre la fin du job puis la publication Pages.
+3. Dans **Settings → Actions → General → Workflow permissions**, cocher **Read and write permissions** si la tâche ne peut pas pousser le fichier de résultats.
+4. Les synchronisations suivantes sont programmées à 06h18, 12h18 et 19h18 UTC, sous réserve de la disponibilité des GitHub Actions (les jobs programmés peuvent être retardés ou désactivés après inactivité prolongée).
+5. Si le fichier `data/results.json` manque, si la synchro dépasse 48 heures ou si le dernier résultat connu dépasse 10 jours, les cartes de pronostics et combinés se désactivent. Le calendrier reste visible comme information indicative.
+
+Le CSV Football-Data fournit les scores terminés, **pas** un calendrier complet à venir. La fraîcheur du résultat n'implique donc pas la validation des horaires de matchs. Vérifier les rencontres auprès de la LFP avant usage.
 
 ## Installer comme application sur un iPhone
 
@@ -42,7 +52,7 @@ Ce n'est **pas** un modèle entraîné et calibré sur tous les paramètres poss
 
 Le flux OpenFootball peut être actualisé avec retard et est maintenu par la communauté. Aucun API de blessures, de composition, de xG ou de cotes bookmaker n'est branché. Les effets météo, déplacement, horaires, calendrier européen, arbitres et enjeu ne sont pas ajustés arbitrairement.
 
-Les chargements se font **à l'ouverture du site**, pas via un job serveur permanent. Le cache des saisons et le journal des prévisions à venir sont stockés **sur l'appareil**. La persistance inter-appareils et les tâches nocturnes nécessiteront ultérieurement un serveur avec stockage et un mécanisme de planification.
+Les données de la seconde source sont synchronisées par GitHub Actions dans le dépôt, avec historique Git. L'historique des prévisions à venir reste stocké **sur l'appareil** ; il n'est pas encore synchronisé entre appareils.
 
 ### Suite technique recommandée (sans abonnement)
 

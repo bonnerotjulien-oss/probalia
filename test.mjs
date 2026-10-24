@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import {cleanSeason,chronological,predict,backtest,csv,chooseProfilePicks,PROFILE_RULES,buildSafeCombos} from './model.js';
+import {freshnessStatus,mergeVerifiedResults,teamKey} from './freshness.js';
+import {parseResults} from './scripts/sync-results.mjs';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
 sample.sort(chronological);
@@ -24,4 +26,13 @@ const changed=sample.slice();changed.push({...sample[0],id:'future',date:'2025-0
 const p2=predict('Lens','Paris FC','2025-01-01',changed);assert.deepEqual(p.prob,p2.prob,'future result must not leak into prediction');
 assert.equal(cleanSeason({matches:[{date:'2026-11-01',team1:'A',team2:'B',score:[0,0]},{date:'2026-10-01',team1:'A',team2:'B',score:[0,0]}]},'26','2026-10-24').filter(m=>m.played).length,1,'past 0-0 draws and future placeholders disambiguated');
 assert.ok(csv([{name:'=HYPERLINK()',p:.2}]).includes("'=HYPERLINK"),'CSV injection defended');
+assert.equal(teamKey('Paris SG'),teamKey('Paris Saint-Germain FC'));
+assert.equal(teamKey('Lyon'),teamKey('Olympique Lyonnais'));
+const feed={fetchedAt:'2026-10-24T10:00:00.000Z',results:[{season:'2026-27',date:'2026-10-23',home:'Lyon',away:'Paris SG',hg:2,ag:1}]};
+const merged=mergeVerifiedResults([{id:'fixture',season:'2026-27',date:'2026-10-22',home:'Olympique Lyonnais',away:'Paris Saint-Germain FC',played:false}],feed);
+assert.equal(merged.merged,1);assert.equal(merged.matches[0].date,'2026-10-23');assert.equal(merged.matches[0].hg,2);
+assert.equal(freshnessStatus(merged.matches,new Date('2026-10-24T11:00:00Z'),feed.fetchedAt).ok,true);
+assert.equal(freshnessStatus(merged.matches,new Date('2026-11-12T11:00:00Z'),feed.fetchedAt).ok,false);
+assert.equal(freshnessStatus(merged.matches,new Date('2026-10-24T11:00:00Z'),null).ok,false);
+assert.deepEqual(parseResults('Date,HomeTeam,AwayTeam,FTHG,FTAG\n23/10/2026,Lyon,Paris SG,2,1\n24/10/2026,Lens,Lille,,\n','2026-27'),feed.results);
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');

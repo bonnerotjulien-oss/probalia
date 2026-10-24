@@ -1,10 +1,11 @@
 import {cleanSeason,chronological,predict,backtest,csv,percent,MODEL_VERSION,chooseProfilePicks,buildSafeCombos} from './model.js';
+import {freshnessStatus,mergeVerifiedResults} from './freshness.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=['2022-23','2023-24','2024-25','2025-26','2026-27'];
 const BASE='https://raw.githubusercontent.com/openfootball/football.json/master/';
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let all=[],upcoming=[],selected=null,bt=null,lastFetched=null,archive=[];
+let all=[],upcoming=[],selected=null,bt=null,lastFetched=null,archive=[],dataReady=false;
 try{archive=JSON.parse(localStorage.getItem('probalia-v2-journal')||'[]')}catch{}
 function status(message,error=false){$('status').textContent=message;$('status-dot').classList.toggle('bad',error)}
 async function loadSeason(season){
@@ -18,11 +19,12 @@ function download(name,text,type='text/plain'){const blob=new Blob([text],{type}
 function splitList(){const now=today();upcoming=all.filter(m=>!m.played&&m.date>=now).sort(chronological);const hasRecent=all.filter(m=>m.played&&m.date<=now).sort(chronological);return hasRecent}
 function renderList(){const list=upcoming.slice(0,24);$('future').textContent=upcoming.length.toLocaleString('fr-FR');
   if(!list.length){$('match-list').innerHTML='<div class="empty">Aucun match à venir dans la source. Vérifie sa fraîcheur ou actualise les données.</div>';return}
-  $('match-list').innerHTML=list.map((m,i)=>{const p=predict(m.home,m.away,m.date,all);return `<button class="match ${selected?.id===m.id?'active':''}" data-match="${i}"><div class="topline"><span>${escape(new Date(m.date+'T12:00:00Z').toLocaleDateString('fr-FR',{day:'numeric',month:'long',timeZone:'UTC'}))} · ${escape(m.time||'heure inconnue')}</span><span>${escape(m.season)}</span></div><div class="teams"><span>${escape(m.home)}</span><span>${escape(m.away)}</span></div><div class="smallprobs">${p?[`1 ${fmt(p.prob[0])}`,`N ${fmt(p.prob[1])}`,`2 ${fmt(p.prob[2])}`].map(x=>`<span>${x}</span>`).join(''):'<span>Données historiques insuffisantes</span>'}</div></button>`}).join('');
+  $('match-list').innerHTML=list.map((m,i)=>{const p=dataReady?predict(m.home,m.away,m.date,all):null;return `<button class="match ${selected?.id===m.id?'active':''}" data-match="${i}"><div class="topline"><span>${escape(new Date(m.date+'T12:00:00Z').toLocaleDateString('fr-FR',{day:'numeric',month:'long',timeZone:'UTC'}))} · ${escape(m.time||'heure inconnue')}</span><span>${escape(m.season)}</span></div><div class="teams"><span>${escape(m.home)}</span><span>${escape(m.away)}</span></div><div class="smallprobs">${!dataReady?'<span>Prédiction suspendue · calendrier indicatif</span>':p?[`1 ${fmt(p.prob[0])}`,`N ${fmt(p.prob[1])}`,`2 ${fmt(p.prob[2])}`].map(x=>`<span>${x}</span>`).join(''):'<span>Données historiques insuffisantes</span>'}</div></button>`}).join('');
   document.querySelectorAll('[data-match]').forEach(b=>b.addEventListener('click',()=>choose(list[Number(b.dataset.match)])));
   if(!selected||!list.some(m=>m.id===selected.id))choose(list[0]);
 }
 function renderProfiles(){
+  if(!dataReady){$('risk-cards').innerHTML='<div class="empty">⛔ Prédictions suspendues : les résultats ou leur synchronisation sont trop anciens. Réessayez après la prochaine mise à jour.</div>';return}
   const entries=upcoming.slice(0,24).map(match=>({match,prediction:predict(match.home,match.away,match.date,all)}));
   const picks=chooseProfilePicks(entries);
   const meta={prudent:{icon:'🛡️',title:'Prudent',description:'Le scénario le plus probable. Gain potentiel souvent faible.'},equilibre:{icon:'⚖️',title:'Équilibré',description:'Un compromis : la probabilité reste supérieure à une chance sur deux.'},audacieux:{icon:'🎯',title:'Audacieux',description:'Un scénario moins fréquent, dont la cote peut être plus élevée.'}};
@@ -34,6 +36,7 @@ function renderProfiles(){
   document.querySelectorAll('[data-open-pick]').forEach(button=>button.addEventListener('click',()=>{const m=upcoming[Number(button.dataset.openPick)];if(m){choose(m);document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'})}}));
 }
 function renderCombos(){
+  if(!dataReady){$('combo-cards').innerHTML='<div class="empty">⛔ Aucun combiné proposé : fraîcheur des données non confirmée.</div>';return}
   const entries=upcoming.slice(0,24).map(match=>({match,prediction:predict(match.home,match.away,match.date,all)}));
   const choices=buildSafeCombos(entries);
   const names={double:'Double prudente',triple:'Triple prudente',alternative:'Double alternative'};
@@ -59,7 +62,9 @@ async function weather(m,el){const coords=matchLocation(m.home);if(!coords){el.t
     const temp=j.hourly.temperature_2m[index],rain=j.hourly.precipitation[index],wind=j.hourly.wind_speed_10m[index];el.textContent=`Prévision à proximité de ${m.home} : ${temp} °C · pluie ${rain} mm/h · vent ${wind} km/h. Non intégrée au calcul (impact non calibré).`;
   }catch{el.textContent='Météo indisponible. Aucun ajustement appliqué.'}
 }
-function choose(m){selected=m;renderListSelection();const p=predict(m.home,m.away,m.date,all);$('fixture-title').textContent=`${m.home} – ${m.away}`;$('fixture-time').textContent=`${m.date} · ${m.time||'heure non renseignée'}`;
+function choose(m){selected=m;renderListSelection();$('fixture-title').textContent=`${m.home} – ${m.away}`;$('fixture-time').textContent=`${m.date} · ${m.time||'heure non renseignée'}`;
+  if(!dataReady){$('detail-content').innerHTML='<div class="empty">⛔ Analyse suspendue : données sportives non actualisées. Le calendrier et les horaires doivent aussi être vérifiés auprès de la ligue.</div>';return}
+  const p=predict(m.home,m.away,m.date,all);
   if(!p){$('detail-content').innerHTML='<div class="empty">Historique insuffisant pour produire une prédiction.</div>';return}
   lastPredictionRecord(m,p);const names=['Domicile','Nul','Extérieur'];const max=Math.max(...p.prob);
   $('detail-content').innerHTML=`<div class="fixture-score">${p.prob.map((v,i)=>`<div class="outcome ${v===max?'highlight':''}"><b>${fmt(v)}</b><small>${names[i]}</small></div>`).join('')}</div><div class="context"><h3>Contexte du match</h3><p>Heure locale : <b>${escape(m.time||'non disponible')}</b> · Jours depuis le dernier match de championnat : domicile <b>${p.homeRestDays??'?'}</b>, extérieur <b>${p.awayRestDays??'?'}</b>. Ces valeurs sont descriptives, non utilisées comme coefficients.</p><p id="weather">Recherche de la météo…</p><p>Résultats historiques pris en compte : ${p.historyCount}. Échantillon d'équipe : ${p.homeMatches} / ${p.awayMatches}. Incertitude : <b>${p.uncertainty}</b>. Absences, compositions, arbitrage, fatigue et déplacement européen : non renseignés, aucun ajustement appliqué.</p></div><h3>Scores les plus probables</h3><div class="scores">${p.scores.slice(0,6).map(s=>`<div class="score-row"><b>${s.h}–${s.a}</b><div class="bar"><span style="width:${(s.p/p.scores[0].p*100).toFixed(2)}%"></span></div><span>${fmt(s.p)}</span></div>`).join('')}</div><div class="context"><h3>Marché 1N2 · Cotes décimales facultatives</h3><div class="odds">${['1','N','2'].map(x=>`<label>Cote ${x}<input data-odds="${x}" type="number" min="1.01" step="0.01" placeholder="ex. 2.10"></label>`).join('')}</div><div id="value" class="value">Saisis des cotes pour comparer la valeur théorique. Les estimations ne constituent pas des conseils de mise.</div></div><div class="context"><h3>Hypothèses du moteur</h3><p>Buts moyens λ : ${dec(p.lambdaH)} / ${dec(p.lambdaA)}. Elo : ${Math.round(p.eloHome)} / ${Math.round(p.eloAway)}. Plus de 2,5 buts : ${fmt(p.over)} · Les deux marquent : ${fmt(p.btts)}.</p></div>`;
@@ -70,11 +75,16 @@ function choose(m){selected=m;renderListSelection();const p=predict(m.home,m.awa
 }
 function renderListSelection(){document.querySelectorAll('[data-match]').forEach(b=>{const m=upcoming[Number(b.dataset.match)];b.classList.toggle('active',m?.id===selected?.id)})}
 function showBacktest(){const data=all.filter(m=>m.played).sort(chronological);bt=backtest(data,160);$('count').textContent=data.length.toLocaleString('fr-FR');$('nBack').textContent=bt.n;$('loss').textContent=bt.logloss?.toFixed(3)||'—';$('brier').textContent=bt.brier?.toFixed(3)||'—';$('baseLoss').textContent=bt.baseline?.toFixed(3)||'—';$('improvement').textContent=bt.improvement===null?'—':fmt(bt.improvement);$('savedCount').textContent=archive.length}
-async function reload(){selected=null;$('refresh').disabled=true;status('Récupération des saisons OpenFootball…');const loaded=await Promise.allSettled(SEASONS.map(loadSeason));let errors=[];all=[];for(let i=0;i<loaded.length;i++){const l=loaded[i];if(l.status==='fulfilled')all.push(...l.value);else errors.push(l.reason.message)}
-  all.sort(chronological);const current=all.filter(m=>m.season==='2026-27');lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
+async function reload(){selected=null;dataReady=false;$('refresh').disabled=true;status('Récupération des saisons et contrôle des résultats…');const loaded=await Promise.allSettled(SEASONS.map(loadSeason));let errors=[];all=[];for(let i=0;i<loaded.length;i++){const l=loaded[i];if(l.status==='fulfilled')all.push(...l.value);else errors.push(l.reason.message)}
   if(!all.length){status('Impossible de charger les données. Vérifie ta connexion.',true);$('refresh').disabled=false;return}
-  splitList();showBacktest();renderList();renderProfiles();renderCombos();const mostRecent=all.filter(m=>m.played).at(-1)?.date;
-  status(`${SEASONS.length-errors.length}/${SEASONS.length} saisons chargées · dernier résultat déclaré : ${mostRecent||'inconnu'} · données communautaires pouvant être en retard${errors.length?' · sources partielles':''}`,!!errors.length);
+  let feed=null,merged=0;
+  try{const res=await fetch('./data/results.json',{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!res.ok)throw Error('HTTP '+res.status);feed=await res.json();const mergedResults=mergeVerifiedResults(all,feed);all=mergedResults.matches;merged=mergedResults.merged}
+  catch(e){errors.push('Synchronisation quotidienne indisponible : '+e.message)}
+  all.sort(chronological);lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
+  const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&!errors.length;
+  splitList();showBacktest();renderList();renderProfiles();renderCombos();
+  const age=Number.isFinite(fresh.ageDays)?fresh.ageDays+' jour(s)':'inconnu';
+  status(`${dataReady?'✓ Résultats contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} matchs recoupés · source ${feed?.fetchedAt?'synchronisée '+new Date(feed.fetchedAt).toLocaleString('fr-FR'):'indisponible'}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
   $('refresh').disabled=false;
 }
 $('refresh').addEventListener('click',reload);
