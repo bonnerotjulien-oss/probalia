@@ -1,4 +1,10 @@
-# PROBALIA V4.1 — modèle probabiliste contrôlé et Top 3 ≥ 85 % (PWA)
+# PROBALIA V4.2 — le week-end en un clin d'œil (PWA)
+
+## Nouveauté V4.2 : accueil épuré
+
+L'accueil affiche directement **le Top 3 du week-end** à probabilité estimée ≥ 85 % et les **combinés prudents** avec leur probabilité conjointe. La période sportive retenue va du vendredi au lundi (matchs encore à venir uniquement) et avance automatiquement dans le calendrier. Chaque carte affiche la probabilité, le marché, l'heure et la cote équitable théorique ; le simulateur s'ouvre à la demande. La mise initiale est de **0,50 €** par sélection ou par ticket. Le bouton *Personnaliser ce ticket* recopie les rencontres et les marchés choisis dans le créateur de combinés, sans passer de pari. Tous les outils scientifiques ou de comparaison restent disponibles en dépliant **Explorer les outils avancés**. La validation du modèle et les flux API restent ceux de V4.1.
+
+La probabilité conjointe d'un combiné est inférieure à chacune de ses sélections ; le libellé « prudent » ne garantit pas un taux de réussite de 85 %. Les cotes utilisées pour estimer un gain doivent être saisies depuis une offre réelle de bookmaker pour ces marchés, car le flux automatique ne couvre que le 1N2.
 
 Application statique gratuite. L'historique vient d'OpenFootball, les scores récents de Football-Data.co.uk, et le calendrier/horaire officiel de l'API football-data.org. Les cotes 1N2 européennes viennent de The Odds API. GitHub Actions synchronise ces flux dans `data/results.json`, `data/fixtures.json` et `data/odds.json` trois fois par jour. **Les clés API sont stockées uniquement dans les GitHub Actions Secrets**, jamais dans le HTML ou JavaScript public. La saison de Ligue 1 est maintenant détectée automatiquement et les cinq saisons les plus récentes sont utilisées : plus besoin de modifier le code en 2027.
 
@@ -30,7 +36,7 @@ Le service worker met en cache l'interface, les feuilles de style, le moteur et 
 ## Démarrer
 
 1. Décompresser l'archive.
-2. Dans le dossier `probalia-v2`, lancer `python -m http.server 8080` ou tout serveur statique équivalent.
+2. Dans le dossier extrait, lancer `python -m http.server 8080` ou tout serveur statique équivalent.
 3. Ouvrir `http://localhost:8080` sur l'ordinateur. En ligne, héberger ces fichiers tels quels sur un hébergement statique avec HTTPS.
 
 Un double-clic sur `index.html` peut fonctionner, mais un petit serveur local est recommandé pour les modules JavaScript et les requêtes de données.
@@ -53,7 +59,7 @@ Un double-clic sur `index.html` peut fonctionner, mais un petit serveur local es
 - **Comparateur de cotes** : propositions de marchés à forte probabilité ; saisie des véritables cotes proposées et classement des écarts de rendement *théorique*. Aucune cote de bookmaker n'est collectée automatiquement.
 - **Radar de cotes 1N2 automatisé** : rapproche les rencontres de l'API football-data.org avec les cotes de The Odds API, conserve la meilleure cote par résultat et calcule l'écart **théorique** `EV = P_modèle × cote − 1`. Si au moins trois opérateurs offrent un marché 1N2 complet, le script calcule aussi un consensus *sans marge* à partir des cotes médianes. Un désaccord de plus de 8 points entre modèle et marché est signalé.
 - **Combinés automatisés** : calcul de tickets à 2 et 3 rencontres sur résultats 1N2, seulement lorsque le modèle bat une référence naïve en période de test et que les autres critères sont satisfaits. Interdit les équipes répétées. Simule le gain brut/net sans placement de pari. Une bonne log loss ne prouve **jamais** un rendement aux cotes des bookmakers.
-- **Top 3 ≥ 85 %** : jusqu'à trois sélections simples sur des clubs distincts durant les sept prochains jours, avec probabilité du modèle ≥ 85 % et au moins 14 rencontres historiques par équipe. Les marchés sont choisis de préférence autour de 88 % pour éviter les cotes équitables minuscules. Chaque carte calcule le gain brut, le bénéfice conditionnel et l'écart théorique à la cote saisie, avec 0,50 € de mise par pari par défaut. Seuls les prix du marché 1N2 peuvent être préremplis par l'API actuelle ; les marchés double chance ou buts requièrent une saisie de cote. Si aucun marché ne satisfait les critères, aucun Top 3 fictif n'est produit. **Trois sélections individuelles à 85 % ne signifient pas qu'un combiné triple possède 85 % de chances.**
+- **Top 3 ≥ 85 %** : jusqu'à trois sélections simples sur des clubs distincts durant la période du week-end (vendredi à lundi), avec probabilité du modèle ≥ 85 % et au moins 14 rencontres historiques par équipe. Les marchés sont choisis de préférence autour de 88 % pour éviter les cotes équitables minuscules. Chaque carte calcule le gain brut, le bénéfice conditionnel et l'écart théorique à la cote saisie, avec 0,50 € de mise par pari par défaut. Seuls les prix du marché 1N2 peuvent être préremplis par l'API actuelle ; les marchés double chance ou buts requièrent une saisie de cote. Si aucun marché ne satisfait les critères, aucun Top 3 fictif n'est produit. **Trois sélections individuelles à 85 % ne signifient pas qu'un combiné triple possède 85 % de chances.**
 
 ## Limites scientifiques et opérationnelles
 

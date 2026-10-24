@@ -8,6 +8,7 @@ import {calculateOddsRadar,automaticCombos,currentOdds} from './odds.js';
 import {adjust1N2,fitTemperature,auditModel,calibratedPrediction} from './calibration.js';
 import {seasonStart,currentSeasonTag,rollingSeasons} from './season.js';
 import {selectTopPicks,simulateSingle} from './top.js';
+import {weekendRange,weekendFixtures,weekendLabel} from './weekend.js';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
 sample.sort(chronological);
@@ -100,4 +101,13 @@ assert.deepEqual(selectTopPicks(topFixtures.map(x=>({...x,prediction:{...topPred
 const halfEuro=simulateSingle(.85,1.20,.5);
 assert.ok(Math.abs(halfEuro.gross-.60)<1e-9);assert.ok(Math.abs(halfEuro.net-.10)<1e-9);
 assert.ok(Math.abs(halfEuro.ev-.02)<1e-9);assert.equal(simulateSingle(.85,1.2,0),null);
+assert.deepEqual(weekendRange('2026-10-24'),{start:'2026-10-23',end:'2026-10-26'},'Saturday keeps the current matchday');
+assert.deepEqual(weekendRange('2026-10-26'),{start:'2026-10-23',end:'2026-10-26'},'Monday stays in the same matchday');
+assert.deepEqual(weekendRange('2026-10-27'),{start:'2026-10-30',end:'2026-11-02'},'Tuesday advances to the coming Friday');
+assert.deepEqual(weekendRange('2027-01-01'),{start:'2027-01-01',end:'2027-01-04'},'year boundary stays correct');
+assert.equal(weekendRange('not-a-date'),null);
+const weekendGames=[{date:'2026-10-26',time:'20:30'},{date:'2026-10-31',time:'15:00'},{date:'2026-10-24',time:'20:45'},{date:'2026-10-27',time:'20:45'}];
+assert.deepEqual(weekendFixtures(weekendGames,'2026-10-24').map(x=>x.date),['2026-10-24','2026-10-26']);
+assert.deepEqual(weekendFixtures(weekendGames,'2026-10-27').map(x=>x.date),['2026-10-31']);
+assert.ok(weekendLabel(weekendRange('2026-10-24')).includes('octobre'));
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');

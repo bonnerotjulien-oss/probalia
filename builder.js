@@ -77,3 +77,17 @@ function compute(){
 }
 
 export function mountBuilder(upcoming,all,dataReady,predictFn=null){fixtures=upcoming;results=all;predictor=predictFn;ready=dataReady;rankedOpportunities();display();renderQuoteCompare()}
+
+/** Copy a prepared weekend scenario into the editable ticket, without placing any bet. */
+export function prefillBuilder(legs,amount=.5){
+  if(!ready||!Array.isArray(legs)||legs.length<2||legs.length>5)return false;
+  const ids=new Set(),clubs=new Set();
+  for(const leg of legs){
+    const match=fixtures.find(m=>m.id===leg?.match?.id);
+    if(!match||ids.has(match.id)||clubs.has(match.home)||clubs.has(match.away)||!marketKeys.includes(leg.market))return false;
+    ids.add(match.id);clubs.add(match.home);clubs.add(match.away);
+  }
+  lines=legs.map(leg=>({match:leg.match.id,market:leg.market,odds:''}));
+  const sum=Number(amount);stake=Number.isFinite(sum)&&sum>0?sum:.5;
+  display();return true;
+}

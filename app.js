@@ -1,16 +1,18 @@
 import {cleanSeason,chronological,predict,csv,percent,MODEL_VERSION,chooseProfilePicks,buildSafeCombos} from './model.js';
 import {freshnessStatus,mergeVerifiedResults,applyOfficialFixtures,parisDate} from './freshness.js';
-import {mountBuilder} from './builder.js';
+import {mountBuilder,prefillBuilder} from './builder.js';
 import {mountAutomaticOdds} from './auto.js';
 import {mountTopPicks} from './top.js';
 import {auditModel,calibratedPrediction} from './calibration.js';
 import {rollingSeasons,currentSeasonTag} from './season.js';
+import {weekendFixtures,weekendRange,weekendLabel} from './weekend.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=rollingSeasons();
 const BASE='https://raw.githubusercontent.com/openfootball/football.json/master/';
 const today=()=>parisDate(new Date());
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let all=[],upcoming=[],selected=null,bt=null,lastFetched=null,archive=[],dataReady=false,audit=null;
+const comboStakes={double:.5,triple:.5,alternative:.5},comboQuotes={},comboSignatures={};
 const predictionCache=new Map();
 function predictForMatch(m){
   if(predictionCache.has(m.id))return predictionCache.get(m.id);
@@ -51,17 +53,32 @@ function renderProfiles(){
 function renderCombos(){
   if(!dataReady){$('combo-cards').innerHTML='<div class="empty">⛔ Aucun combiné proposé : fraîcheur des données non confirmée.</div>';return}
   if(!audit?.ready||!audit.modelBeatsBaseline){$('combo-cards').innerHTML='<div class="empty">⛔ Combinés prudents suspendus : le modèle ne dispose pas d’une performance suffisamment convaincante face à la référence naïve sur son test indépendant. Tu peux toujours simuler un ticket personnel.</div>';return}
-  const entries=upcoming.slice(0,24).map(match=>({match,prediction:predictForMatch(match)}));
+  const entries=weekendFixtures(upcoming,today()).map(match=>({match,prediction:predictForMatch(match)}));
   const choices=buildSafeCombos(entries);
-  const names={double:'Double prudente',triple:'Triple prudente',alternative:'Double alternative'};
-  $('combo-cards').innerHTML=Object.entries(names).map(([key,title])=>{
-    const pick=choices[key];if(!pick)return `<div class="combo-card"><h3>${title}</h3><p class="small">Pas assez de sélections répondant aux critères pour cette combinaison.</p></div>`;
-    return `<div class="combo-card"><h3>${title}</h3><div class="combo-legs">${pick.legs.map(l=>`<div class="combo-leg"><div class="combo-match">${escape(l.match.home)} – ${escape(l.match.away)} · ${escape(l.match.date)}</div><strong>${escape(l.label)}</strong><div class="combo-prob">${fmt(l.p)}</div></div>`).join('')}</div><div class="combo-global"><b>${fmt(pick.p)}</b><span class="small">Probabilité conjointe estimée</span></div><div class="combo-odds">Cote équitable théorique : <strong>${dec(pick.fairOdds)}</strong><label for="combo-odd-${key}">Cote combinée réellement proposée<input id="combo-odd-${key}" type="number" min="1.01" step="0.01" placeholder="Saisir la cote totale" data-combo-odds="${key}"></label><div class="combo-ev" id="combo-ev-${key}">Renseigne la cote réelle pour calculer l'EV théorique.</div></div></div>`;
-  }).join('');
-  document.querySelectorAll('[data-combo-odds]').forEach(input=>input.addEventListener('input',()=>{const key=input.dataset.comboOdds,pick=choices[key],odd=Number(input.value);const label=$('combo-ev-'+key);
-    if(!Number.isFinite(odd)||odd<=1){label.textContent='Cote manquante ou invalide.';label.className='combo-ev';return}
-    const ev=pick.p*odd-1;label.textContent=`EV théorique : ${ev>=0?'+':''}${fmt(ev)} · sans garantie de rentabilité (modèle non calibré).`;label.className='combo-ev '+(ev>0?'good':'bad');
-  }));
+  const names={double:'Double du week-end',triple:'Triple du week-end',alternative:'Double alternative'};
+  // Never reuse a previously typed bookmaker quote on a different combination.
+  for(const key of Object.keys(names)){
+    const signature=choices[key]?.legs.map(leg=>`${leg.match.id}:${leg.market}`).join('|')||'';
+    if(comboSignatures[key]!==signature){comboQuotes[key]='';comboSignatures[key]=signature}
+  }
+  const ticket=(key,title)=>{
+    const pick=choices[key];if(!pick)return `<div class="combo-card"><h3>${title}</h3><p class="small">Aucune combinaison ne respecte les critères pour ce week-end.</p></div>`;
+    return `<article class="combo-card"><div class="combo-card-head"><div><small>${key==='double'?'OPTION PRINCIPALE':'AUTRE SCÉNARIO'}</small><h3>${title}</h3></div><div class="combo-card-number">${fmt(pick.p)}<span>Probabilité estimée</span></div></div><div class="combo-legs">${pick.legs.map(l=>`<div class="combo-leg"><div class="combo-match">${escape(l.match.home)} – ${escape(l.match.away)} · ${escape(l.match.date)} à ${escape(l.match.time||'heure à confirmer')}</div><strong>${escape(l.label)}</strong><span class="combo-prob">${fmt(l.p)} selon le modèle</span></div>`).join('')}</div><div class="combo-footer"><span class="combo-fair">Cote équitable totale : <b>${dec(pick.fairOdds)}</b></span><span class="small">${pick.legs.length} matchs</span></div><details class="combo-sim"><summary>Simuler mon gain</summary><div class="combo-sim-fields"><label for="combo-odd-${key}">Cote réelle du combiné<input id="combo-odd-${key}" data-combo-odds="${key}" type="number" inputmode="decimal" min="1.01" step="0.01" placeholder="Ex. 1,55" value="${escape(comboQuotes[key]||'')}"></label><label for="combo-stake-${key}">Mise (€)<input id="combo-stake-${key}" data-combo-stake="${key}" type="number" inputmode="decimal" min="0.01" max="10000" step="0.1" value="${comboStakes[key]}"></label></div><div class="combo-ev" id="combo-ev-${key}">Renseigne la cote réellement proposée pour connaître le gain possible avec ${comboStakes[key].toFixed(2).replace('.',',')} €.</div></details><button class="combo-personalize" data-make-combo="${key}" type="button">Personnaliser ce ticket ↗</button></article>`;
+  };
+  const others=Object.entries(names).filter(([key])=>key!=='double'&&choices[key]);
+  $('combo-cards').innerHTML=ticket('double',names.double)+(others.length?`<details class="more-combos"><summary>Voir ${others.length===1?'une autre combinaison':`${others.length} autres combinaisons`}</summary><div class="more-combos-list">${others.map(([key,title])=>ticket(key,title)).join('')}</div></details>`:'');
+  const update=key=>{
+    const p=choices[key]?.p,odd=Number(comboQuotes[key]),amount=Number(comboStakes[key]),target=$('combo-ev-'+key);
+    if(!target||!p)return;
+    if(!Number.isFinite(amount)||amount<=0||!Number.isFinite(odd)||odd<=1){target.textContent='Indique une cote réelle et une mise positive pour simuler le gain.';target.className='combo-ev';return}
+    const gross=amount*odd,net=gross-amount,ev=p*odd-1;
+    target.innerHTML=`Si gagné : <strong>${gross.toLocaleString('fr-FR',{style:'currency',currency:'EUR'})}</strong> brut, dont <strong>${net.toLocaleString('fr-FR',{style:'currency',currency:'EUR'})}</strong> net. Écart théorique : ${ev>=0?'+':''}${fmt(ev)}. Aucun rendement garanti.`;
+    target.className='combo-ev '+(ev>=0?'good':'bad');
+  };
+  document.querySelectorAll('[data-combo-odds]').forEach(input=>input.addEventListener('input',()=>{const key=input.dataset.comboOdds;comboQuotes[key]=input.value;update(key)}));
+  document.querySelectorAll('[data-combo-stake]').forEach(input=>input.addEventListener('input',()=>{const key=input.dataset.comboStake;comboStakes[key]=Number(input.value);update(key)}));
+  document.querySelectorAll('[data-make-combo]').forEach(button=>button.addEventListener('click',()=>{const key=button.dataset.makeCombo;prefillBuilder(choices[key].legs,comboStakes[key]);$('advanced-tools').open=true;document.getElementById('custom-combos').scrollIntoView({behavior:'smooth',block:'start'})}));
+  for(const key of Object.keys(names))if(choices[key])update(key);
 }
 function lastPredictionRecord(m,p){const key=m.id+'|'+MODEL_VERSION;const record={key,createdAt:new Date().toISOString(),fixtureDate:m.date,fixtureTime:m.time,home:m.home,away:m.away,p1:p.prob[0],pN:p.prob[1],p2:p.prob[2],model:MODEL_VERSION,source:'openfootball/football.json'};
   if(!archive.some(x=>x.key===key)){archive.push(record);try{localStorage.setItem('probalia-v2-journal',JSON.stringify(archive))}catch{}}$('savedCount').textContent=archive.length;
@@ -88,6 +105,7 @@ function choose(m){selected=m;renderListSelection();$('fixture-title').textConte
   }));
 }
 function renderListSelection(){document.querySelectorAll('[data-match]').forEach(b=>{const m=upcoming[Number(b.dataset.match)];b.classList.toggle('active',m?.id===selected?.id)})}
+function renderWeekendHeading(){const range=weekendRange(today()),games=weekendFixtures(upcoming,today());$('weekend-range').textContent=weekendLabel(range);$('weekend-count').textContent=`${games.length} ${games.length===1?'rencontre':'rencontres'} au calendrier`;return games}
 function showBacktest(){const data=all.filter(m=>m.played).sort(chronological);audit=auditModel(data);bt=audit;
   $('count').textContent=data.length.toLocaleString('fr-FR');$('nBack').textContent=audit.n;$('loss').textContent=audit.logloss?.toFixed(3)||'—';$('brier').textContent=audit.brier?.toFixed(3)||'—';$('baseLoss').textContent=audit.baseline?.toFixed(3)||'—';$('improvement').textContent=audit.improvement===null?'—':fmt(audit.improvement);$('savedCount').textContent=archive.length;
   $('rawLoss').textContent=audit.rawLogloss?.toFixed(3)||'—';$('adjustedLoss').textContent=audit.adjustedLogloss?.toFixed(3)||'—';
@@ -103,12 +121,12 @@ async function reload(){selected=null;dataReady=false;predictionCache.clear();$(
   catch(e){errors.push('Calendrier officiel indisponible : '+e.message);all=all.filter(m=>m.played||m.season!==currentSeasonTag())}
   all.sort(chronological);lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
   const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&fixtureReady&&!errors.length;
-  splitList();status('Validation chronologique et calibration en cours…');showBacktest();renderList();renderProfiles();renderCombos();mountBuilder(upcoming,all,dataReady,predictFor);
+  splitList();const weekend=renderWeekendHeading();status('Validation chronologique et calibration en cours…');showBacktest();renderList();renderProfiles();mountBuilder(upcoming,all,dataReady,predictFor);renderCombos();
   let oddsFeed=null;
   try{const res=await fetch('./data/odds.json',{cache:'no-store',signal:AbortSignal.timeout(10000)});if(res.ok)oddsFeed=await res.json()}
   catch{}
   mountAutomaticOdds(upcoming,all,oddsFeed,dataReady,predictFor,audit);
-  mountTopPicks(upcoming,all,oddsFeed,dataReady,predictFor,audit);
+  mountTopPicks(weekend,all,oddsFeed,dataReady,predictFor,audit);
   const age=Number.isFinite(fresh.ageDays)?fresh.ageDays+' jour(s)':'inconnu';
   status(`${dataReady?'✓ Résultats et calendrier contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} résultats vérifiés · ${fixtureCount} rencontres calendaires · ${fixtureFeed?.fetchedAt?'calendrier '+new Date(fixtureFeed.fetchedAt).toLocaleString('fr-FR'):'calendrier indisponible'}${warnings.length?' · '+warnings.join(' ; '):''}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
   $('refresh').disabled=false;
@@ -116,4 +134,7 @@ async function reload(){selected=null;dataReady=false;predictionCache.clear();$(
 $('refresh').addEventListener('click',reload);
 $('download').addEventListener('click',()=>{if(bt?.predictions.length)download('PROBALIA-backtest.csv','\ufeff'+csv(bt.predictions),'text/csv;charset=utf-8')});
 $('history').addEventListener('click',()=>download('PROBALIA-journal.json',JSON.stringify(archive,null,2),'application/json'));
+function revealAdvancedTarget(){const id=decodeURIComponent(location.hash.slice(1)),target=document.getElementById(id);if(target?.closest('#advanced-tools'))$('advanced-tools').open=true}
+document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{const id=link.getAttribute('href').slice(1),target=document.getElementById(id);if(target?.closest('#advanced-tools'))$('advanced-tools').open=true}));
+window.addEventListener('hashchange',revealAdvancedTarget);revealAdvancedTarget();
 reload();

@@ -1,20 +1,109 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1219"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="PROBALIA"><meta name="description" content="Statistiques et probabilités de football, calibration chronologique et simulations."><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-180.png"><link rel="icon" type="image/svg+xml" href="icons/icon.svg"><title>PROBALIA V4.1 — Top 3 à 85 %</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="risk.css"><link rel="stylesheet" href="combo.css"><link rel="stylesheet" href="builder.css"><link rel="stylesheet" href="auto.css"><link rel="stylesheet" href="calibration.css"><link rel="stylesheet" href="top.css"><link rel="stylesheet" href="pwa.css"></head><body>
-<aside class="sidebar"><div class="brand"><span class="brand-icon">↗</span><span>PROBALIA <small>LAB / V4.1</small></span></div><nav><a href="#dashboard">◈ Tableau de bord</a><a href="#top-three">◆ Top 3 ≥ 85 %</a><a href="#auto-radar">✦ Radar des cotes</a><a href="#auto-combos">⌁ Combinés automatiques</a><a href="#picks">◎ Profils de risque</a><a href="#combos">⌁ Combinés prudents</a><a href="#custom-combos">✎ Mes combinés + gains</a><a href="#best-odds">⌗ Comparateur manuel</a><a href="#matches">⚽ Prochains matchs</a><a href="#backtest">▤ Validation</a><a href="#method">◇ Méthodologie</a></nav><div class="sidefoot">Données ouvertes. Probabilités expérimentales.<br>Pas de promesse de rendement.</div></aside>
-<main id="dashboard"><header><div><div class="kicker">INTELLIGENCE FOOTBALL · LIGUE 1</div><h1>Les probabilités, <em>à l'épreuve des faits.</em></h1><p>Un moteur prédictif indépendant, entraîné sur les matchs passés et évalué chronologiquement.</p></div><div class="header-actions"><button id="install" class="secondary">⬇ Installer l'appli</button><button id="refresh" class="primary">↻ Actualiser les données</button></div></header>
-<section class="status"><span id="status-dot" class="dot"></span><span id="status">Chargement des données ouvertes…</span><span id="updated" class="updated"></span></section>
-<section class="kpis"><article><small>Matchs historiques chargés</small><b id="count">—</b><span>Saisons disponibles</span></article><article><small>Matchs à venir</small><b id="future">—</b><span>Calendrier disponible</span></article><article><small>Log loss hors échantillon</small><b id="loss">—</b><span>Plus bas = meilleur</span></article><article><small>Brier score hors échantillon</small><b id="brier">—</b><span>Plus bas = meilleur</span></article></section>
-<section class="panel" id="auto-radar"><div class="panel-head"><div><div class="kicker">PROBALIA V4 · COMPARAISON CONTRÔLÉE</div><h2>Les cotes, comparées automatiquement</h2></div><span class="tag">Cotes réelles · 1N2</span></div><div id="auto-status" class="auto-status">Chargement du radar de cotes…</div><div id="automatic-odds" class="auto-panel"><div class="empty">Analyse automatique en cours…</div></div></section>
-<section class="panel" id="top-three"><div class="panel-head"><div><div class="kicker">NOUVEAU · TOP 3 PERSONNALISÉ</div><h2>Trois sélections à 85 % minimum</h2></div><span class="tag">Dès 0,50 € / pari</span></div><p class="subtle">Les trois meilleurs profils de probabilité proches de 85 %, sur des matchs différents, avec comparaison à une cote réellement proposée. Une probabilité élevée ne garantit ni le résultat, ni le gain.</p><div id="top-picks"><div class="empty">Recherche des sélections à haute probabilité…</div></div></section>
-<section class="panel" id="auto-combos"><div class="panel-head"><div><div class="kicker">SCÉNARIOS DE GAIN</div><h2>Combinés calculés pour toi</h2></div><span class="tag">2 ou 3 sélections</span></div><div id="automatic-combos" class="auto-panel"><div class="empty">Calcul des opportunités…</div></div></section>
-<section class="panel" id="picks"><div class="panel-head"><div><div class="kicker">SÉLECTION PAR PROBABILITÉ</div><h2>Quel niveau de risque acceptes-tu ?</h2></div><span class="tag">Sans mise automatique</span></div><p class="subtle">PROBALIA sélectionne un marché correspondant à chaque profil parmi les prochaines rencontres analysables. « Prudent » signifie plus probable, jamais garanti. Une forte probabilité ne signifie pas nécessairement une bonne cote.</p><div class="risk-cards" id="risk-cards"><div class="empty">Recherche des marchés disponibles…</div></div><p class="small">Seuils : prudent ≥ 78 %, équilibré de 54 % à moins de 78 %, audacieux de 12 % à moins de 42 %. Ces seuils sont des catégories d'affichage, pas une calibration de confiance. Compare la cote proposée à la cote équitable estimée et vérifie les compositions avant de décider.</p></section>
-<section class="panel" id="combos"><div class="panel-head"><div><div class="kicker">SCÉNARIOS MULTI-MATCHS</div><h2>Combinés à probabilité élevée</h2></div><span class="tag">2 ou 3 sélections</span></div><p class="subtle">Sélections dans les 7 jours suivant le prochain match, avec maximum une sélection par rencontre et sans équipe répétée. Les probabilités sont multipliées en supposant l'indépendance des matchs : c'est une approximation, pas une probabilité calibrée ni un pari garanti.</p><div class="combo-cards" id="combo-cards"><div class="empty">Calcul des combinés…</div></div><p class="small">La probabilité du combiné est nécessairement inférieure à celle de chacune de ses sélections. Les cotes affichées sont des cotes équitables théoriques : saisis la cote réelle de ton bookmaker pour connaître l'écart estimé. En l'absence de données assez fiables, aucun combiné n'est proposé.</p></section>
-<section class="panel" id="custom-combos"><div class="panel-head"><div><div class="kicker">CRÉATEUR DE TICKETS</div><h2>Construis ton propre combiné</h2></div><span class="tag">2 à 5 matchs</span></div><div id="custom-builder" class="builder-panel"><div class="empty">Chargement du simulateur…</div></div></section>
-<section class="panel" id="best-odds"><div class="panel-head"><div><div class="kicker">COTES ET VALEUR THÉORIQUE</div><h2>Quelles cotes méritent d'être comparées ?</h2></div><span class="tag">Saisie manuelle</span></div><div id="quote-compare"><div class="empty">Chargement des marchés…</div></div></section>
-<section class="split" id="matches"><div class="panel"><div class="panel-head"><div><div class="kicker">PRÉVISIONS</div><h2>Rencontres à analyser</h2></div><span class="tag">90 minutes · 1N2</span></div><p class="subtle">Probabilités calculées à partir des derniers résultats connus de la source. Les équipes nouvellement promues ont une incertitude plus élevée.</p><div id="match-list" class="match-list"><div class="empty">En attente de données…</div></div></div>
-<div class="panel" id="detail"><div class="panel-head"><div><div class="kicker">DÉTAIL D'UN MATCH</div><h2 id="fixture-title">Sélectionne une rencontre</h2></div><span class="tag" id="fixture-time">—</span></div><div id="detail-content" class="empty">Clique sur un match pour voir le calcul, les scores possibles et les facteurs contextuels.</div></div></section>
-<section class="panel" id="backtest"><div class="panel-head"><div><div class="kicker">CONTRÔLE QUALITÉ V4</div><h2>Validation sur matchs jamais utilisés pour l'ajustement</h2></div><span class="tag">Séparation chronologique stricte</span></div><p class="subtle">Les prévisions historiques sont calculées avec les seuls matchs des jours précédents. La correction température/nuls est ajustée sur une période initiale, puis confrontée à la dernière période (~22 %) tenue à l'écart. Si elle n'améliore pas la log loss et le Brier hors échantillon, elle n'est pas appliquée aux prochains matchs.</p><div id="calibration-status" class="calibration-status" role="status">Audit en cours…</div><div class="stats"><div><small>Matchs du test indépendant</small><b id="nBack">—</b></div><div><small>Log loss brut</small><b id="rawLoss">—</b></div><div><small>Log loss ajusté candidat</small><b id="adjustedLoss">—</b></div><div><small>Référence naïve · Log loss</small><b id="baseLoss">—</b></div><div><small>Gain relatif / référence</small><b id="improvement">—</b></div><div><small>Prévisions archivées localement</small><b id="savedCount">—</b></div></div><div class="actions"><button id="download" class="secondary">↓ Exporter le test indépendant (CSV)</button><button id="history" class="secondary">↓ Exporter le journal local (JSON)</button></div><p class="small">Ces mesures évaluent la qualité probabiliste des prévisions 1N2, pas la rentabilité des paris. Sans archive historique des cotes disponibles avant chaque match, aucun ROI ni taux de réussite des paris à cote réelle ne peut être déduit.</p></section>
-<section class="panel" id="method"><div class="kicker">TRANSPARENCE</div><h2>Comment les chiffres sont produits</h2><div class="method-grid"><div><b>01 / Base de données</b><p>Résultats OpenFootball et Football-Data. Le calendrier des futurs matchs vient de l’API football-data.org et doit être synchronisé dans les 48 dernières heures. En cas de retard, les prédictions se bloquent.</p></div><div><b>02 / Modèle mathématique</b><p>Attaque et défense domicile/extérieur, pondération exponentielle des rencontres récentes, lissage bayésien, Elo dynamique, loi de Poisson et correction Dixon-Coles des petits scores.</p></div><div><b>03 / Ajustement contrôlé</b><p>Prévisions « walk-forward », correction température et fréquence des nuls entraînée sur le passé, test final tenu à l'écart, comparaison au modèle brut et à une référence de fréquences historiques.</p></div><div><b>04 / Contexte et marché</b><p>Heure locale, jours de repos et météo affichés. Consensus des probabilités sans marge à partir de trois bookmakers minimum. Les absences, compositions et l'heure de match ne changent pas le score calculé sans validation scientifique.</p></div></div></section>
-<footer>PROBALIA V4.1 · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les cotes sont des instantanés susceptibles de changer. Aucun modèle n'assure un gain ni la fiabilité des sélections.</footer></main>
-<nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#dashboard">⌂<span>Accueil</span></a><a href="#top-three">◆<span>Top 3</span></a><a href="#auto-radar">✦<span>Radar</span></a><a href="#custom-combos">✎<span>Mes combis</span></a></nav>
-<dialog id="install-help"><h2>Installer PROBALIA</h2><p id="install-instructions">Depuis Safari sur iPhone, ouvre ce site, puis touche Partager et « Sur l'écran d'accueil ».</p><form method="dialog"><button class="primary">Compris</button></form></dialog>
-<script type="module" src="app.js"></script><script type="module" src="pwa.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1016">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PROBALIA">
+  <meta name="description" content="Les probabilités et combinés du week-end, en un coup d'œil. Analyse expérimentale des matchs de football.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <title>PROBALIA V4.2 — Le week-end en un coup d'œil</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="risk.css">
+  <link rel="stylesheet" href="combo.css">
+  <link rel="stylesheet" href="builder.css">
+  <link rel="stylesheet" href="auto.css">
+  <link rel="stylesheet" href="calibration.css">
+  <link rel="stylesheet" href="top.css">
+  <link rel="stylesheet" href="pwa.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="sitebar">
+    <div class="sitebar-inner">
+      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.2</small></span></a>
+      <nav class="desktop-nav" aria-label="Navigation principale">
+        <a href="#weekend">Ce week-end</a>
+        <a href="#top-three">Top 3</a>
+        <a href="#combos">Combinés</a>
+        <a href="#custom-combos">Mon ticket</a>
+      </nav>
+      <span class="nav-label"><span class="live-dot"></span> Analyse football</span>
+    </div>
+  </div>
+
+  <main id="dashboard">
+    <header class="hero">
+      <div class="hero-copy">
+        <div class="kicker">LE RADAR DU WEEK-END <span class="hero-kicker-dot">·</span> LIGUE 1</div>
+        <h1>Les bons matchs.<br><em>Les bonnes questions.</em></h1>
+        <p>Les trois scénarios les plus probables et leurs combinés, sans perdre de vue le risque réel.</p>
+        <div class="hero-meta">
+          <span class="range-pill" id="weekend-range">Recherche des rencontres du week-end…</span>
+          <span id="weekend-count">Calendrier en cours de chargement</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="refresh" class="primary" type="button">↻ Actualiser</button>
+        <button id="install" class="secondary" type="button">⬇ Installer</button>
+      </div>
+    </header>
+
+    <section class="status" aria-live="polite"><span id="status-dot" class="dot"></span><span id="status">Chargement des données ouvertes…</span><span id="updated" class="updated"></span></section>
+
+    <div class="section-intro" id="weekend">
+      <div><span class="eyebrow">LE TABLEAU DE BORD</span><h2>Ton week-end, en un coup d'œil.</h2></div>
+      <p>Les pourcentages sont estimés par notre modèle, jamais garantis. Les cotes réelles restent décisives.</p>
+    </div>
+
+    <div class="weekend-grid">
+      <section class="panel spotlight" id="top-three">
+        <div class="panel-head"><div><div class="kicker">01 / SÉLECTIONS À FORTE PROBABILITÉ</div><h2>Top 3 du week-end</h2></div><span class="tag">≥ 85 % modèle</span></div>
+        <p class="panel-deck">Trois scénarios à 85 % minimum sur des rencontres distinctes, privilégiant l'équilibre probabilité / cote théorique. À vérifier avant chaque match.</p>
+        <div id="top-picks"><div class="empty">Recherche des sélections du week-end…</div></div>
+      </section>
+
+      <section class="panel ticket-spotlight" id="combos">
+        <div class="panel-head"><div><div class="kicker">02 / SCÉNARIOS MULTI-MATCHS</div><h2>Combinés prudents</h2></div><span class="tag">Dès 0,50 €</span></div>
+        <p class="panel-deck">Double et triple, avec leur vraie probabilité combinée estimée. Un combiné est toujours moins probable que chaque sélection seule.</p>
+        <div id="combo-cards" class="combo-cards"><div class="empty">Préparation des combinés…</div></div>
+        <p class="small ticket-note">Hypothèse d'indépendance entre matchs. Cotes théoriques, non disponibles chez un bookmaker tant qu'une offre n'est pas saisie.</p>
+      </section>
+    </div>
+
+    <div class="insight-bar"><div><span class="insight-icon">i</span><span><b>Un pari à 85 % n'est pas un pari garanti.</b> Sans cote réellement proposée, aucun gain attendu n'est établi.</span></div><a href="#backtest">Voir les preuves du modèle →</a></div>
+
+    <details id="advanced-tools" class="advanced-tools">
+      <summary><span class="advanced-glyph">＋</span><span><b>Explorer les outils avancés</b><small>Mon ticket, cotes, calendrier, analyses et validation statistique</small></span><span class="advanced-arrow">⌄</span></summary>
+      <div class="advanced-content">
+        <section class="panel" id="custom-combos"><div class="panel-head"><div><div class="kicker">MON TICKET</div><h2>Créer mon propre combiné</h2></div><span class="tag">2 à 5 matchs</span></div><div id="custom-builder" class="builder-panel"><div class="empty">Chargement du simulateur…</div></div></section>
+
+        <section class="panel" id="auto-radar"><div class="panel-head"><div><div class="kicker">MARCHÉ DES COTES</div><h2>Comparaison automatique 1N2</h2></div><span class="tag">Cotes réelles · 1N2</span></div><div id="auto-status" class="auto-status">Chargement des cotes…</div><div id="automatic-odds" class="auto-panel"><div class="empty">Analyse en cours…</div></div></section>
+
+        <section class="panel" id="auto-combos"><div class="panel-head"><div><div class="kicker">SIMULATIONS</div><h2>Autres combinés automatiques</h2></div><span class="tag">Sous conditions</span></div><div id="automatic-combos" class="auto-panel"><div class="empty">Recherche d'opportunités…</div></div></section>
+
+        <section class="panel" id="picks"><div class="panel-head"><div><div class="kicker">PROFILS DE RISQUE</div><h2>Prudent, équilibré, audacieux</h2></div><span class="tag">Sans mise automatique</span></div><p class="subtle">« Prudent » signifie plus probable, jamais garanti. Une forte probabilité ne signifie pas forcément une cote intéressante.</p><div id="risk-cards" class="risk-cards"><div class="empty">Chargement des marchés…</div></div><p class="small">Seuils : prudent ≥ 78 %, équilibré entre 54 % et 78 %, audacieux entre 12 % et 42 %. Ce ne sont pas des taux de réussite démontrés.</p></section>
+
+        <section class="panel" id="best-odds"><div class="panel-head"><div><div class="kicker">SIMULATION</div><h2>Comparer les cotes proposées</h2></div><span class="tag">Saisie manuelle</span></div><div id="quote-compare"><div class="empty">Chargement des marchés…</div></div></section>
+
+        <section class="split" id="matches"><div class="panel"><div class="panel-head"><div><div class="kicker">CALENDRIER</div><h2>Prochains matchs</h2></div><span class="tag">1N2</span></div><p class="subtle">Probabilités estimées d'après les résultats connus.</p><div id="match-list" class="match-list"><div class="empty">En attente de données…</div></div></div><div class="panel" id="detail"><div class="panel-head"><div><div class="kicker">ANALYSE DÉTAILLÉE</div><h2 id="fixture-title">Sélectionne une rencontre</h2></div><span class="tag" id="fixture-time">—</span></div><div id="detail-content" class="empty">Clique sur un match pour voir les calculs et le contexte.</div></div></section>
+
+        <section class="panel" id="backtest"><div class="panel-head"><div><div class="kicker">TRANSPARENCE</div><h2>Validation sur des matchs tenus à l'écart</h2></div><span class="tag">Test chronologique</span></div><p class="subtle">Les prédictions passées n'utilisent que les résultats antérieurs au match. La correction n'est conservée que si elle améliore les scores de probabilité sur des rencontres non utilisées pour son ajustement.</p><div id="calibration-status" class="calibration-status" role="status">Audit en cours…</div><div class="stats"><div><small>Matchs du test indépendant</small><b id="nBack">—</b></div><div><small>Log loss brut</small><b id="rawLoss">—</b></div><div><small>Log loss ajusté candidat</small><b id="adjustedLoss">—</b></div><div><small>Référence naïve · Log loss</small><b id="baseLoss">—</b></div><div><small>Gain relatif à la référence</small><b id="improvement">—</b></div><div><small>Prévisions archivées sur cet appareil</small><b id="savedCount">—</b></div></div><div class="actions"><button id="download" class="secondary" type="button">↓ Test indépendant (CSV)</button><button id="history" class="secondary" type="button">↓ Journal local (JSON)</button></div><p class="small">Ces scores mesurent la qualité de prévisions 1N2, pas la rentabilité de paris à cote réelle. Aucun ROI historique ne peut être affirmé sans cotes archivées avant chaque match.</p></section>
+
+        <section class="panel" id="method"><div class="kicker">COMMENT ÇA MARCHE</div><h2>Une méthode transparente</h2><div class="method-grid"><div><b>01 / Données</b><p>Résultats OpenFootball et Football-Data ; calendrier actualisé avec football-data.org. Les prévisions se suspendent si les données deviennent trop anciennes.</p></div><div><b>02 / Modèle</b><p>Attaque/défense domicile-extérieur, forme récente, Elo, Poisson et correction Dixon-Coles.</p></div><div><b>03 / Validation</b><p>Tests chronologiques séparés. Une correction qui ne progresse pas hors échantillon n'est pas activée.</p></div><div><b>04 / Limites</b><p>Heure, repos et météo sont descriptifs ; absences et compositions ne modifient pas les probabilités sans validation.</p></div></div></section>
+
+        <section class="kpis" aria-label="Indicateurs de qualité"><article><small>Matchs historiques</small><b id="count">—</b><span>Base de données</span></article><article><small>Matchs à venir</small><b id="future">—</b><span>Calendrier vérifié</span></article><article><small>Log loss (test)</small><b id="loss">—</b><span>Plus bas = meilleur</span></article><article><small>Brier score (test)</small><b id="brier">—</b><span>Plus bas = meilleur</span></article></section>
+      </div>
+    </details>
+
+    <footer>PROBALIA V4.2 · Modèle expérimental, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
+  </main>
+  <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend">⌂<span>Accueil</span></a><a href="#top-three">◆<span>Top 3</span></a><a href="#combos">⌁<span>Combinés</span></a><a href="#custom-combos">✎<span>Mon ticket</span></a></nav>
+  <dialog id="install-help"><h2>Installer PROBALIA</h2><p id="install-instructions">Depuis Safari sur iPhone, ouvre ce site puis touche Partager et « Sur l'écran d'accueil ».</p><form method="dialog"><button class="primary">Compris</button></form></dialog>
+  <script type="module" src="app.js"></script><script type="module" src="pwa.js"></script>
+</body>
+</html>
