@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {cleanSeason,chronological,predict,backtest,csv,chooseProfilePicks,PROFILE_RULES,buildSafeCombos} from './model.js';
+const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
+for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
+sample.sort(chronological);
+const p=predict('Lens','Paris FC','2025-01-01',sample);
+assert.ok(p,'predict should return a model');assert.ok(Math.abs(p.prob.reduce((a,b)=>a+b,0)-1)<1e-8,'probabilities sum to one');
+assert.ok(p.scores[0].p>=p.scores[1].p,'score ordering');
+assert.ok(p.lambdaH>0&&p.lambdaA>0,'expected goals positive');
+assert.ok(Math.abs(p.markets['1X']-p.prob[0]-p.prob[1])<1e-10,'double chance is union of outcomes');
+assert.ok(p.markets.over05>=p.markets.over15&&p.markets.over15>=p.markets.over25,'goals market ordered');
+const picks=chooseProfilePicks([{match:sample[0],prediction:p}]);
+for(const [k,pick] of Object.entries(picks)){if(pick){assert.ok(pick.p>=PROFILE_RULES[k].min&&pick.p<PROFILE_RULES[k].max);assert.ok(Math.abs(pick.fairOdds-1/pick.p)<1e-8)}}
+const comboPred={...p,homeMatches:20,awayMatches:20,markets:{...p.markets,'1X':.91,'X2':.85,under45:.90,homeScore:.80,awayScore:.78,over15:.77}};
+const comboEntries=[['Lens','Paris FC'],['Lille','Lyon'],['Brest','Nice'],['Angers','Lorient']].map(([home,away],i)=>({match:{id:String(i),home,away,date:'2026-11-01'},prediction:comboPred}));
+const combos=buildSafeCombos(comboEntries);
+assert.ok(combos.double&&combos.triple);
+assert.equal(combos.double.legs.length,2);
+assert.ok(Math.abs(combos.double.p-combos.double.legs.reduce((v,l)=>v*l.p,1))<1e-12);
+assert.ok(combos.triple.p<combos.double.p,'more legs reduce joint probability');
+assert.equal(new Set(combos.triple.legs.flatMap(l=>[l.match.home,l.match.away])).size,6,'teams cannot repeat in a combination');
+const b=backtest(sample,30);assert.ok(b.n>0);assert.ok(Number.isFinite(b.logloss));assert.ok(Number.isFinite(b.brier));
+const changed=sample.slice();changed.push({...sample[0],id:'future',date:'2025-06-01',hg:20,ag:0});
+const p2=predict('Lens','Paris FC','2025-01-01',changed);assert.deepEqual(p.prob,p2.prob,'future result must not leak into prediction');
+assert.equal(cleanSeason({matches:[{date:'2026-11-01',team1:'A',team2:'B',score:[0,0]},{date:'2026-10-01',team1:'A',team2:'B',score:[0,0]}]},'26','2026-10-24').filter(m=>m.played).length,1,'past 0-0 draws and future placeholders disambiguated');
+assert.ok(csv([{name:'=HYPERLINK()',p:.2}]).includes("'=HYPERLINK"),'CSV injection defended');
+console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');

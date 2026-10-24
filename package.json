@@ -1,0 +1,1 @@
+{"name":"probalia-v2","private":true,"version":"2.3.0","type":"module","scripts":{"test":"node test.mjs"}}
