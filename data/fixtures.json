@@ -1,8 +1,9 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-10-24T12:56:29.734Z",
+  "fetchedAt": "2026-10-24T16:01:59.037Z",
   "competition": "FL1",
+  "season": 2026,
   "matches": [
     {
       "id": 559715,
