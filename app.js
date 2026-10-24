@@ -1,5 +1,6 @@
 import {cleanSeason,chronological,predict,backtest,csv,percent,MODEL_VERSION,chooseProfilePicks,buildSafeCombos} from './model.js';
-import {freshnessStatus,mergeVerifiedResults} from './freshness.js';
+import {freshnessStatus,mergeVerifiedResults,applyOfficialFixtures} from './freshness.js';
+import {mountBuilder} from './builder.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=['2022-23','2023-24','2024-25','2025-26','2026-27'];
 const BASE='https://raw.githubusercontent.com/openfootball/football.json/master/';
@@ -80,11 +81,14 @@ async function reload(){selected=null;dataReady=false;$('refresh').disabled=true
   let feed=null,merged=0;
   try{const res=await fetch('./data/results.json',{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!res.ok)throw Error('HTTP '+res.status);feed=await res.json();const mergedResults=mergeVerifiedResults(all,feed);all=mergedResults.matches;merged=mergedResults.merged}
   catch(e){errors.push('Synchronisation quotidienne indisponible : '+e.message)}
+  let fixtureFeed=null,fixtureCount=0,fixtureReady=false;
+  try{const res=await fetch('./data/fixtures.json',{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!res.ok)throw Error('HTTP '+res.status);fixtureFeed=await res.json();const checked=applyOfficialFixtures(all,fixtureFeed);all=checked.matches;fixtureCount=checked.upcoming;fixtureReady=checked.ok}
+  catch(e){errors.push('Calendrier officiel indisponible : '+e.message);all=all.filter(m=>m.played||m.season!=='2026-27')}
   all.sort(chronological);lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
-  const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&!errors.length;
-  splitList();showBacktest();renderList();renderProfiles();renderCombos();
+  const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&fixtureReady&&!errors.length;
+  splitList();showBacktest();renderList();renderProfiles();renderCombos();mountBuilder(upcoming,all,dataReady);
   const age=Number.isFinite(fresh.ageDays)?fresh.ageDays+' jour(s)':'inconnu';
-  status(`${dataReady?'✓ Résultats contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} matchs recoupés · source ${feed?.fetchedAt?'synchronisée '+new Date(feed.fetchedAt).toLocaleString('fr-FR'):'indisponible'}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
+  status(`${dataReady?'✓ Résultats et calendrier contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} résultats recoupés · ${fixtureCount} rencontres calendaires · ${fixtureFeed?.fetchedAt?'calendrier '+new Date(fixtureFeed.fetchedAt).toLocaleString('fr-FR'):'calendrier indisponible'}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
   $('refresh').disabled=false;
 }
 $('refresh').addEventListener('click',reload);

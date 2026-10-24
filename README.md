@@ -1,16 +1,17 @@
-# PROBALIA V2 — application web installable (PWA)
+# PROBALIA V2.2 — application web installable (PWA)
 
-Application statique gratuite, sans clé API. Le calendrier indicatif et l'historique viennent d'OpenFootball. Une tâche GitHub Actions télécharge les résultats de Ligue 1 de [Football-Data](https://www.football-data.co.uk/francem.php) trois fois par jour et crée `data/results.json`, consommé par le site. Attention : la mise à jour du calendrier et des horaires ne dispose pas encore d'une source officielle vérifiée.
+Application statique gratuite. L'historique vient d'OpenFootball, les scores récents de Football-Data.co.uk, et le calendrier/horaire officiel de l'API football-data.org. GitHub Actions synchronise les deux flux dans `data/results.json` et `data/fixtures.json` trois fois par jour. **La clé football-data.org est stockée uniquement dans les GitHub Actions Secrets**, jamais dans le HTML ou JavaScript public.
 
 ## Activer la synchronisation automatique sur GitHub Pages
 
-1. Publier **tous** les fichiers de cette archive à la racine de `main`, y compris le dossier caché `.github/workflows` et le dossier `scripts` (important).
-2. Dans le dépôt GitHub, ouvrir **Actions** → **PROBALIA - Synchroniser les résultats** → **Run workflow** → **Run workflow**. Cela génère automatiquement `data/results.json` et le publie sur `main` ; attendre la fin du job puis la publication Pages.
-3. Dans **Settings → Actions → General → Workflow permissions**, cocher **Read and write permissions** si la tâche ne peut pas pousser le fichier de résultats.
-4. Les synchronisations suivantes sont programmées à 06h18, 12h18 et 19h18 UTC, sous réserve de la disponibilité des GitHub Actions (les jobs programmés peuvent être retardés ou désactivés après inactivité prolongée).
-5. Si le fichier `data/results.json` manque, si la synchro dépasse 48 heures ou si le dernier résultat connu dépasse 10 jours, les cartes de pronostics et combinés se désactivent. Le calendrier reste visible comme information indicative.
+1. Publier **tous** les fichiers de cette archive à la racine de `main`, y compris le dossier caché `.github/workflows` et le dossier `scripts` (important). Si la mise à jour de GitHub a été faite via le navigateur et n'a pas importé le dossier caché, modifier manuellement `.github/workflows/sync-results.yml` avec le contenu fourni dans cette archive.
+2. Dans **Settings → Secrets and variables → Actions**, créer un secret de dépôt nommé exactement `FOOTBALL_DATA_TOKEN` contenant la clé API gratuite [football-data.org](https://www.football-data.org/client/register). Ne jamais coller la clé dans le dépôt public.
+3. Dans le dépôt GitHub, ouvrir **Actions** → **PROBALIA - Synchroniser les résultats** → **Run workflow** → **Run workflow**. Cela génère `data/results.json` ET `data/fixtures.json` puis les publie sur `main` ; attendre le job et le déploiement Pages.
+4. Dans **Settings → Actions → General → Workflow permissions**, cocher **Read and write permissions** si la tâche ne peut pas pousser les fichiers de données.
+5. Les synchronisations suivantes sont programmées à 06h18, 12h18 et 19h18 UTC, sous réserve de la disponibilité des GitHub Actions (les jobs programmés peuvent être retardés ou désactivés après inactivité prolongée).
+6. Si un des deux flux manque ou date de plus de 48 heures, ou si le dernier score déclaré dépasse 10 jours, les pronostics, comparateurs et simulateurs sont suspendus.
 
-Le CSV Football-Data fournit les scores terminés, **pas** un calendrier complet à venir. La fraîcheur du résultat n'implique donc pas la validation des horaires de matchs. Vérifier les rencontres auprès de la LFP avant usage.
+Le CSV Football-Data fournit uniquement les scores terminés ; le calendrier actuel vient de l'API football-data.org. Seuls les matchs `TIMED` (heure annoncée) sont proposés dans les analyses, avec conversion Europe/Paris. Les matchs simplement `SCHEDULED` (date provisoire), en cours ou reportés sont exclus des scénarios : vérifier malgré tout auprès de la LFP avant usage.
 
 ## Installer comme application sur un iPhone
 
@@ -45,12 +46,14 @@ Un double-clic sur `index.html` peut fonctionner, mais un petit serveur local es
 - Cotes 1N2 saisissables manuellement pour comparer l'espérance théorique (EV), sans recommandation automatique.
 - Onglet **Profils de risque** : un marché à forte probabilité (Prudent), un marché intermédiaire (Équilibré) et un marché moins probable (Audacieux), sélectionnés parmi les rencontres à venir. Ce classement n'est ni un indice de rentabilité ni une garantie de succès ; les seuils sont déclarés dans le moteur et restent à valider sur l'historique.
 - Onglet **Combinés prudents** : propositions à deux ou trois rencontres dans les 7 jours après la première rencontre à venir, avec une seule sélection par match, sans répétition d'équipe et une estimation de probabilité conjointe. Le produit des probabilités suppose l'indépendance entre matchs, approximation pouvant sous-estimer les corrélations. La cote combinée du bookmaker est saisie manuellement pour calculer l'EV théorique ; aucun ticket n'est placé automatiquement.
+- **Mes combinés** : constructeur de 2 à 5 rencontres avec choix du marché et saisie des cotes bookmaker, simulation de mise, cote cumulée, retour brut, gain net conditionnel et probabilité estimée. Aucune mise n'est effectuée.
+- **Comparateur de cotes** : propositions de marchés à forte probabilité ; saisie des véritables cotes proposées et classement des écarts de rendement *théorique*. Aucune cote de bookmaker n'est collectée automatiquement.
 
 ## Limites scientifiques et opérationnelles
 
 Ce n'est **pas** un modèle entraîné et calibré sur tous les paramètres possibles. Les hyperparamètres actuels sont préfixés et doivent être validés sur des périodes de test indépendantes. Le rho Dixon-Coles n'est pas optimisé ; la calibration des probabilités (fiabilité de p=60 %, etc.) reste à implémenter. La comparaison au modèle de référence aide au diagnostic, mais une bonne log loss ne garantit pas une EV positive face au marché.
 
-Le flux OpenFootball peut être actualisé avec retard et est maintenu par la communauté. Aucun API de blessures, de composition, de xG ou de cotes bookmaker n'est branché. Les effets météo, déplacement, horaires, calendrier européen, arbitres et enjeu ne sont pas ajustés arbitrairement.
+Les horaires de football-data.org sont des données externes susceptibles de changer et doivent être contrôlés avant le match. Aucun API de blessures, de composition, de xG ou de **cotes bookmaker** n'est branché. Les effets météo, déplacement, calendrier européen, arbitres et enjeu ne sont pas ajustés arbitrairement.
 
 Les données de la seconde source sont synchronisées par GitHub Actions dans le dépôt, avec historique Git. L'historique des prévisions à venir reste stocké **sur l'appareil** ; il n'est pas encore synchronisé entre appareils.
 

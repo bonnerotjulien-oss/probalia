@@ -17,10 +17,11 @@ const NAME_ALIASES = {
   marseille: 'olympique de marseille', lyon: 'olympique lyonnais', lyonnais: 'olympique lyonnais',
   lille: 'lille osc', lens: 'rc lens', rennes: 'stade rennais', nice: 'ogc nice',
   monaco: 'as monaco', toulouse: 'toulouse fc', nantes: 'fc nantes',
-  strasbourg: 'rc strasbourg', brest: 'stade brestois', auxerre: 'aj auxerre',
+  strasbourg: 'rc strasbourg', 'rc strasbourg alsace': 'rc strasbourg', brest: 'stade brestois', 'stade brestois 29': 'stade brestois', auxerre: 'aj auxerre',
   'le havre': 'le havre ac', lorient: 'fc lorient', angers: 'angers sco',
   metz: 'fc metz', montpellier: 'montpellier hsc', reims: 'stade de reims',
   'paris fc': 'paris fc', 'saint etienne': 'as saint etienne',
+  'stade rennais fc': 'stade rennais', 'as monaco fc': 'as monaco',
 };
 export function teamKey(name) {
   const basic = String(name).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -44,4 +45,25 @@ export function mergeVerifiedResults(matches, feed) {
     return {...m, date:r.date, hg:r.hg, ag:r.ag, played:true, resultSource:'football-data.co.uk'};
   });
   return {matches:updated, merged};
+}
+
+export function applyOfficialFixtures(matches, feed, now = new Date()) {
+  if (!feed || !Array.isArray(feed.matches) || !Number.isFinite(Date.parse(feed.fetchedAt))) return {matches:matches.filter(m=>m.played||m.season!=='2026-27'),upcoming:0,ok:false};
+  const hours=(now-new Date(feed.fetchedAt))/3600000;
+  if (hours<0 || hours>MAX_SYNC_AGE_HOURS) return {matches:matches.filter(m=>m.played||m.season!=='2026-27'),upcoming:0,ok:false};
+  const existingTeams=new Map();
+  for(const m of matches) for(const name of [m.home,m.away]) existingTeams.set(teamKey(name),name);
+  const scheduled=[];
+  for(const m of feed.matches) {
+    const millis=Date.parse(m.utcDate);
+    // SCHEDULED may be a placeholder without a confirmed kick-off time.
+    if(!Number.isFinite(millis)||millis<=now.getTime()||m.status!=='TIMED'||!m.home||!m.away)continue;
+    const home=existingTeams.get(teamKey(m.home)),away=existingTeams.get(teamKey(m.away));
+    if(!home||!away||home===away)continue; // Never invent a team mapping.
+    const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(millis));
+    const time=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(millis));
+    scheduled.push({id:`official:${m.id}`,season:'2026-27',date,time,home,away,played:false,hg:null,ag:null,fixtureSource:'football-data.org',fixtureStatus:m.status});
+  }
+  const unique=new Map(scheduled.map(m=>[m.id,m]));
+  return {matches:[...matches.filter(m=>m.played||m.season!=='2026-27'),...unique.values()],upcoming:unique.size,ok:unique.size>0};
 }

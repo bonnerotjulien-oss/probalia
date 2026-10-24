@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import {cleanSeason,chronological,predict,backtest,csv,chooseProfilePicks,PROFILE_RULES,buildSafeCombos} from './model.js';
-import {freshnessStatus,mergeVerifiedResults,teamKey} from './freshness.js';
+import {freshnessStatus,mergeVerifiedResults,teamKey,applyOfficialFixtures} from './freshness.js';
 import {parseResults} from './scripts/sync-results.mjs';
+import {simulateTicket} from './builder.js';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
 sample.sort(chronological);
@@ -35,4 +36,14 @@ assert.equal(freshnessStatus(merged.matches,new Date('2026-10-24T11:00:00Z'),fee
 assert.equal(freshnessStatus(merged.matches,new Date('2026-11-12T11:00:00Z'),feed.fetchedAt).ok,false);
 assert.equal(freshnessStatus(merged.matches,new Date('2026-10-24T11:00:00Z'),null).ok,false);
 assert.deepEqual(parseResults('Date,HomeTeam,AwayTeam,FTHG,FTAG\n23/10/2026,Lyon,Paris SG,2,1\n24/10/2026,Lens,Lille,,\n','2026-27'),feed.results);
+const fixtureFeed={fetchedAt:'2026-10-24T08:00:00Z',matches:[
+  {id:100,status:'TIMED',utcDate:'2026-10-25T19:45:00Z',home:'RC Strasbourg Alsace',away:'Olympique Lyonnais'},
+  {id:101,status:'IN_PLAY',utcDate:'2026-10-24T10:00:00Z',home:'RC Strasbourg Alsace',away:'Olympique Lyonnais'},
+]};
+const fixtureList=applyOfficialFixtures([{id:'old',season:'2026-27',date:'2026-11-02',home:'RC Strasbourg Alsace',away:'Olympique Lyonnais',played:false},{id:'historical',season:'2026-27',date:'2026-10-10',home:'RC Strasbourg Alsace',away:'Olympique Lyonnais',played:true,hg:1,ag:0}],fixtureFeed,new Date('2026-10-24T12:00:00Z'));
+assert.equal(fixtureList.ok,true);assert.equal(fixtureList.upcoming,1);assert.equal(fixtureList.matches.length,2);
+assert.equal(fixtureList.matches.find(m=>!m.played).time,'20:45');
+assert.equal(applyOfficialFixtures(fixtureList.matches,fixtureFeed,new Date('2026-10-28T12:00:00Z')).ok,false,'stale fixture feed must fail closed');
+const ticket=simulateTicket([{p:.70,odds:1.80},{p:.80,odds:1.60}],10);
+assert.ok(ticket);assert.ok(Math.abs(ticket.gross-28.8)<1e-10);assert.ok(Math.abs(ticket.probability-.56)<1e-12);assert.equal(simulateTicket([{p:.9,odds:1.2}],10),null);
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');
