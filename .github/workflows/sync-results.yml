@@ -25,10 +25,15 @@ jobs:
       - name: Actualiser les resultats de Ligue 1
         run: node scripts/sync-results.mjs
 
+      - name: Actualiser le calendrier et les horaires
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+        run: node scripts/sync-fixtures.mjs
+
       - name: Publier les nouvelles donnees
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/results.json
+          git add data/results.json data/fixtures.json
           git diff --cached --quiet || git commit -m "data: synchronisation Ligue 1"
           git push
