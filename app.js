@@ -6,6 +6,7 @@ import {mountTopPicks} from './top.js';
 import {auditModel,calibratedPrediction} from './calibration.js';
 import {rollingSeasons,currentSeasonTag} from './season.js';
 import {weekendFixtures,weekendRange,weekendLabel} from './weekend.js';
+import {mountCalendar} from './calendar.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=rollingSeasons();
 const BASE='https://raw.githubusercontent.com/openfootball/football.json/master/';
@@ -122,6 +123,7 @@ async function reload(){selected=null;dataReady=false;predictionCache.clear();$(
   all.sort(chronological);lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
   const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&fixtureReady&&!errors.length;
   splitList();const weekend=renderWeekendHeading();status('Validation chronologique et calibration en cours…');showBacktest();renderList();renderProfiles();mountBuilder(upcoming,all,dataReady,predictFor);renderCombos();
+  mountCalendar(upcoming,today(),dataReady,predictForMatch,match=>{$('advanced-tools').open=true;choose(match);$('detail').scrollIntoView({behavior:'smooth',block:'start'})});
   let oddsFeed=null;
   try{const res=await fetch('./data/odds.json',{cache:'no-store',signal:AbortSignal.timeout(10000)});if(res.ok)oddsFeed=await res.json()}
   catch{}

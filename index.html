@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-  <title>PROBALIA V4.2 — Le week-end en un coup d'œil</title>
+  <title>PROBALIA V4.3 — Calendrier interactif du week-end</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="risk.css">
   <link rel="stylesheet" href="combo.css">
@@ -21,13 +21,15 @@
   <link rel="stylesheet" href="top.css">
   <link rel="stylesheet" href="pwa.css">
   <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="calendar.css">
 </head>
 <body>
   <div class="sitebar">
     <div class="sitebar-inner">
-      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.2</small></span></a>
+      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.3</small></span></a>
       <nav class="desktop-nav" aria-label="Navigation principale">
         <a href="#weekend">Ce week-end</a>
+        <a href="#weekend-calendar">Calendrier</a>
         <a href="#top-three">Top 3</a>
         <a href="#combos">Combinés</a>
         <a href="#custom-combos">Mon ticket</a>
@@ -59,6 +61,13 @@
       <div><span class="eyebrow">LE TABLEAU DE BORD</span><h2>Ton week-end, en un coup d'œil.</h2></div>
       <p>Les pourcentages sont estimés par notre modèle, jamais garantis. Les cotes réelles restent décisives.</p>
     </div>
+
+    <section id="weekend-calendar" aria-label="Calendrier interactif du week-end">
+      <div class="calendar-head"><div><span class="eyebrow">LES RENCONTRES · VENDREDI → LUNDI</span><h2>Le calendrier du week-end</h2><p>Choisis un jour, puis un match pour consulter ses probabilités et les scores les plus vraisemblables.</p></div><span class="tag">Ligue 1</span></div>
+      <div id="calendar-days" class="calendar-days" role="tablist" aria-label="Jours du week-end"></div>
+      <div id="calendar-matches" class="calendar-matches" aria-live="polite"><div class="empty">Chargement des rencontres…</div></div>
+      <div id="calendar-preview" class="calendar-preview" hidden></div>
+    </section>
 
     <div class="weekend-grid">
       <section class="panel spotlight" id="top-three">
@@ -100,9 +109,9 @@
       </div>
     </details>
 
-    <footer>PROBALIA V4.2 · Modèle expérimental, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
+    <footer>PROBALIA V4.3 · Modèle expérimental, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
   </main>
-  <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend">⌂<span>Accueil</span></a><a href="#top-three">◆<span>Top 3</span></a><a href="#combos">⌁<span>Combinés</span></a><a href="#custom-combos">✎<span>Mon ticket</span></a></nav>
+  <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend-calendar">▦<span>Calendrier</span></a><a href="#top-three">◆<span>Top 3</span></a><a href="#combos">⌁<span>Combinés</span></a><a href="#custom-combos">✎<span>Mon ticket</span></a></nav>
   <dialog id="install-help"><h2>Installer PROBALIA</h2><p id="install-instructions">Depuis Safari sur iPhone, ouvre ce site puis touche Partager et « Sur l'écran d'accueil ».</p><form method="dialog"><button class="primary">Compris</button></form></dialog>
   <script type="module" src="app.js"></script><script type="module" src="pwa.js"></script>
 </body>

@@ -1,4 +1,12 @@
-# PROBALIA V4.2 — le week-end en un clin d'œil (PWA)
+# PROBALIA V4.3 — calendrier interactif du week-end (PWA)
+
+## Nouveauté V4.3 : calendrier interactif
+
+- Calendrier du vendredi au lundi sur la page d'accueil, avec onglets par jour.
+- Un clic sur une rencontre affiche les probabilités 1/N/2, le score exact modal, trois autres scores, +2,5 buts et les deux équipes marquent.
+- Accès à la fiche statistique complète, accessible dans les outils avancés.
+- Si les sources sportives sont périmées, la consultation du calendrier reste possible mais les probabilités sont suspendues.
+- Calculs réutilisés du moteur existant : aucun score ou taux inventé par le calendrier.
 
 ## Nouveauté V4.2 : accueil épuré
 

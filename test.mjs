@@ -9,6 +9,7 @@ import {adjust1N2,fitTemperature,auditModel,calibratedPrediction} from './calibr
 import {seasonStart,currentSeasonTag,rollingSeasons} from './season.js';
 import {selectTopPicks,simulateSingle} from './top.js';
 import {weekendRange,weekendFixtures,weekendLabel} from './weekend.js';
+import {calendarDays} from './calendar.js';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
 sample.sort(chronological);
@@ -110,4 +111,9 @@ const weekendGames=[{date:'2026-10-26',time:'20:30'},{date:'2026-10-31',time:'15
 assert.deepEqual(weekendFixtures(weekendGames,'2026-10-24').map(x=>x.date),['2026-10-24','2026-10-26']);
 assert.deepEqual(weekendFixtures(weekendGames,'2026-10-27').map(x=>x.date),['2026-10-31']);
 assert.ok(weekendLabel(weekendRange('2026-10-24')).includes('octobre'));
+const groupedCalendar=calendarDays(weekendGames,'2026-10-24');
+assert.deepEqual(groupedCalendar.map(day=>day.date),['2026-10-23','2026-10-24','2026-10-25','2026-10-26']);
+assert.deepEqual(groupedCalendar.map(day=>day.matches.length),[0,1,0,1],'calendar places fixtures on correct weekday');
+assert.equal(calendarDays([], '2026-10-27').length,4,'calendar always offers four tabs for the next weekend');
+assert.deepEqual(calendarDays([], 'invalid'),[],'invalid reference never renders dates');
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');
