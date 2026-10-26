@@ -1,4 +1,12 @@
-# PROBALIA V4.3 — calendrier interactif du week-end (PWA)
+# PROBALIA V4.3.1 — interface chaleureuse et épurée (PWA)
+
+## Nouveauté V4.3.1 : interface plus intuitive
+
+- Palette ivoire, vert sauge et touches terracotta, inspirée des interfaces iOS claires.
+- Parcours de navigation en trois étapes : matchs, probabilités, combinés.
+- Cartes claires et lisibles, onglets de calendrier et boutons tactiles adaptés à l'iPhone.
+- Icône et couleurs de l'application installée harmonisées avec le nouveau thème.
+- Aucun changement dans le moteur statistique ou les sources de données.
 
 ## Nouveauté V4.3 : calendrier interactif
 

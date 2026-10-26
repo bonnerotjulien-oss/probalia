@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1016">
+  <meta name="theme-color" content="#f8f6f2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="PROBALIA">
@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-  <title>PROBALIA V4.3 — Calendrier interactif du week-end</title>
+  <title>PROBALIA V4.3.1 — Le football, plus clair</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="risk.css">
   <link rel="stylesheet" href="combo.css">
@@ -22,15 +22,15 @@
   <link rel="stylesheet" href="pwa.css">
   <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="calendar.css">
+  <link rel="stylesheet" href="warm.css">
 </head>
 <body>
   <div class="sitebar">
     <div class="sitebar-inner">
-      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.3</small></span></a>
+      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.3.1</small></span></a>
       <nav class="desktop-nav" aria-label="Navigation principale">
-        <a href="#weekend">Ce week-end</a>
-        <a href="#weekend-calendar">Calendrier</a>
-        <a href="#top-three">Top 3</a>
+        <a href="#weekend-calendar">Matchs</a>
+        <a href="#top-three">Meilleures probabilités</a>
         <a href="#combos">Combinés</a>
         <a href="#custom-combos">Mon ticket</a>
       </nav>
@@ -41,9 +41,9 @@
   <main id="dashboard">
     <header class="hero">
       <div class="hero-copy">
-        <div class="kicker">LE RADAR DU WEEK-END <span class="hero-kicker-dot">·</span> LIGUE 1</div>
-        <h1>Les bons matchs.<br><em>Les bonnes questions.</em></h1>
-        <p>Les trois scénarios les plus probables et leurs combinés, sans perdre de vue le risque réel.</p>
+        <div class="kicker">PROBALIA <span class="hero-kicker-dot">·</span> TON ASSISTANT FOOTBALL</div>
+        <h1>Le week-end commence <em>ici.</em></h1>
+        <p>Les rencontres, leurs probabilités et tes combinés. Tout ce qui compte, au même endroit.</p>
         <div class="hero-meta">
           <span class="range-pill" id="weekend-range">Recherche des rencontres du week-end…</span>
           <span id="weekend-count">Calendrier en cours de chargement</span>
@@ -55,15 +55,21 @@
       </div>
     </header>
 
+    <nav class="quick-path" aria-label="Parcours rapide">
+      <a href="#weekend-calendar"><span class="quick-icon">01</span><span><b>Explorer les matchs</b><small>Calendrier & scores</small></span><span class="quick-arrow">↗</span></a>
+      <a href="#top-three"><span class="quick-icon">02</span><span><b>Comparer les probabilités</b><small>Top 3 du week-end</small></span><span class="quick-arrow">↗</span></a>
+      <a href="#combos"><span class="quick-icon">03</span><span><b>Simuler mon combiné</b><small>Dès 0,50 €</small></span><span class="quick-arrow">↗</span></a>
+    </nav>
+
     <section class="status" aria-live="polite"><span id="status-dot" class="dot"></span><span id="status">Chargement des données ouvertes…</span><span id="updated" class="updated"></span></section>
 
     <div class="section-intro" id="weekend">
-      <div><span class="eyebrow">LE TABLEAU DE BORD</span><h2>Ton week-end, en un coup d'œil.</h2></div>
-      <p>Les pourcentages sont estimés par notre modèle, jamais garantis. Les cotes réelles restent décisives.</p>
+      <div><span class="eyebrow">À LA UNE</span><h2>Tout ton football, simplement.</h2></div>
+      <p>Des probabilités calculées, pas des certitudes. Prends le temps de comparer les cotes.</p>
     </div>
 
     <section id="weekend-calendar" aria-label="Calendrier interactif du week-end">
-      <div class="calendar-head"><div><span class="eyebrow">LES RENCONTRES · VENDREDI → LUNDI</span><h2>Le calendrier du week-end</h2><p>Choisis un jour, puis un match pour consulter ses probabilités et les scores les plus vraisemblables.</p></div><span class="tag">Ligue 1</span></div>
+      <div class="calendar-head"><div><span class="eyebrow">01 · MATCHS À VENIR</span><h2>Le programme du week-end</h2><p>Choisis un jour et touche un match pour voir son score estimé et les probabilités.</p></div><span class="tag">Ligue 1</span></div>
       <div id="calendar-days" class="calendar-days" role="tablist" aria-label="Jours du week-end"></div>
       <div id="calendar-matches" class="calendar-matches" aria-live="polite"><div class="empty">Chargement des rencontres…</div></div>
       <div id="calendar-preview" class="calendar-preview" hidden></div>
@@ -71,13 +77,13 @@
 
     <div class="weekend-grid">
       <section class="panel spotlight" id="top-three">
-        <div class="panel-head"><div><div class="kicker">01 / SÉLECTIONS À FORTE PROBABILITÉ</div><h2>Top 3 du week-end</h2></div><span class="tag">≥ 85 % modèle</span></div>
+        <div class="panel-head"><div><div class="kicker">02 · LES PLUS PROBABLES</div><h2>Top 3 du week-end</h2></div><span class="tag">≥ 85 % modèle</span></div>
         <p class="panel-deck">Trois scénarios à 85 % minimum sur des rencontres distinctes, privilégiant l'équilibre probabilité / cote théorique. À vérifier avant chaque match.</p>
         <div id="top-picks"><div class="empty">Recherche des sélections du week-end…</div></div>
       </section>
 
       <section class="panel ticket-spotlight" id="combos">
-        <div class="panel-head"><div><div class="kicker">02 / SCÉNARIOS MULTI-MATCHS</div><h2>Combinés prudents</h2></div><span class="tag">Dès 0,50 €</span></div>
+        <div class="panel-head"><div><div class="kicker">03 · MON SIMULATEUR</div><h2>Mes combinés</h2></div><span class="tag">Dès 0,50 €</span></div>
         <p class="panel-deck">Double et triple, avec leur vraie probabilité combinée estimée. Un combiné est toujours moins probable que chaque sélection seule.</p>
         <div id="combo-cards" class="combo-cards"><div class="empty">Préparation des combinés…</div></div>
         <p class="small ticket-note">Hypothèse d'indépendance entre matchs. Cotes théoriques, non disponibles chez un bookmaker tant qu'une offre n'est pas saisie.</p>
@@ -109,9 +115,9 @@
       </div>
     </details>
 
-    <footer>PROBALIA V4.3 · Modèle expérimental, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
+    <footer>PROBALIA V4.3.1 · Modèle expérimental, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
   </main>
-  <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend-calendar">▦<span>Calendrier</span></a><a href="#top-three">◆<span>Top 3</span></a><a href="#combos">⌁<span>Combinés</span></a><a href="#custom-combos">✎<span>Mon ticket</span></a></nav>
+  <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend-calendar"><span class="mobile-nav-icon">▦</span><span>Matchs</span></a><a href="#top-three"><span class="mobile-nav-icon">◈</span><span>Top 3</span></a><a href="#combos"><span class="mobile-nav-icon">◎</span><span>Combinés</span></a><a href="#custom-combos"><span class="mobile-nav-icon">▤</span><span>Mon ticket</span></a></nav>
   <dialog id="install-help"><h2>Installer PROBALIA</h2><p id="install-instructions">Depuis Safari sur iPhone, ouvre ce site puis touche Partager et « Sur l'écran d'accueil ».</p><form method="dialog"><button class="primary">Compris</button></form></dialog>
   <script type="module" src="app.js"></script><script type="module" src="pwa.js"></script>
 </body>

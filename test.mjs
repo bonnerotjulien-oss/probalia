@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
 import {cleanSeason,chronological,predict,backtest,csv,chooseProfilePicks,PROFILE_RULES,buildSafeCombos} from './model.js';
 import {freshnessStatus,mergeVerifiedResults,teamKey,applyOfficialFixtures,parisDate} from './freshness.js';
 import {parseResults} from './scripts/sync-results.mjs';
@@ -116,4 +117,9 @@ assert.deepEqual(groupedCalendar.map(day=>day.date),['2026-10-23','2026-10-24','
 assert.deepEqual(groupedCalendar.map(day=>day.matches.length),[0,1,0,1],'calendar places fixtures on correct weekday');
 assert.equal(calendarDays([], '2026-10-27').length,4,'calendar always offers four tabs for the next weekend');
 assert.deepEqual(calendarDays([], 'invalid'),[],'invalid reference never renders dates');
+const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
+const cache=readFileSync(new URL('./sw.js',import.meta.url),'utf8');
+assert.ok(html.includes('href="warm.css"'),'warm stylesheet loaded after all legacy CSS');
+assert.ok(cache.includes("'./warm.css'"),'service worker includes warm stylesheet for iPhone PWA');
+for(const size of [180,192,512])assert.ok(existsSync(new URL(`./icons/icon-${size}.png`,import.meta.url)),'updated icon exists');
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');
