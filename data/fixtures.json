@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-10-26T13:13:08.032Z",
+  "fetchedAt": "2026-10-26T23:10:11.179Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -505,7 +505,7 @@
     {
       "id": 559648,
       "utcDate": "2026-10-26T19:30:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Paris Saint-Germain FC",
       "away": "Olympique Lyonnais"
     },
