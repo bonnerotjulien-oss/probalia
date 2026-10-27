@@ -10,6 +10,7 @@ import {mountCalendar} from './calendar.js';
 import {mountPerformance} from './performance.js';
 import {mountTactics} from './tactical-ui.js';
 import {mountIntelligence} from './intelligence-ui.js';
+import {mountTeamStats} from './team-stats-ui.js';
 import {safeLearnedSettings} from './learning.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=rollingSeasons();
@@ -139,6 +140,7 @@ async function reload(){selected=null;dataReady=false;predictionCache.clear();$(
   mountPerformance();
   mountTactics(upcoming);
   mountIntelligence(upcoming);
+  mountTeamStats(upcoming);
   const age=Number.isFinite(fresh.ageDays)?fresh.ageDays+' jour(s)':'inconnu';
   status(`${dataReady?'✓ Résultats et calendrier contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · apprentissage : ${learnedStatus} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} résultats vérifiés · ${fixtureCount} rencontres calendaires · ${fixtureFeed?.fetchedAt?'calendrier '+new Date(fixtureFeed.fetchedAt).toLocaleString('fr-FR'):'calendrier indisponible'}${warnings.length?' · '+warnings.join(' ; '):''}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
   $('refresh').disabled=false;

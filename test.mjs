@@ -16,6 +16,8 @@ import {createForecastCandidates} from './scripts/sync-predictions.mjs';
 import {classifyShot,summarizeTacticalEvents,tacticalMatchup} from './tactics.js';
 import {buildIntelligence,observationsForTeam,compareStyles,summarizeEvidence} from './intelligence.js';
 import {readRSS} from './scripts/sync-tactical-news.mjs';
+import {parseTeamStats} from './scripts/sync-team-stats.mjs';
+import {normalizeTeamMatches,teamProfile,compareTeamStats} from './team-stats.js';
 import {trainConservatively,settingsFor,safeLearnedSettings,evaluateSettings} from './learning.js';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 const notes=[{id:'a',team:'Lens',season:'2025-26',observedAt:'2026-02-01',role:'strength',category:'transition',evidenceType:'measured',claim:'Attaques rapides documentées dans cet article.',sourceUrl:'https://theanalyst.com/articles/lens-making-ligue-1-title-race-interesting',reviewed:true},
@@ -34,6 +36,17 @@ assert.equal(buildIntelligence([{...notes[0],id:'bad-stat',metric:{label:'buts',
 const rss='<rss><channel><item><title>Lens ajuste son pressing</title><link>https://rmcsport.bfmtv.com/football/ligue-1/test.html</link><pubDate>Tue, 27 Oct 2026 06:00:00 GMT</pubDate></item></channel></rss>';
 assert.equal(readRSS(rss,'RMC',new Date('2026-10-27T10:00:00Z')).length,1);
 assert.equal(readRSS(rss,'RMC',new Date('2027-10-27T10:00:00Z')).length,0,'stale news must disappear');
+const statCSV='Div,Date,HomeTeam,AwayTeam,FTHG,FTAG,HS,AS,HST,AST,HC,AC\nF1,01/10/2026,Lens,Lyon,2,1,15,9,7,4,8,3\n';
+const parsedStats=parseTeamStats(statCSV,'2026-27');
+assert.equal(parsedStats.length,1);
+assert.equal(parsedStats[0].homeStats.corners,8);
+assert.equal(parseTeamStats('Date,HomeTeam,AwayTeam,FTHG,FTAG\n01/10/2026,Lens,Lyon,2,1\n','2026-27')[0].homeStats.corners,null,'unknown corners are not zeros');
+const statRows=Array.from({length:6},(_,i)=>({...parsedStats[0],date:`2026-10-${String(i+1).padStart(2,'0')}`}));
+const statFeed=normalizeTeamMatches(statRows,new Date('2026-10-27T12:00:00Z'));
+assert.equal(teamProfile(statFeed,'Lens','2026-10-27').n,6);
+assert.equal(compareTeamStats(statFeed,'Lens','Lyon','2026-10-27').comparisons.length,6);
+assert.equal(teamProfile(statFeed,'Lens','2026-10-04').ready,false,'future match stats must never leak into a past prediction');
+assert.equal(teamProfile(statFeed,'Lens','2027-10-27').ready,false,'stale statistics cannot survive a whole year');
 const shot=(team,pattern,body='Right Foot',goal=false)=>({type:{name:'Shot'},team:{name:team},play_pattern:{name:pattern},shot:{type:{name:'Open Play'},body_part:{name:body},outcome:{name:goal?'Goal':'Saved'},statsbomb_xg:.15}});
 assert.equal(classifyShot(shot('Lens','From Corner','Head',true)),'setPiece','set piece precedence over header');
 assert.equal(classifyShot(shot('Lens','Regular Play','Head')),'header');
@@ -168,6 +181,8 @@ const cache=readFileSync(new URL('./sw.js',import.meta.url),'utf8');
 assert.ok(html.includes('href="warm.css"'),'warm stylesheet loaded after all legacy CSS');
 assert.ok(cache.includes("'./warm.css'"),'service worker includes warm stylesheet for iPhone PWA');
 assert.ok(cache.includes("'./performance.js'"),'PWA caches performance module');
+assert.ok(cache.includes("'./team-stats.js'"),'PWA caches current team-stats calculation code');
+assert.ok(html.includes('id="team-stats-content"'),'team-statistics section exists');
 for(const size of [180,192,512])assert.ok(existsSync(new URL(`./icons/icon-${size}.png`,import.meta.url)),'updated icon exists');
 // Auditable, immutable pre-match ledger. All fixtures and results are synthetic.
 const fixtureTime='2026-11-01T19:45:00.000Z',recordedAt=new Date('2026-10-31T12:00:00.000Z');

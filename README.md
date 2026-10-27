@@ -198,3 +198,29 @@ Les cotes et les calculs d'EV ne sont pas une incitation à parier. Fixer un bud
 
 **Limite fondamentale :** aucun abonnement ni API d'événements Opta n'est inclus. L'intelligence éditoriale ne modifie pas les probabilités tant qu'un effet prédictif tactique n'a pas réussi un test hors échantillon.
 
+# V4.9 — Statistiques d'équipes synchronisées automatiquement
+
+Cette version ajoute le collecteur `scripts/sync-team-stats.mjs` et une nouvelle section de l'application : **Statistiques récentes par équipe**.
+
+## Ce qui est automatisé
+
+- Un workflow GitHub Actions `PROBALIA - Statistiques de match Ligue 1` se lance chaque matin (ou manuellement dans Actions > Run workflow).
+- Il télécharge les CSV de Football-Data pour la saison en cours et la précédente, si disponibles, puis génère `data/team-stats.json`.
+- L'interface affiche des moyennes récentes de **tirs, tirs cadrés et corners**, créés par une équipe et concédés par son adversaire, si ces colonnes existent.
+- Pour chaque match analysé, les calculs utilisent uniquement les résultats antérieurs à son coup d'envoi ; fenêtre 150 jours, maximum 12 rencontres, minimum quatre.
+- Les données absentes restent `null` : elles ne se transforment jamais en zéro ou en chiffres inventés.
+- En cas d'échec de la collecte, le programme conserve l'ancien fichier et son horodatage ; il ne prétend pas être à jour.
+
+## Mise en ligne
+
+1. Transférer **tous les fichiers** du ZIP à la racine du dépôt GitHub, ainsi que les sous-dossiers `.github`, `scripts`, `tactical-sources`, `data` et `icons`.
+2. Dans **Actions**, sélectionner `PROBALIA - Statistiques de match Ligue 1`, puis **Run workflow**.
+3. Confirmer une exécution verte avec la ligne `Statistiques équipe : ... matchs publiés` et l'existence de `data/team-stats.json`.
+4. Actualiser l'application une fois le déploiement GitHub Pages terminé. Si les colonnes de tirs/corners ne sont pas fournies par la source, l'application affiche cette limite explicitement.
+
+## Limites
+
+Football-Data publie des statistiques de **match agrégées**, pas une chronologie événementielle détaillée. Les corners obtenus ne sont pas nécessairement des buts sur corner. Le volume de tirs ne démontre pas qu'une équipe sait contrer un pressing. Les données Opta Analyst restent une couche éditoriale sourcée ; aucune ingestion sous licence ni extraction automatique d'articles complets n'est incluse.
+
+Les nouvelles moyennes **n'ajustent pas** les probabilités ou les tickets. Leur valeur prédictive doit d'abord être testée chronologiquement sur des saisons et journées conservées hors entraînement (logloss, Brier et calibration).
+

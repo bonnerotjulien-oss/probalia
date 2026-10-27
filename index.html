@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-  <title>PROBALIA V4.8 — Intelligence tactique approfondie</title>
+  <title>PROBALIA V4.9 — Statistiques tactiques automatisées</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="risk.css">
   <link rel="stylesheet" href="combo.css">
@@ -30,7 +30,7 @@
 <body>
   <div class="sitebar">
     <div class="sitebar-inner">
-      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.8</small></span></a>
+      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.9</small></span></a>
       <nav class="desktop-nav" aria-label="Navigation principale">
         <a href="#weekend-calendar">Matchs</a>
         <a href="#top-three">Meilleures probabilités</a>
@@ -105,6 +105,8 @@
       <div class="panel-head"><div><div class="kicker">05 · CONFRONTATIONS DE STYLES</div><h2>Analyse tactique</h2></div><span class="tag">Données événementielles</span></div>
       <p class="panel-deck">Buts et tirs sur phases arrêtées, jeu aérien, transitions et jeu placé : confrontations offensives/défensives quand des événements récents et vérifiés sont disponibles.</p>
       <div id="tactical-content"><div class="empty">Recherche des données tactiques…</div></div>
+      <div class="panel-head"><div><h3>Statistiques récentes par équipe</h3></div><span class="tag">Collecte automatique</span></div>
+      <div id="team-stats-content"><div class="empty">Lecture des tirs et corners…</div></div>
       <div class="panel-head"><div><h3>Intelligence tactique sourcée</h3></div><span class="tag">Comparaison + fraîcheur</span></div>
       <div id="intelligence-content"><div class="empty">Lecture des sources et de la veille…</div></div>
     </section>
@@ -132,7 +134,7 @@
       </div>
     </details>
 
-    <footer>PROBALIA V4.8 · Mémoire tactique datée, corroboration, péremption des observations et veille à vérifier · Aucune donnée tactique ne modifie encore les probabilités de paris sans validation hors échantillon · Sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a>, <a href="https://theanalyst.com/competition/ligue-1/stats" target="_blank" rel="noreferrer">Opta Analyst</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Aucune garantie de gain.</footer>
+    <footer>PROBALIA V4.9 · Statistiques agrégées automatiquement, mémoire tactique sourcée et datée · Ce n'est pas une base d'événements Opta · Aucune donnée tactique ne modifie les probabilités sans validation hors échantillon · Sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a>, <a href="https://theanalyst.com/competition/ligue-1/stats" target="_blank" rel="noreferrer">Opta Analyst</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Aucune garantie de gain.</footer>
   </main>
   <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend-calendar"><span class="mobile-nav-icon">▦</span><span>Matchs</span></a><a href="#top-three"><span class="mobile-nav-icon">◈</span><span>Top 3</span></a><a href="#combos"><span class="mobile-nav-icon">◎</span><span>Combinés</span></a><a href="#custom-combos"><span class="mobile-nav-icon">▤</span><span>Mon ticket</span></a></nav>
   <dialog id="install-help"><h2>Installer PROBALIA</h2><p id="install-instructions">Depuis Safari sur iPhone, ouvre ce site puis touche Partager et « Sur l'écran d'accueil ».</p><form method="dialog"><button class="primary">Compris</button></form></dialog>
