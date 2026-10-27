@@ -1,0 +1,31 @@
+name: PROBALIA - Statistiques de match Ligue 1
+on:
+  schedule:
+    - cron: '27 7 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Collecter les statistiques de matchs publiées
+        run: node scripts/sync-team-stats.mjs
+      - name: Vérifier la cohérence du moteur
+        run: npm test
+      - name: Publier les données vérifiées
+        run: |
+          if test -f data/team-stats.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/team-stats.json
+            if ! git diff --cached --quiet; then
+              git commit -m "data: statistiques de match Ligue 1"
+              git pull --rebase
+              git push
+            fi
+          fi
