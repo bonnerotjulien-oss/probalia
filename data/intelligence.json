@@ -1,0 +1,162 @@
+{
+  "version": 2,
+  "updatedAt": "2026-10-27T08:37:10.318Z",
+  "observations": [
+    {
+      "id": "lens-transition-2025-26-opta",
+      "team": "rc lens",
+      "role": "strength",
+      "category": "transition",
+      "evidenceType": "measured",
+      "claim": "Lens se distinguait par des attaques rapides et une forte production de tirs après contre-attaque au moment de l'analyse.",
+      "season": "2025-26",
+      "observedAt": "2025-12-31",
+      "sourceTitle": "Opta Analyst — Lens Are Making the Ligue 1 Title Race Interesting Again",
+      "sourceUrl": "https://theanalyst.com/articles/lens-making-ligue-1-title-race-interesting",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": null,
+      "metric": null
+    },
+    {
+      "id": "lens-corners-2025-26-ligue1",
+      "team": "rc lens",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Lens figurait parmi les équipes les plus dangereuses sur corner après vingt-six journées.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur corner après 26 journées",
+        "value": 10,
+        "unit": "buts"
+      }
+    },
+    {
+      "id": "psg-corners-2025-26-ligue1",
+      "team": "paris saint germain",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Le PSG avait inscrit huit buts sur corner à la vingt-sixième journée, deuxième total cité par la Ligue 1.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur corner après 26 journées",
+        "value": 8,
+        "unit": "buts"
+      }
+    },
+    {
+      "id": "lyon-corners-2025-26-ligue1",
+      "team": "olympique lyonnais",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Lyon comptait six réalisations sur corner après vingt-six journées, selon le bilan de la Ligue 1.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur corner après 26 journées",
+        "value": 6,
+        "unit": "buts"
+      }
+    },
+    {
+      "id": "marseille-corners-2025-26-ligue1",
+      "team": "olympique de marseille",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Marseille comptait six buts inscrits sur corner après vingt-six journées de championnat.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur corner après 26 journées",
+        "value": 6,
+        "unit": "buts"
+      }
+    },
+    {
+      "id": "lorient-freekicks-2025-26-ligue1",
+      "team": "fc lorient",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Lorient était premier sur les buts issus de coups francs directs et indirects avec six réalisations après vingt-six journées.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur coup franc après 26 journées",
+        "value": 6,
+        "unit": "buts"
+      }
+    },
+    {
+      "id": "brest-indirect-freekicks-2025-26-ligue1",
+      "team": "stade brestois",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Brest comptait quatre buts sur coups francs indirects après vingt-six journées, à égalité avec Lorient sur cet indicateur.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur coups francs indirects après 26 journées",
+        "value": 4,
+        "unit": "buts"
+      }
+    },
+    {
+      "id": "nantes-indirect-freekicks-2025-26-ligue1",
+      "team": "fc nantes",
+      "role": "strength",
+      "category": "setPiece",
+      "evidenceType": "measured",
+      "claim": "Nantes avait inscrit trois buts sur coups francs indirects après vingt-six journées.",
+      "season": "2025-26",
+      "observedAt": "2026-03-26",
+      "sourceTitle": "Ligue 1 — Who are Ligue 1’s most dangerous set-piece teams in 2025/26?",
+      "sourceUrl": "https://ligue1.com/en/articles/l1_article_4683-",
+      "coach": "",
+      "reviewed": true,
+      "sampleMatches": 26,
+      "metric": {
+        "label": "Buts sur coups francs indirects après 26 journées",
+        "value": 3,
+        "unit": "buts"
+      }
+    }
+  ]
+}

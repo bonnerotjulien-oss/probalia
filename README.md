@@ -1,4 +1,52 @@
-# PROBALIA V4.5 — auto-apprentissage contrôlé et mémoire des prévisions (PWA)
+# PROBALIA V4.7 — Tactical Intelligence, veille et mémoire sourcée (PWA)
+
+## Nouveauté V4.7 : mémoire tactique contemporaine
+
+L'application associe désormais aux équipes une **mémoire éditoriale structurée** (faits mesurés, analyses rapportées et hypothèses). Chaque entrée précise l'équipe, la catégorie tactique, le rôle (force / fragilité / style), la saison, la date, une formulation courte et un lien vers sa source. Elle accepte seulement les saisons **en cours ou précédente** et refuse les observations postérieures au match concerné.
+
+Les observations validées sont préparées par `scripts/build-intelligence.mjs` depuis `tactical-sources/observations.json`, puis disponibles via `data/intelligence.json`. Un exemple limité et sourcé concernant Lens en 2025-2026 est intégré ; il ne prétend pas représenter tous les clubs et doit être réévalué en 2026-2027.
+
+### Veille automatique des titres
+
+Le nouveau workflow `.github/workflows/sync-intelligence.yml` est planifié **une fois par jour**. `scripts/sync-tactical-news.mjs` relève uniquement les **titres, liens, dates et sources** d'un flux RSS public de Ligue 1. Il les conserve dans `data/tactical-news.json` durant 90 jours, avec le statut **« À vérifier »**.
+
+**Cette veille ne lit pas automatiquement le corps intégral des articles, ne recopie pas leur contenu et ne transforme jamais un titre en statistique.** Aucun scraping automatisé d'Opta Analyst ou du site officiel de Ligue 1 n'est installé : publication visible ne signifie pas licence de rediffusion/collecte en masse. Pour ajouter des faits d'Opta, on vérifie ponctuellement l'article et consigne une observation synthétique avec un lien, sans reproduire les tableaux complets.
+
+### Mise en ligne V4.7
+
+1. Copier tous les fichiers de cette archive dans le dépôt, en **préservant `data/` et les secrets GitHub existants**.
+2. S'assurer que `.github/workflows/sync-intelligence.yml`, `intelligence.js`, `intelligence-ui.js`, `intelligence.css`, `scripts/build-intelligence.mjs`, `scripts/sync-tactical-news.mjs` et `tactical-sources/observations.json` sont présents.
+3. Dans **Actions → PROBALIA - Veille tactique et mémoire sourcée → Run workflow**, déclencher une première synchronisation.
+4. Vérifier les fichiers `data/intelligence.json` et, si le flux RSS répond, `data/tactical-news.json`.
+5. Ouvrir PROBALIA, section Analyse tactique. Les observations sourcées et les titres à examiner apparaîtront si le flux fonctionne. En l'absence de données, un message clair reste affiché.
+
+### Suite indispensable
+
+Pour un système qui **lit et résume automatiquement les articles complets**, il faudrait une source proposant cette utilisation ou une autorisation explicite, et un moteur d'extraction sémantique (souvent une API IA avec coût et secret serveur). Le dépistage d'un titre est aujourd'hui automatisé ; sa vérification et sa conversion en observation tactique ne le sont pas. Les caractéristiques d'entraîneurs exigent une confirmation du coach actuel : un fait lié à un coach précis n'est pas activé tant que son identité actuelle n'est pas connue. Les probabilités restent inchangées jusqu'à validation historique d'un modèle tactique.
+
+## Nouveau : analyse tactique événementielle (V4.6)
+
+Cette version ajoute une rubrique **Analyse tactique** et un moteur d'analyse de matchs basé sur les événements de football, avec quatre familles de situations :
+
+1. Tirs après corners et coups francs (phases arrêtées).
+2. Tirs de la tête et du jeu aérien hors phases arrêtées.
+3. Tirs en contre-attaque / transition.
+4. Tirs dans le jeu placé.
+
+Pour chaque équipe, il comptabilise les tirs, buts, xG *lorsqu'ils existent dans les événements*, et les tirs/buts concédés. Pour un match donné, le tableau croise la répartition offensive d'une équipe et les tirs concédés de l'autre. La base ne retient que les événements datant de moins de **120 jours**, et les matchs doivent être antérieurs à la prédiction. Un minimum de huit rencontres documentées par équipe et de trente tirs permet de limiter les affichages trompeurs.
+
+**Attention : aucune couverture événementielle actuelle de Ligue 1 n'est fournie dans cette archive.** Aucun flux gratuit, complet et actualisé de 2026–2027 dont les droits autorisent cette intégration n'a été identifié. Si les données manquent, le site affiche « données indisponibles » ; il ne fabrique pas de profil. La base événementielle gratuite Wyscout documentée couvre 2017–2018, et la base ouverte StatsBomb présente certaines anciennes saisons de Ligue 1, non assimilables à la saison en cours.
+
+### Comment importer des événements légalement obtenus
+
+- Voir `tactical-sources/FORMAT.md` pour le format JSON attendu, avec événements de type StatsBomb et identification des deux clubs.
+- Ajouter les fichiers JSON complets de match dans `tactical-sources/` uniquement si tu disposes des droits de réutilisation. Ne pas intégrer les exemples du manuel comme données réelles.
+- Exécuter `node scripts/build-tactics.mjs` ou laisser le workflow **Résultats 2 fois par semaine** le faire. Il créera `data/tactics.json`, affiché automatiquement dans l'app.
+- Les données doivent être réellement récentes pour apparaître dans l'analyse des matchs à venir. Des matchs historiques peuvent servir à développer et valider le moteur, mais ne donnent pas le style des effectifs actuels.
+
+### Influence sur le calcul des probabilités
+
+**Aucune correction tactique n'est appliquée aux probabilités 1/N/2 ou au score exact dans V4.6.** Il serait statistiquement injustifié de transformer arbitrairement « beaucoup de buts sur corner » en +5 % de victoire. Une prochaine étape nécessite un jeu récent d'événements, le rapprochement des équipes et joueurs, un modèle de correction des buts attendus, puis une validation hors échantillon contre V4.5. Tant que ce test n'est pas positif, la couche tactique doit rester descriptive.
 
 ## Nouveauté V4.5 : apprentissage statistique automatique
 
@@ -139,3 +187,14 @@ Les données de la seconde source et le journal des prévisions sont synchronis�
 `node test.mjs` (Node.js récent, modules ESM activés avec le `package.json`).
 
 Les cotes et les calculs d'EV ne sont pas une incitation à parier. Fixer un budget et ne pas jouer de sommes que l'on ne peut pas perdre.
+# V4.8 — Analyse tactique approfondie
+
+- Huit observations vérifiées de 2025-26, avec chiffres/URL quand disponibles ; Opta Analyst et Ligue 1.
+- Comparaison des forces et fragilités **effectivement documentées**, et identification des forces communes (sans inventer de fragilités).
+- Indicateur **de couverture documentaire**, et non de succès du pronostic : distinct des probabilités 1N2.
+- Saisons courante et précédente seulement ; exclusion des observations de plus de 270 jours ; restriction aux entraîneurs connus pour les notes attribuées à un coach.
+- Veille RSS automatisée sur les **titres** ; ces titres ne sont pas automatiquement convertis en faits.
+- Procédure détaillée dans `tactical-sources/PROCEDURE_V4_8.md`.
+
+**Limite fondamentale :** aucun abonnement ni API d'événements Opta n'est inclus. L'intelligence éditoriale ne modifie pas les probabilités tant qu'un effet prédictif tactique n'a pas réussi un test hors échantillon.
+
