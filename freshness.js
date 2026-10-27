@@ -3,6 +3,9 @@ import {currentSeasonTag,seasonStart} from './season.js';
 const DAY = 86400000;
 export const MAX_RESULT_AGE_DAYS = 10;
 export const MAX_SYNC_AGE_HOURS = 48;
+// Football-Data.co.uk permits light personal automated downloads (at most
+// twice weekly). Results now refresh Monday/Thursday; fixtures stay daily.
+export const MAX_RESULTS_SYNC_AGE_HOURS = 100;
 
 export function parisDate(value){
   const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(value);
@@ -16,7 +19,7 @@ export function freshnessStatus(matches, now = new Date(), syncAt = null) {
   const ageDays = latest ? Math.max(0, Math.floor((now - new Date(latest + 'T12:00:00Z')) / DAY)) : Infinity;
   const syncAgeHours = syncAt ? (now - new Date(syncAt)) / 3600000 : Infinity;
   // Do not silently accept stale records or a failed/missing automated sync.
-  return {latest, ageDays, syncAgeHours, ok: ageDays <= MAX_RESULT_AGE_DAYS && syncAgeHours >= 0 && syncAgeHours <= MAX_SYNC_AGE_HOURS};
+  return {latest, ageDays, syncAgeHours, ok: ageDays <= MAX_RESULT_AGE_DAYS && syncAgeHours >= 0 && syncAgeHours <= MAX_RESULTS_SYNC_AGE_HOURS};
 }
 
 const NAME_ALIASES = {

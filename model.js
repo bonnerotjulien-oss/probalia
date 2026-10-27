@@ -1,5 +1,5 @@
 /* PROBALIA: transparent, deterministic scoring model, with separate time-split calibration. */
-export const MODEL_VERSION = '4.0.0-rolling-dc-audited';
+export const MODEL_VERSION = '4.5.0-walk-forward-audited';
 export const SETTINGS = Object.freeze({halfLifeDays:210,priorMatches:9,eloK:18,eloHomeAdvantage:65,eloGoalInfluence:0.10,rho:-0.06,maxGoals:10,minHistory:60});
 const DAY=86400000;
 export function dayNumber(s){return Date.parse(`${s}T12:00:00Z`)}
@@ -21,11 +21,11 @@ const clamp=(x,lo,hi)=>Math.max(lo,Math.min(hi,x));
 const fact=n=>{let out=1;for(let i=2;i<=n;i++)out*=i;return out};
 const poisson=(n,mean)=>Math.exp(-mean)*Math.pow(mean,n)/fact(n);
 const percent=(n)=>Math.round(n*1000)/10;
-function eloRatings(history){
+function eloRatings(history,config=SETTINGS){
   const ratings=new Map();
   for(const m of history){const h=ratings.get(m.home)??1500,a=ratings.get(m.away)??1500;
-    const p=1/(1+Math.pow(10,(a-h-SETTINGS.eloHomeAdvantage)/400));const score=m.hg>m.ag?1:m.hg===m.ag?.5:0;
-    const delta=SETTINGS.eloK*(score-p);ratings.set(m.home,h+delta);ratings.set(m.away,a-delta);
+    const p=1/(1+Math.pow(10,(a-h-config.eloHomeAdvantage)/400));const score=m.hg>m.ag?1:m.hg===m.ag?.5:0;
+    const delta=config.eloK*(score-p);ratings.set(m.home,h+delta);ratings.set(m.away,a-delta);
   }return ratings;
 }
 export function predict(home,away,atDate,all,config=SETTINGS){
@@ -44,7 +44,7 @@ export function predict(home,away,atDate,all,config=SETTINGS){
   const awayDefence=smoothed(A.aAgainst,A.aW,leagueH)/leagueH;
   const awayAttack=smoothed(A.aFor,A.aW,leagueA)/leagueA;
   const homeDefence=smoothed(H.hAgainst,H.hW,leagueA)/leagueA;
-  const elo=eloRatings(history),eDiff=((elo.get(home)??1500)-(elo.get(away)??1500))/400;
+  const elo=eloRatings(history,config),eDiff=((elo.get(home)??1500)-(elo.get(away)??1500))/400;
   const multiplier=Math.exp(clamp(config.eloGoalInfluence*eDiff,-.35,.35));
   const lambdaH=clamp(leagueH*homeAttack*awayDefence*multiplier,.15,4.4);
   const lambdaA=clamp(leagueA*awayAttack*homeDefence/multiplier,.15,4.4);

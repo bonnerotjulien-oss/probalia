@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-  <title>PROBALIA V4.3.1 — Le football, plus clair</title>
+  <title>PROBALIA V4.5 — Auto-apprentissage contrôlé</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="risk.css">
   <link rel="stylesheet" href="combo.css">
@@ -23,11 +23,12 @@
   <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="calendar.css">
   <link rel="stylesheet" href="warm.css">
+  <link rel="stylesheet" href="performance.css">
 </head>
 <body>
   <div class="sitebar">
     <div class="sitebar-inner">
-      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.3.1</small></span></a>
+      <a href="#dashboard" class="wordmark" aria-label="PROBALIA, accueil"><span class="wordmark-symbol">P<span>•</span></span><span>PROBALIA <small>V4.5</small></span></a>
       <nav class="desktop-nav" aria-label="Navigation principale">
         <a href="#weekend-calendar">Matchs</a>
         <a href="#top-three">Meilleures probabilités</a>
@@ -92,6 +93,12 @@
 
     <div class="insight-bar"><div><span class="insight-icon">i</span><span><b>Un pari à 85 % n'est pas un pari garanti.</b> Sans cote réellement proposée, aucun gain attendu n'est établi.</span></div><a href="#backtest">Voir les preuves du modèle →</a></div>
 
+    <section id="performance" aria-label="Mémoire automatique des prédictions">
+      <div class="panel-head"><div><div class="kicker">04 · LE MODÈLE SOUS CONTRÔLE</div><h2>Mémoire des prédictions</h2></div><span class="tag">Suivi automatisé</span></div>
+      <p class="panel-deck">Prévisions figées avant les matchs, puis comparées aux résultats officiels. Les erreurs sont mesurées, pas réécrites après coup.</p>
+      <div id="performance-content"><div class="empty">Lecture du journal des prédictions…</div></div>
+    </section>
+
     <details id="advanced-tools" class="advanced-tools">
       <summary><span class="advanced-glyph">＋</span><span><b>Explorer les outils avancés</b><small>Mon ticket, cotes, calendrier, analyses et validation statistique</small></span><span class="advanced-arrow">⌄</span></summary>
       <div class="advanced-content">
@@ -115,7 +122,7 @@
       </div>
     </details>
 
-    <footer>PROBALIA V4.3.1 · Modèle expérimental, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
+    <footer>PROBALIA V4.5 · Ajustements statistiques testés hors échantillon, sans pari automatique · Sources : <a href="https://github.com/openfootball/football.json" target="_blank" rel="noreferrer">OpenFootball</a>, <a href="https://www.football-data.co.uk/" target="_blank" rel="noreferrer">Football-Data</a>, <a href="https://www.football-data.org/" target="_blank" rel="noreferrer">football-data.org</a> et <a href="https://the-odds-api.com/" target="_blank" rel="noreferrer">The Odds API</a>. Les estimations ne garantissent pas un gain.</footer>
   </main>
   <nav class="mobile-nav" aria-label="Navigation de l'application"><a href="#weekend-calendar"><span class="mobile-nav-icon">▦</span><span>Matchs</span></a><a href="#top-three"><span class="mobile-nav-icon">◈</span><span>Top 3</span></a><a href="#combos"><span class="mobile-nav-icon">◎</span><span>Combinés</span></a><a href="#custom-combos"><span class="mobile-nav-icon">▤</span><span>Mon ticket</span></a></nav>
   <dialog id="install-help"><h2>Installer PROBALIA</h2><p id="install-instructions">Depuis Safari sur iPhone, ouvre ce site puis touche Partager et « Sur l'écran d'accueil ».</p><form method="dialog"><button class="primary">Compris</button></form></dialog>

@@ -11,6 +11,9 @@ import {seasonStart,currentSeasonTag,rollingSeasons} from './season.js';
 import {selectTopPicks,simulateSingle} from './top.js';
 import {weekendRange,weekendFixtures,weekendLabel} from './weekend.js';
 import {calendarDays} from './calendar.js';
+import {archiveForecasts,settleForecasts,summarizeForecasts,matchIdentity} from './ledger.js';
+import {createForecastCandidates} from './scripts/sync-predictions.mjs';
+import {trainConservatively,settingsFor,safeLearnedSettings,evaluateSettings} from './learning.js';
 const sample=[];const teams=['Lens','Paris FC','Lille','Lyon'];
 for(let i=0;i<180;i++){const h=teams[i%4],a=teams[(i+1+(Math.floor(i/4)%2))%4];if(h===a)continue;sample.push({id:String(i),season:'test',home:h,away:a,date:new Date(Date.UTC(2024,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:i%3,played:true})}
 sample.sort(chronological);
@@ -25,6 +28,18 @@ assert.deepEqual(fitTemperature([]),{temperature:1,drawBias:0},'insufficient his
 const thinAudit=auditModel(sample);
 assert.equal(thinAudit.ready,false,'fewer than 200 chronological observations cannot validate calibration');
 const largeSample=Array.from({length:480},(_,i)=>({id:'a'+i,season:'test',home:teams[i%4],away:teams[(i+1)%4],date:new Date(Date.UTC(2020,0,1+i)).toISOString().slice(0,10),time:'20:45',hg:i%4,ag:(i*3+1)%4,played:true}));
+assert.notEqual(settingsFor('forme-recente').halfLifeDays,settingsFor('reference').halfLifeDays,'candidate settings differ');
+assert.equal(safeLearnedSettings({version:1,status:'validated',candidateId:'unknown'}).halfLifeDays,210,'unknown models cannot inject settings');
+assert.equal(trainConservatively(sample,new Date('2026-01-01')).status,'insufficient','no self-training on too few games');
+const trained=trainConservatively(largeSample,new Date('2026-01-01'));
+assert.ok(['baseline','validated'].includes(trained.status),'training outcome must pass the validation gate');
+assert.equal(trained.validation.reference.n,90,'holdout must be separate and large enough');
+assert.ok(trained.validation.first>trained.training.last,'validation dates later than all training dates');
+assert.equal(evaluateSettings(largeSample,largeSample.slice(-4),settingsFor('reference')).n,4);
+if(trained.status==='validated'){
+  assert.ok(trained.validation.challenger.logloss<=trained.validation.reference.logloss-.008,'automatic update only after genuine holdout logloss gain');
+  assert.ok(trained.validation.challenger.brier<=trained.validation.reference.brier+.0002,'automatic update cannot degrade Brier score materially');
+}
 const audited=auditModel(largeSample);
 assert.equal(audited.ready,true);assert.ok(audited.n>=60);assert.ok(Number.isFinite(audited.rawLogloss));assert.ok(Number.isFinite(audited.adjustedLogloss));
 assert.ok(audited.predictions.every(x=>x.date>=audited.holdoutStart),'test rows strictly after training period');
@@ -121,5 +136,31 @@ const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
 const cache=readFileSync(new URL('./sw.js',import.meta.url),'utf8');
 assert.ok(html.includes('href="warm.css"'),'warm stylesheet loaded after all legacy CSS');
 assert.ok(cache.includes("'./warm.css'"),'service worker includes warm stylesheet for iPhone PWA');
+assert.ok(cache.includes("'./performance.js'"),'PWA caches performance module');
 for(const size of [180,192,512])assert.ok(existsSync(new URL(`./icons/icon-${size}.png`,import.meta.url)),'updated icon exists');
+// Auditable, immutable pre-match ledger. All fixtures and results are synthetic.
+const fixtureTime='2026-11-01T19:45:00.000Z',recordedAt=new Date('2026-10-31T12:00:00.000Z');
+const mockForecast={season:'2026-27',home:'Olympique Lyonnais',away:'Paris SG',scheduledAt:fixtureTime,
+  prob:[.6,.25,.15],score:{h:2,a:1,p:.12},modelVersion:'test',odds:{home:1.9,draw:3.6,away:5.3}};
+const first=archiveForecasts([], [mockForecast],recordedAt);
+assert.equal(first.added,1);assert.equal(first.records[0].p1,.6);
+assert.equal(first.records[0].id,matchIdentity('2026-27','Lyon','Paris Saint-Germain FC'));
+const repeat=archiveForecasts(first.records,[{...mockForecast,prob:[.1,.1,.8]}],new Date('2026-11-01T10:00:00Z'));
+assert.equal(repeat.added,0,'never replace a recorded prediction');assert.equal(repeat.records[0].p1,.6);
+assert.equal(archiveForecasts([], [mockForecast],new Date('2026-11-01T19:40:00Z')).added,0,'never archive after the 15-minute kickoff lock');
+const unresolved=settleForecasts(first.records,[],new Date('2026-11-02T12:00:00Z'));
+assert.equal(unresolved.settled,0,'never fabricate a score');
+const settled=settleForecasts(first.records,[{season:'2026-27',home:'Lyon',away:'Paris Saint-Germain FC',date:'2026-11-01',hg:2,ag:1}],new Date('2026-11-02T12:00:00Z'));
+assert.equal(settled.settled,1);
+const scorecard=summarizeForecasts(settled.records);
+assert.equal(scorecard.n,1);assert.equal(scorecard.accuracy,1);assert.equal(scorecard.scoreAccuracy,1);assert.ok(Math.abs(scorecard.flatProfit-.9)<1e-8);
+assert.equal(settleForecasts(settled.records,[{season:'2026-27',home:'Lyon',away:'Paris SG',date:'2026-11-01',hg:0,ag:5}],new Date('2026-11-04T12:00:00Z')).settled,0,'settled result stays immutable');
+assert.equal(summarizeForecasts(first.records).n,0,'pending predictions excluded from metrics');
+const completedFixtureHistory=sample.slice(0,125).map(x=>({...x,season:'2026-27'}));
+const ledgerInputs={results:completedFixtureHistory.map(r=>({season:r.season,date:r.date,home:r.home,away:r.away,hg:r.hg,ag:r.ag}))};
+const inputFixtures={fetchedAt:'2026-10-31T12:00:00Z',matches:[{id:25,status:'TIMED',utcDate:fixtureTime,home:'Lens',away:'Lyon'}]};
+const options=createForecastCandidates(ledgerInputs,inputFixtures,null,recordedAt);
+assert.equal(options.length,1,'server creates model prediction using verified historical records');
+assert.ok(Math.abs(options[0].prob.reduce((a,b)=>a+b,0)-1)<1e-9);
+assert.equal(createForecastCandidates(ledgerInputs,{...inputFixtures,fetchedAt:'2026-10-20T00:00:00Z'},null,recordedAt).length,0,'never predict with stale official calendar');
 console.log('PROBALIA model tests OK · '+b.n+' evaluated predictions');

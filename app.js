@@ -7,17 +7,20 @@ import {auditModel,calibratedPrediction} from './calibration.js';
 import {rollingSeasons,currentSeasonTag} from './season.js';
 import {weekendFixtures,weekendRange,weekendLabel} from './weekend.js';
 import {mountCalendar} from './calendar.js';
+import {mountPerformance} from './performance.js';
+import {safeLearnedSettings} from './learning.js';
 const $=id=>document.getElementById(id),fmt=n=>percent(n).toFixed(1).replace('.',',')+' %',dec=n=>n.toFixed(2).replace('.',',');
 const SEASONS=rollingSeasons();
 const BASE='https://raw.githubusercontent.com/openfootball/football.json/master/';
 const today=()=>parisDate(new Date());
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let all=[],upcoming=[],selected=null,bt=null,lastFetched=null,archive=[],dataReady=false,audit=null;
+let learnedSettings=safeLearnedSettings(null),learnedStatus='reference';
 const comboStakes={double:.5,triple:.5,alternative:.5},comboQuotes={},comboSignatures={};
 const predictionCache=new Map();
 function predictForMatch(m){
   if(predictionCache.has(m.id))return predictionCache.get(m.id);
-  const raw=predict(m.home,m.away,m.date,all);
+  const raw=predict(m.home,m.away,m.date,all,learnedSettings);
   const result=audit?.validated?calibratedPrediction(raw,audit.calibrator):raw;
   predictionCache.set(m.id,result);return result;
 }
@@ -107,7 +110,7 @@ function choose(m){selected=m;renderListSelection();$('fixture-title').textConte
 }
 function renderListSelection(){document.querySelectorAll('[data-match]').forEach(b=>{const m=upcoming[Number(b.dataset.match)];b.classList.toggle('active',m?.id===selected?.id)})}
 function renderWeekendHeading(){const range=weekendRange(today()),games=weekendFixtures(upcoming,today());$('weekend-range').textContent=weekendLabel(range);$('weekend-count').textContent=`${games.length} ${games.length===1?'rencontre':'rencontres'} au calendrier`;return games}
-function showBacktest(){const data=all.filter(m=>m.played).sort(chronological);audit=auditModel(data);bt=audit;
+function showBacktest(){const data=all.filter(m=>m.played).sort(chronological);audit=auditModel(data,learnedSettings);bt=audit;
   $('count').textContent=data.length.toLocaleString('fr-FR');$('nBack').textContent=audit.n;$('loss').textContent=audit.logloss?.toFixed(3)||'—';$('brier').textContent=audit.brier?.toFixed(3)||'—';$('baseLoss').textContent=audit.baseline?.toFixed(3)||'—';$('improvement').textContent=audit.improvement===null?'—':fmt(audit.improvement);$('savedCount').textContent=archive.length;
   $('rawLoss').textContent=audit.rawLogloss?.toFixed(3)||'—';$('adjustedLoss').textContent=audit.adjustedLogloss?.toFixed(3)||'—';
   $('calibration-status').textContent=audit.ready?`${audit.reason} · ${audit.trainingCount} matchs d'ajustement, ${audit.n} de test (${audit.holdoutStart} → ${audit.holdoutEnd}). ${audit.modelBeatsBaseline?'Modèle devant la référence naïve.':'Modèle non supérieur à la référence naïve : éviter toute interprétation en avantage de pari.'}`:audit.reason;
@@ -120,6 +123,8 @@ async function reload(){selected=null;dataReady=false;predictionCache.clear();$(
   let fixtureFeed=null,fixtureCount=0,fixtureReady=false;
   try{const res=await fetch('./data/fixtures.json',{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!res.ok)throw Error('HTTP '+res.status);fixtureFeed=await res.json();const checked=applyOfficialFixtures(all,fixtureFeed);all=checked.matches;fixtureCount=checked.upcoming;fixtureReady=checked.ok}
   catch(e){errors.push('Calendrier officiel indisponible : '+e.message);all=all.filter(m=>m.played||m.season!==currentSeasonTag())}
+  try{const res=await fetch('./data/model-settings.json',{cache:'no-store',signal:AbortSignal.timeout(8000)});if(res.ok){const learned=await res.json();learnedSettings=safeLearnedSettings(learned);learnedStatus=learned.status==='validated'?'ajustement automatique validé':'référence conservée'}else{learnedSettings=safeLearnedSettings(null);learnedStatus='référence (pas encore entraîné)'}}
+  catch{learnedSettings=safeLearnedSettings(null);learnedStatus='référence (apprentissage indisponible)'}
   all.sort(chronological);lastFetched=new Date();$('updated').textContent='Contrôle : '+lastFetched.toLocaleString('fr-FR');
   const fresh=freshnessStatus(all,new Date(),feed?.fetchedAt);dataReady=fresh.ok&&merged>0&&fixtureReady&&!errors.length;
   splitList();const weekend=renderWeekendHeading();status('Validation chronologique et calibration en cours…');showBacktest();renderList();renderProfiles();mountBuilder(upcoming,all,dataReady,predictFor);renderCombos();
@@ -129,8 +134,9 @@ async function reload(){selected=null;dataReady=false;predictionCache.clear();$(
   catch{}
   mountAutomaticOdds(upcoming,all,oddsFeed,dataReady,predictFor,audit);
   mountTopPicks(weekend,all,oddsFeed,dataReady,predictFor,audit);
+  mountPerformance();
   const age=Number.isFinite(fresh.ageDays)?fresh.ageDays+' jour(s)':'inconnu';
-  status(`${dataReady?'✓ Résultats et calendrier contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} résultats vérifiés · ${fixtureCount} rencontres calendaires · ${fixtureFeed?.fetchedAt?'calendrier '+new Date(fixtureFeed.fetchedAt).toLocaleString('fr-FR'):'calendrier indisponible'}${warnings.length?' · '+warnings.join(' ; '):''}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
+  status(`${dataReady?'✓ Résultats et calendrier contrôlés':'⛔ PRONOSTICS SUSPENDUS'} · apprentissage : ${learnedStatus} · dernier résultat ${fresh.latest||'inconnu'} (${age}) · ${merged} résultats vérifiés · ${fixtureCount} rencontres calendaires · ${fixtureFeed?.fetchedAt?'calendrier '+new Date(fixtureFeed.fetchedAt).toLocaleString('fr-FR'):'calendrier indisponible'}${warnings.length?' · '+warnings.join(' ; '):''}${errors.length?' · '+errors.join(' ; '):''}`,!dataReady);
   $('refresh').disabled=false;
 }
 $('refresh').addEventListener('click',reload);

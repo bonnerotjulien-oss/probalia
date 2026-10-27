@@ -1,4 +1,37 @@
-# PROBALIA V4.3.1 — interface chaleureuse et épurée (PWA)
+# PROBALIA V4.5 — auto-apprentissage contrôlé et mémoire des prévisions (PWA)
+
+## Nouveauté V4.5 : apprentissage statistique automatique
+
+- Le script `scripts/train-model.mjs` évalue **neuf configurations préétablies** du moteur Poisson / Elo / Dixon-Coles à partir des matchs historiquement terminés.
+- Il choisit une variante sur **200 matchs d'entraînement**, puis la compare au modèle de référence sur **90 autres matchs plus récents**. Les prévisions sont calculées chronologiquement, sans voir les scores du jour ou les résultats à venir.
+- Le nouveau réglage n'est adopté que s'il améliore suffisamment la **log loss** sur le test indépendant, sans dégrader significativement le **score de Brier**. Dans le cas contraire, PROBALIA conserve ses paramètres de référence.
+- La décision et les résultats du test sont publiés dans `data/model-settings.json`, puis lus par l'interface iPhone et le moteur de prévisions automatique. Le tableau de performance indique si un réglage est actif ou si la référence est conservée.
+- L'entraînement se déroule automatiquement **les lundis et jeudis**, juste après la mise à jour des scores, sans nouveau fournisseur de données ni secret supplémentaire.
+
+**Limites :** ce mécanisme est une sélection automatique parmi quelques configurations, pas une IA tactique autonome. Les performances historiques peuvent être instables et ne garantissent aucun profit. Les périodes de validation sont réévaluées à chaque synchronisation : pour des conclusions solides, il faudra aussi suivre les prévisions réelles prospectivement sur plusieurs mois, grâce au journal V4.4.
+
+### Installer V4.5 depuis V4.4
+
+Copier tous les fichiers à la racine du dépôt, en particulier `learning.js`, `scripts/train-model.mjs`, `model.js`, `app.js`, `calibration.js` et `performance.js`. Remplacer également `.github/workflows/sync-results.yml` : il entraîne désormais le modèle avant de mettre à jour le journal. Lancer ensuite **GitHub → Actions → PROBALIA - Résultats 2 fois par semaine → Run workflow**. Vérifier que `data/model-settings.json` a été créé. Les secrets API ne changent pas.
+
+## Nouveauté V4.4 : historique vérifiable et partagé
+
+- La rubrique **Bilan des prévisions** affiche `data/predictions.json` : mêmes indicateurs sur iPhone et ordinateur.
+- GitHub Actions fige la **première prévision disponible dans les 7 jours avant chaque match**, au moins 15 minutes avant le coup d'envoi. Cette prévision n'est jamais modifiée rétroactivement.
+- Dès que les scores finaux sont vérifiés, le bilan calcule la précision 1/N/2, la précision des scores exacts, le Brier, la log loss et la calibration. Les petits échantillons restent peu significatifs.
+- Les cotes ne sont mémorisées **que si un prix réel a été observé avant le match**. Les profits associés sont des simulations sur une unité fictive par pari, et non des gains réels.
+- Le nouveau workflow `.github/workflows/sync-forecast.yml` actualise calendriers, cotes et journal trois fois par jour ; `.github/workflows/sync-results.yml` actualise les résultats historiques **lundi et jeudi** pour limiter les téléchargements.
+- La V4.4 introduit le journal de prévisions ; la V4.5 ajoute une sélection statistique automatique validée hors échantillon. Les données tactiques (xG, types de buts, compositions) restent à intégrer séparément. Aucune donnée Opta payante n'a été intégrée.
+
+### Installer la mise à jour V4.4 sur GitHub
+
+1. Copier le contenu de l'archive à la racine du dépôt, dont `ledger.js`, `performance.js`, `performance.css` et `scripts/sync-predictions.mjs`.
+2. Copier aussi les **deux workflows** dans le dossier caché `.github/workflows` : `sync-forecast.yml` (nouveau) et `sync-results.yml` (remplacé). Cette étape est essentielle pour que le journal se remplisse sans ouvrir le site.
+3. Conserver les secrets existants `FOOTBALL_DATA_TOKEN` et `ODDS_API_KEY` dans les paramètres GitHub, jamais dans le code.
+4. Dans **Actions**, lancer **PROBALIA - Calendrier, cotes et prévisions**, puis **PROBALIA - Résultats 2 fois par semaine** ; vérifier l'apparition de `data/predictions.json`. Le bilan ne contiendra des scores qu'après l'issue de matchs archivés.
+5. Si l'écriture échoue, activer **Settings → Actions → General → Workflow permissions → Read and write permissions**. Recharger le site et l'application installée pour renouveler le cache.
+
+Attention : Football-Data.co.uk réserve ses données gratuites à un usage personnel ou académique et limite les téléchargements automatisés. Ne pas redistribuer ces données ni les utiliser pour un produit commercial sans droits adaptés.
 
 ## Nouveauté V4.3.1 : interface plus intuitive
 
@@ -22,17 +55,17 @@ L'accueil affiche directement **le Top 3 du week-end** à probabilité estimée 
 
 La probabilité conjointe d'un combiné est inférieure à chacune de ses sélections ; le libellé « prudent » ne garantit pas un taux de réussite de 85 %. Les cotes utilisées pour estimer un gain doivent être saisies depuis une offre réelle de bookmaker pour ces marchés, car le flux automatique ne couvre que le 1N2.
 
-Application statique gratuite. L'historique vient d'OpenFootball, les scores récents de Football-Data.co.uk, et le calendrier/horaire officiel de l'API football-data.org. Les cotes 1N2 européennes viennent de The Odds API. GitHub Actions synchronise ces flux dans `data/results.json`, `data/fixtures.json` et `data/odds.json` trois fois par jour. **Les clés API sont stockées uniquement dans les GitHub Actions Secrets**, jamais dans le HTML ou JavaScript public. La saison de Ligue 1 est maintenant détectée automatiquement et les cinq saisons les plus récentes sont utilisées : plus besoin de modifier le code en 2027.
+Application statique gratuite. L'historique vient d'OpenFootball, les scores récents de Football-Data.co.uk, et le calendrier/horaire officiel de l'API football-data.org. Les cotes 1N2 européennes viennent de The Odds API. GitHub Actions synchronise calendrier et cotes trois fois par jour, les résultats lundi et jeudi, et conserve les prévisions dans `data/predictions.json`. **Les clés API sont stockées uniquement dans les GitHub Actions Secrets**, jamais dans le HTML ou JavaScript public. La saison de Ligue 1 est détectée automatiquement et les cinq saisons les plus récentes sont utilisées.
 
 ## Activer la synchronisation automatique sur GitHub Pages
 
 1. Publier **tous** les fichiers de cette archive à la racine de `main`, y compris le dossier caché `.github/workflows` et le dossier `scripts` (important). Si la mise à jour de GitHub a été faite via le navigateur et n'a pas importé le dossier caché, modifier manuellement `.github/workflows/sync-results.yml` avec le contenu fourni dans cette archive.
 2. Dans **Settings → Secrets and variables → Actions**, créer un secret de dépôt nommé exactement `FOOTBALL_DATA_TOKEN` contenant la clé API gratuite [football-data.org](https://www.football-data.org/client/register). Ne jamais coller la clé dans le dépôt public.
 3. Créer un deuxième secret `ODDS_API_KEY` avec une clé [The Odds API](https://the-odds-api.com/) gratuite (500 crédits/mois au moment de l'intégration). La tâche utilise uniquement `h2h` et la région `eu` — soit normalement 1 crédit par appel effectif, environ 90/mois à 3 appels par jour. Les headers de réponse consignent les crédits restants dans le fichier de synthèse. Les données ne sont pas en temps réel.
-4. Dans le dépôt GitHub, ouvrir **Actions** → **PROBALIA - Synchroniser les résultats** → **Run workflow** → **Run workflow**. Cela génère `data/results.json`, `data/fixtures.json` et, si la clé est valide, `data/odds.json`, puis les publie sur `main` ; attendre le job et le déploiement Pages.
+4. Dans le dépôt GitHub, ouvrir **Actions** et lancer **PROBALIA - Calendrier, cotes et prévisions**, puis **PROBALIA - Résultats 2 fois par semaine** via **Run workflow**. Ces tâches génèrent les fichiers de données et le journal `data/predictions.json` ; attendre le déploiement Pages.
 5. Dans **Settings → Actions → General → Workflow permissions**, cocher **Read and write permissions** si la tâche ne peut pas pousser les fichiers de données.
-6. Les synchronisations suivantes sont programmées à 06h18, 12h18 et 19h18 UTC, sous réserve de la disponibilité des GitHub Actions (les jobs programmés peuvent être retardés ou désactivés après inactivité prolongée).
-7. Si résultats/calendrier manquent ou datent de plus de 48 heures, ou si le dernier score déclaré dépasse 10 jours, les pronostics et simulateurs sont suspendus. Si seuls les bookmaker odds échouent, le site garde ses statistiques et cache le radar automatisé ; les cotes de plus de 18h ne sont pas affichées. Au démarrage d'une nouvelle saison, l'absence temporaire d'un CSV ou de la source OpenFootball courante est tolérée à condition que les autres flux vérifiés fonctionnent.
+6. Calendriers, cotes et journal : 06h18, 12h18 et 19h18 UTC. Résultats : lundi et jeudi à 07h18 UTC. Ces horaires peuvent être retardés, ou désactivés après inactivité GitHub prolongée.
+7. Si calendrier ou cotes sont périmés, les informations associées sont suspendues. Les résultats vérifiés acceptent jusqu'à 100 heures entre synchronisations, afin de permettre les deux téléchargements hebdomadaires. Si seul le flux de bookmaker échoue, les simulations fondées sur les résultats historiques peuvent rester disponibles ; les prix trop anciens sont masqués.
 
 Le CSV Football-Data fournit uniquement les scores terminés ; le calendrier actuel vient de l'API football-data.org. Seuls les matchs `TIMED` (heure annoncée) sont proposés dans les analyses, avec conversion Europe/Paris. Les matchs simplement `SCHEDULED` (date provisoire), en cours ou reportés sont exclus des scénarios : vérifier malgré tout auprès de la LFP avant usage.
 
@@ -79,13 +112,13 @@ Un double-clic sur `index.html` peut fonctionner, mais un petit serveur local es
 
 ## Limites scientifiques et opérationnelles
 
-Ce n'est **pas** un modèle entraîné et calibré sur tous les paramètres possibles. Les hyperparamètres Poisson/Elo sont prédéfinis, le rho Dixon-Coles n'est pas optimisé et la correction des probabilités 1N2 peut être rejetée après test. Même quand elle est retenue, ce n'est pas une preuve de rentabilité ou de validité hors des périodes observées. Sans historique des cotes réellement disponibles avant les matchs, il n'existe pas de backtest fiable de rendement (ROI).
+Ce n'est **pas** un modèle entraîné et calibré sur tous les paramètres possibles. Une grille limitée de paramètres Poisson/Elo et Dixon-Coles est maintenant comparée automatiquement, avec rejet possible sur la période de test ; la correction des probabilités 1N2 peut elle aussi être rejetée. Aucun de ces contrôles ne prouve la rentabilité ou la validité hors des périodes observées. Sans historique des cotes réellement disponibles avant les matchs, il n'existe pas de backtest fiable de rendement (ROI).
 
 Les horaires de football-data.org sont susceptibles de changer ; les cotes de The Odds API sont également des instantanés susceptibles de changer. Seul le marché **1N2** (victoire/nul/défaite) est relié à des cotes automatiques ; les autres marchés restent manuels. Aucune API de blessures, de composition ou de xG n'est branchée. Les effets météo, déplacement, calendrier européen, arbitres et enjeu ne sont pas ajustés arbitrairement.
 
 Le script ne publie qu'une synthèse de la meilleure cote par résultat et un consensus agrégé, pas le flux bookmaker complet. Vérifier les [conditions de The Odds API](https://the-odds-api.com/terms-and-conditions.html) avant une distribution publique plus large. **Le flux européen peut inclure des opérateurs non agréés en France** : vérifier l'autorisation de l'opérateur et la disponibilité des cotes avant toute décision.
 
-Les données de la seconde source sont synchronisées par GitHub Actions dans le dépôt, avec historique Git. L'historique des prévisions à venir reste stocké **sur l'appareil** ; il n'est pas encore synchronisé entre appareils.
+Les données de la seconde source et le journal des prévisions sont synchronisés par GitHub Actions dans le dépôt, avec historique Git. Les **prévisions archivées** sont communes à tous les appareils ; les combinés créés personnellement restent stockés localement dans le navigateur.
 
 ### Suite technique recommandée (sans abonnement)
 

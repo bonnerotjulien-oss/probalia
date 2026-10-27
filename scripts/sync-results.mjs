@@ -1,4 +1,4 @@
-import {mkdir, writeFile} from 'node:fs/promises';
+import {mkdir, writeFile, readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {rollingSeasons} from '../season.js';
@@ -43,7 +43,14 @@ export function parseResults(csv,season) {
 
 async function run() {
   const results=[];
+  const destination=path.join(root,'data','results.json');
+  let previous=[];
+  try{const stored=JSON.parse(await readFile(destination,'utf8'));previous=Array.isArray(stored.results)?stored.results:[]}catch{}
   for (const season of seasons) {
+    // Old seasons are immutable: reuse the previously verified local snapshot.
+    // This avoids downloading five historical CSVs on each scheduled update.
+    const prior=previous.filter(r=>r.season===season);
+    if(season!==seasons.at(-1)&&prior.length>=30){results.push(...prior);continue}
     const code=season.slice(2,4)+season.slice(5,7);
     const url=`https://www.football-data.co.uk/mmz4281/${code}/F1.csv`;
     const response=await fetch(url,{signal:AbortSignal.timeout(30000),headers:{'User-Agent':'PROBALIA data update (personal analytical app)'}});
@@ -55,7 +62,6 @@ async function run() {
     results.push(...parsed);
     process.stdout.write(`${season}: ${parsed.length} results\n`);
   }
-  const destination=path.join(root,'data','results.json');
   await mkdir(path.dirname(destination),{recursive:true});
   await writeFile(destination,JSON.stringify({version:1,source:'football-data.co.uk',fetchedAt:new Date().toISOString(),results},null,2)+'\n');
   process.stdout.write(`Generated ${results.length} results\n`);

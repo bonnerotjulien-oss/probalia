@@ -40,7 +40,7 @@ export function fitTemperature(rows){
   return best;
 }
 
-export function auditModel(matches){
+export function auditModel(matches,config){
   const completed=matches.filter(m=>m.played&&Number.isInteger(m.hg)&&Number.isInteger(m.ag)).slice().sort(chronological);
   const rows=[],counts=[1,1,1];let past=[],index=0;
   for(const match of completed){
@@ -48,7 +48,7 @@ export function auditModel(matches){
     while(index<completed.length&&dateKey(completed[index])<dateKey(match)){
       past.push(completed[index]);counts[outcome(completed[index])]++;index++;
     }
-    const raw=predict(match.home,match.away,match.date,past);
+    const raw=predict(match.home,match.away,match.date,past,config);
     if(!raw)continue;
     const n=counts.reduce((a,b)=>a+b,0);
     rows.push({id:match.id,date:match.date,home:match.home,away:match.away,score:`${match.hg}-${match.ag}`,actual:outcome(match),raw:raw.prob,baseline:counts.map(x=>x/n)});

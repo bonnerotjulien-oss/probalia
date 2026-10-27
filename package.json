@@ -1,1 +1,1 @@
-{"name":"probalia-v4","private":true,"version":"4.3.1","type":"module","scripts":{"test":"node test.mjs"}}
+{"name":"probalia-v4","private":true,"version":"4.5.0","type":"module","scripts":{"test":"node test.mjs"}}
