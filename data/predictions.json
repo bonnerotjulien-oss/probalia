@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "source": "PROBALIA",
+  "updatedAt": "2026-10-27T07:09:52.780Z",
+  "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
+  "records": [
+    {
+      "id": "2026-27|le havre ac|paris saint germain",
+      "createdAt": "2026-10-27T07:09:52.780Z",
+      "scheduledAt": "2026-10-30T18:00:00Z",
+      "season": "2026-27",
+      "home": "Le Havre AC",
+      "away": "Paris Saint-Germain FC",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.1189967538820802,
+      "pN": 0.1940411911587674,
+      "p2": 0.6869620549591522,
+      "score": {
+        "home": 0,
+        "away": 2,
+        "p": 0.11792409064020666
+      },
+      "odds": {
+        "home": 12.5,
+        "draw": 7.42,
+        "away": 1.26,
+        "bookmakers": {
+          "home": "Betfair",
+          "draw": "Pinnacle",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-10-27T07:05:39.861Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|olympique lyonnais|angers sco",
+      "createdAt": "2026-10-27T07:09:52.780Z",
+      "scheduledAt": "2026-10-31T19:45:00Z",
+      "season": "2026-27",
+      "home": "Olympique Lyonnais",
+      "away": "Angers SCO",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.6386924770176953,
+      "pN": 0.21626676803737807,
+      "p2": 0.14504075494492674,
+      "score": {
+        "home": 2,
+        "away": 0,
+        "p": 0.11432146723393395
+      },
+      "odds": {
+        "home": 1.44,
+        "draw": 5.31,
+        "away": 8.4,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "Pinnacle",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-10-27T07:05:39.861Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|fc lorient|stade brestois",
+      "createdAt": "2026-10-27T07:09:52.780Z",
+      "scheduledAt": "2026-10-31T19:45:00Z",
+      "season": "2026-27",
+      "home": "FC Lorient",
+      "away": "Stade Brestois 29",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.4932378764067834,
+      "pN": 0.24946989571785583,
+      "p2": 0.25729222787536066,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.11704309956457645
+      },
+      "odds": {
+        "home": 2.56,
+        "draw": 3.45,
+        "away": 3.05,
+        "bookmakers": {
+          "home": "Betfair",
+          "draw": "Betfair",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-10-27T07:05:39.861Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|rc strasbourg|aj auxerre",
+      "createdAt": "2026-10-27T07:09:52.780Z",
+      "scheduledAt": "2026-11-01T14:00:00Z",
+      "season": "2026-27",
+      "home": "RC Strasbourg Alsace",
+      "away": "AJ Auxerre",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.5276686492436526,
+      "pN": 0.23018339487037603,
+      "p2": 0.24214795588597088,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.10350569251509063
+      },
+      "odds": {
+        "home": 1.87,
+        "draw": 4.16,
+        "away": 4.3,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "1xBet",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-10-27T07:05:39.861Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|paris fc|as monaco",
+      "createdAt": "2026-10-27T07:09:52.780Z",
+      "scheduledAt": "2026-11-01T16:15:00Z",
+      "season": "2026-27",
+      "home": "Paris FC",
+      "away": "AS Monaco FC",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.41165292553630817,
+      "pN": 0.24460276208772064,
+      "p2": 0.3437443123759712,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.10907127584201638
+      },
+      "odds": {
+        "home": 2.38,
+        "draw": 3.8,
+        "away": 3.1,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "1xBet",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-10-27T07:05:39.861Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|olympique de marseille|toulouse fc",
+      "createdAt": "2026-10-27T07:09:52.780Z",
+      "scheduledAt": "2026-11-01T19:45:00Z",
+      "season": "2026-27",
+      "home": "Olympique de Marseille",
+      "away": "Toulouse FC",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.4811657666149152,
+      "pN": 0.23054707513891692,
+      "p2": 0.28828715824616846,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.09909148722002885
+      },
+      "odds": {
+        "home": 1.96,
+        "draw": 4.11,
+        "away": 3.9,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "1xBet",
+          "away": "GTbets"
+        }
+      },
+      "oddsObservedAt": "2026-10-27T07:05:39.861Z",
+      "result": null
+    }
+  ],
+  "summary": {
+    "n": 0,
+    "pending": 6,
+    "accuracy": null,
+    "scoreAccuracy": null,
+    "brier": null,
+    "logloss": null,
+    "calibration": [],
+    "quoted": 0,
+    "flatProfit": null
+  }
+}

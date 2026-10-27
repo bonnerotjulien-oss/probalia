@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "trainedAt": "2026-10-27T07:09:48.577Z",
+  "totalResults": 1370,
+  "method": "chronological walk-forward, frozen candidate grid; independent final holdout; logarithmic loss + Brier safety check",
+  "warning": "Validation historique uniquement, pas de garantie de rentabilité, pas de données tactiques ni de cotes",
+  "status": "validated",
+  "candidateId": "forme-longue",
+  "settings": {
+    "halfLifeDays": 300,
+    "priorMatches": 9,
+    "eloK": 18,
+    "eloHomeAdvantage": 65,
+    "eloGoalInfluence": 0.1,
+    "rho": -0.06,
+    "maxGoals": 10,
+    "minHistory": 60
+  },
+  "reason": "Réglage retenu après amélioration vérifiée hors échantillon.",
+  "selectedOnTraining": "forme-longue",
+  "training": {
+    "first": "2025-10-29",
+    "last": "2026-05-10",
+    "n": 200,
+    "reference": {
+      "id": "reference",
+      "n": 200,
+      "logloss": 1.015552073827433,
+      "brier": 0.20252803401790243
+    },
+    "selected": {
+      "id": "forme-longue",
+      "n": 200,
+      "logloss": 1.0123953709310616,
+      "brier": 0.20186230908829647
+    }
+  },
+  "validation": {
+    "first": "2026-05-10",
+    "last": "2026-10-26",
+    "reference": {
+      "n": 90,
+      "logloss": 1.0288867537172008,
+      "brier": 0.2052747891872733
+    },
+    "challenger": {
+      "n": 90,
+      "logloss": 1.0186460044673988,
+      "brier": 0.2027965895765241
+    }
+  },
+  "testedCandidates": [
+    {
+      "id": "reference",
+      "n": 200,
+      "logloss": 1.015552073827433,
+      "brier": 0.20252803401790243
+    },
+    {
+      "id": "forme-recente",
+      "n": 200,
+      "logloss": 1.0188326980831908,
+      "brier": 0.2032595920515987
+    },
+    {
+      "id": "forme-longue",
+      "n": 200,
+      "logloss": 1.0123953709310616,
+      "brier": 0.20186230908829647
+    },
+    {
+      "id": "prudence-fortes",
+      "n": 200,
+      "logloss": 1.0183970253618306,
+      "brier": 0.20319228844944523
+    },
+    {
+      "id": "forme-sensible",
+      "n": 200,
+      "logloss": 1.0156169437015292,
+      "brier": 0.20252370841954628
+    },
+    {
+      "id": "elo-doux",
+      "n": 200,
+      "logloss": 1.017508871054114,
+      "brier": 0.20296794576134247
+    },
+    {
+      "id": "elo-renforce",
+      "n": 200,
+      "logloss": 1.0139210908016514,
+      "brier": 0.20216850922446425
+    },
+    {
+      "id": "nul-frequent",
+      "n": 200,
+      "logloss": 1.015030329130798,
+      "brier": 0.2024410403698553
+    },
+    {
+      "id": "nul-modere",
+      "n": 200,
+      "logloss": 1.0165123801646745,
+      "brier": 0.20269201747559315
+    }
+  ]
+}
