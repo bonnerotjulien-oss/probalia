@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-10-27T07:05:39.809Z",
+  "fetchedAt": "2026-10-27T18:05:26.222Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -517,32 +517,18 @@
       "away": "Paris Saint-Germain FC"
     },
     {
-      "id": 559639,
-      "utcDate": "2026-10-30T20:05:00Z",
-      "status": "TIMED",
-      "home": "Lille OSC",
-      "away": "Racing Club de Lens"
-    },
-    {
       "id": 559646,
-      "utcDate": "2026-10-31T16:15:00Z",
+      "utcDate": "2026-10-30T18:00:00Z",
       "status": "TIMED",
       "home": "OGC Nice",
       "away": "Stade Rennais FC 1901"
     },
     {
-      "id": 559640,
-      "utcDate": "2026-10-31T19:45:00Z",
+      "id": 559639,
+      "utcDate": "2026-10-30T20:05:00Z",
       "status": "TIMED",
-      "home": "Olympique Lyonnais",
-      "away": "Angers SCO"
-    },
-    {
-      "id": 559641,
-      "utcDate": "2026-10-31T19:45:00Z",
-      "status": "TIMED",
-      "home": "FC Lorient",
-      "away": "Stade Brestois 29"
+      "home": "Lille OSC",
+      "away": "Racing Club de Lens"
     },
     {
       "id": 559643,
@@ -559,6 +545,13 @@
       "away": "AJ Auxerre"
     },
     {
+      "id": 559640,
+      "utcDate": "2026-11-01T16:15:00Z",
+      "status": "TIMED",
+      "home": "Olympique Lyonnais",
+      "away": "Angers SCO"
+    },
+    {
       "id": 559642,
       "utcDate": "2026-11-01T16:15:00Z",
       "status": "TIMED",
@@ -571,6 +564,13 @@
       "status": "TIMED",
       "home": "Olympique de Marseille",
       "away": "Toulouse FC"
+    },
+    {
+      "id": 559641,
+      "utcDate": "2026-11-02T19:45:00Z",
+      "status": "TIMED",
+      "home": "FC Lorient",
+      "away": "Stade Brestois 29"
     },
     {
       "id": 559638,
