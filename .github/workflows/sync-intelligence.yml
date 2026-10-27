@@ -1,0 +1,30 @@
+name: PROBALIA - Veille tactique et mémoire sourcée
+on:
+  schedule:
+    - cron: '43 8 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Mettre à jour la mémoire des observations vérifiées
+        run: node scripts/build-intelligence.mjs
+      - name: Relever les titres du flux de veille
+        run: node scripts/sync-tactical-news.mjs
+      - name: Publier les métadonnées de la veille
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/intelligence.json
+          if test -f data/tactical-news.json; then git add data/tactical-news.json; fi
+          if ! git diff --cached --quiet; then
+            git commit -m "data: veille tactique sourcée"
+            git pull --rebase
+            git push
+          fi

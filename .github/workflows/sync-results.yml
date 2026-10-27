@@ -16,6 +16,8 @@ jobs:
       - run: node scripts/sync-results.mjs
       - name: Tester de nouveaux réglages hors échantillon
         run: node scripts/train-model.mjs
+      - name: Actualiser les profils tactiques si des événements autorisés existent
+        run: node scripts/build-tactics.mjs
       - name: Évaluer les prévisions enregistrées
         run: node scripts/sync-predictions.mjs
       - name: Publier résultats et mémoire
@@ -23,6 +25,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/results.json data/predictions.json data/model-settings.json
+          if test -f data/tactics.json; then git add data/tactics.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "data: résultats et suivi PROBALIA"
             git pull --rebase
