@@ -1,44 +1,30 @@
-
-name: PROBALIA - Synchroniser les résultats
-
+name: PROBALIA - Résultats 2 fois par semaine
 on:
   schedule:
-    - cron: '18 6,12,19 * * *'
+    - cron: '18 7 * * 1,4'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Recuperer les fichiers
-        uses: actions/checkout@v4
-
-      - name: Installer Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
-
-      - name: Actualiser les resultats
-        run: node scripts/sync-results.mjs
-
-      - name: Actualiser le calendrier
-        env:
-          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
-        run: node scripts/sync-fixtures.mjs
-
-      - name: Actualiser les cotes des bookmakers
-        env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: node scripts/sync-odds.mjs
-
-      - name: Publier les nouvelles donnees
+      - run: node scripts/sync-results.mjs
+      - name: Tester de nouveaux réglages hors échantillon
+        run: node scripts/train-model.mjs
+      - name: Évaluer les prévisions enregistrées
+        run: node scripts/sync-predictions.mjs
+      - name: Publier résultats et mémoire
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
-          git diff --cached --quiet || git commit -m "data: synchronisation PROBALIA V3"
-          git push
+          git add data/results.json data/predictions.json data/model-settings.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: résultats et suivi PROBALIA"
+            git pull --rebase
+            git push
+          fi
