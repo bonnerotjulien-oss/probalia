@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.co.uk",
-  "fetchedAt": "2026-10-26T23:10:10.519Z",
+  "fetchedAt": "2026-10-27T07:05:39.101Z",
   "results": [
     {
       "season": "2022-23",
@@ -10890,6 +10890,78 @@
       "away": "Nice",
       "hg": 2,
       "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-23",
+      "home": "Brest",
+      "away": "Nice",
+      "hg": 1,
+      "ag": 2
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-24",
+      "home": "Lens",
+      "away": "Paris FC",
+      "hg": 2,
+      "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-25",
+      "home": "Monaco",
+      "away": "Lille",
+      "hg": 1,
+      "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-25",
+      "home": "Angers",
+      "away": "Lorient",
+      "hg": 0,
+      "ag": 0
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-25",
+      "home": "Auxerre",
+      "away": "Le Mans",
+      "hg": 1,
+      "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-25",
+      "home": "Marseille",
+      "away": "Le Havre",
+      "hg": 4,
+      "ag": 3
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-25",
+      "home": "Rennes",
+      "away": "Strasbourg",
+      "hg": 3,
+      "ag": 0
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-25",
+      "home": "Toulouse",
+      "away": "Troyes",
+      "hg": 0,
+      "ag": 0
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-10-26",
+      "home": "Paris SG",
+      "away": "Lyon",
+      "hg": 2,
+      "ag": 0
     }
   ]
 }
