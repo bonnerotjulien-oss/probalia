@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "trainedAt": "2026-10-27T07:09:48.577Z",
+  "trainedAt": "2026-10-29T14:28:30.405Z",
   "totalResults": 1370,
   "method": "chronological walk-forward, frozen candidate grid; independent final holdout; logarithmic loss + Brier safety check",
   "warning": "Validation historique uniquement, pas de garantie de rentabilité, pas de données tactiques ni de cotes",
