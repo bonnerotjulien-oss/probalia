@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-10-30T13:10:56.919Z",
+  "fetchedAt": "2026-10-30T23:02:07.767Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -512,21 +512,21 @@
     {
       "id": 559644,
       "utcDate": "2026-10-30T18:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Le Havre AC",
       "away": "Paris Saint-Germain FC"
     },
     {
       "id": 559646,
       "utcDate": "2026-10-30T18:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "OGC Nice",
       "away": "Stade Rennais FC 1901"
     },
     {
       "id": 559639,
       "utcDate": "2026-10-30T20:05:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Lille OSC",
       "away": "Racing Club de Lens"
     },
