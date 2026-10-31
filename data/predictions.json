@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-10-31T12:46:41.312Z",
+  "updatedAt": "2026-10-31T22:35:10.137Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -206,11 +206,40 @@
       },
       "oddsObservedAt": "2026-10-30T23:02:07.816Z",
       "result": null
+    },
+    {
+      "id": "2026-27|aj auxerre|paris fc",
+      "createdAt": "2026-10-31T22:35:10.137Z",
+      "scheduledAt": "2026-11-07T16:15:00Z",
+      "season": "2026-27",
+      "home": "AJ Auxerre",
+      "away": "Paris FC",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.37366381345978644,
+      "pN": 0.30528751844285185,
+      "p2": 0.3210486680973614,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.14153709958465915
+      },
+      "odds": {
+        "home": 3.85,
+        "draw": 3.9,
+        "away": 2.05,
+        "bookmakers": {
+          "home": "Betfair",
+          "draw": "1xBet",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-10-31T22:35:09.805Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 0,
-    "pending": 7,
+    "pending": 8,
     "accuracy": null,
     "scoreAccuracy": null,
     "brier": null,
