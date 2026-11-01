@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-10-31T22:35:09.758Z",
+  "fetchedAt": "2026-11-01T13:36:30.638Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -533,7 +533,7 @@
     {
       "id": 559643,
       "utcDate": "2026-10-31T19:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "ES Troyes AC",
       "away": "Le Mans FC"
     },
