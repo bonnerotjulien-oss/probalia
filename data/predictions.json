@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-01T13:36:30.954Z",
+  "updatedAt": "2026-11-01T22:54:28.553Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -235,11 +235,98 @@
       },
       "oddsObservedAt": "2026-10-31T22:35:09.805Z",
       "result": null
+    },
+    {
+      "id": "2026-27|stade brestois|olympique lyonnais",
+      "createdAt": "2026-11-01T22:54:28.553Z",
+      "scheduledAt": "2026-11-08T16:15:00Z",
+      "season": "2026-27",
+      "home": "Stade Brestois 29",
+      "away": "Olympique Lyonnais",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.38957997159062296,
+      "pN": 0.26589627512267977,
+      "p2": 0.3445237532866979,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.12563632339758024
+      },
+      "odds": {
+        "home": 3.04,
+        "draw": 3.8,
+        "away": 2.5,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "1xBet",
+          "away": "LeoVegas (SE)"
+        }
+      },
+      "oddsObservedAt": "2026-11-01T22:54:28.324Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|le havre ac|fc lorient",
+      "createdAt": "2026-11-01T22:54:28.553Z",
+      "scheduledAt": "2026-11-08T16:15:00Z",
+      "season": "2026-27",
+      "home": "Le Havre AC",
+      "away": "FC Lorient",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.3053732220758786,
+      "pN": 0.3022470826623924,
+      "p2": 0.3923796952617284,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.14061171880472192
+      },
+      "odds": {
+        "home": 2.92,
+        "draw": 3.52,
+        "away": 2.65,
+        "bookmakers": {
+          "home": "Betfair",
+          "draw": "1xBet",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-11-01T22:54:28.324Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|angers sco|ogc nice",
+      "createdAt": "2026-11-01T22:54:28.553Z",
+      "scheduledAt": "2026-11-08T16:15:00Z",
+      "season": "2026-27",
+      "home": "Angers SCO",
+      "away": "OGC Nice",
+      "modelVersion": "4.5.0-walk-forward-audited:forme-longue",
+      "p1": 0.32807221128841313,
+      "pN": 0.27895561916814227,
+      "p2": 0.3929721695434447,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.13304975759072135
+      },
+      "odds": {
+        "home": 3.7,
+        "draw": 3.84,
+        "away": 2.18,
+        "bookmakers": {
+          "home": "Tipico",
+          "draw": "1xBet",
+          "away": "Unibet (SE)"
+        }
+      },
+      "oddsObservedAt": "2026-11-01T22:54:28.324Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 0,
-    "pending": 8,
+    "pending": 11,
     "accuracy": null,
     "scoreAccuracy": null,
     "brier": null,

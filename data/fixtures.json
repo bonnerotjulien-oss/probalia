@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-11-01T13:36:30.638Z",
+  "fetchedAt": "2026-11-01T22:54:28.281Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -540,28 +540,28 @@
     {
       "id": 559647,
       "utcDate": "2026-11-01T14:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "RC Strasbourg Alsace",
       "away": "AJ Auxerre"
     },
     {
       "id": 559640,
       "utcDate": "2026-11-01T16:15:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Olympique Lyonnais",
       "away": "Angers SCO"
     },
     {
       "id": 559642,
       "utcDate": "2026-11-01T16:15:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Paris FC",
       "away": "AS Monaco FC"
     },
     {
       "id": 559645,
       "utcDate": "2026-11-01T19:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Olympique de Marseille",
       "away": "Toulouse FC"
     },
