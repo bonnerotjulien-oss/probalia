@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "trainedAt": "2026-10-29T14:28:30.405Z",
-  "totalResults": 1370,
+  "trainedAt": "2026-11-02T17:13:22.171Z",
+  "totalResults": 1378,
   "method": "chronological walk-forward, frozen candidate grid; independent final holdout; logarithmic loss + Brier safety check",
   "warning": "Validation historique uniquement, pas de garantie de rentabilité, pas de données tactiques ni de cotes",
-  "status": "validated",
-  "candidateId": "forme-longue",
+  "status": "baseline",
+  "candidateId": "reference",
   "settings": {
-    "halfLifeDays": 300,
+    "halfLifeDays": 210,
     "priorMatches": 9,
     "eloK": 18,
     "eloHomeAdvantage": 65,
@@ -16,93 +16,93 @@
     "maxGoals": 10,
     "minHistory": 60
   },
-  "reason": "Réglage retenu après amélioration vérifiée hors échantillon.",
-  "selectedOnTraining": "forme-longue",
+  "reason": "Le modèle de référence reste le meilleur à l’entraînement.",
+  "selectedOnTraining": "reference",
   "training": {
-    "first": "2025-10-29",
-    "last": "2026-05-10",
+    "first": "2025-11-02",
+    "last": "2026-05-13",
     "n": 200,
     "reference": {
       "id": "reference",
       "n": 200,
-      "logloss": 1.015552073827433,
-      "brier": 0.20252803401790243
+      "logloss": 1.01634180145479,
+      "brier": 0.20292129392515426
     },
     "selected": {
-      "id": "forme-longue",
+      "id": "reference",
       "n": 200,
-      "logloss": 1.0123953709310616,
-      "brier": 0.20186230908829647
+      "logloss": 1.01634180145479,
+      "brier": 0.20292129392515426
     }
   },
   "validation": {
-    "first": "2026-05-10",
-    "last": "2026-10-26",
+    "first": "2026-05-13",
+    "last": "2026-11-01",
     "reference": {
       "n": 90,
-      "logloss": 1.0288867537172008,
-      "brier": 0.2052747891872733
+      "logloss": 1.017555824564709,
+      "brier": 0.20248152681374088
     },
     "challenger": {
       "n": 90,
-      "logloss": 1.0186460044673988,
-      "brier": 0.2027965895765241
+      "logloss": 1.017555824564709,
+      "brier": 0.20248152681374088
     }
   },
   "testedCandidates": [
     {
       "id": "reference",
       "n": 200,
-      "logloss": 1.015552073827433,
-      "brier": 0.20252803401790243
+      "logloss": 1.01634180145479,
+      "brier": 0.20292129392515426
     },
     {
       "id": "forme-recente",
       "n": 200,
-      "logloss": 1.0188326980831908,
-      "brier": 0.2032595920515987
+      "logloss": 1.0195136677827166,
+      "brier": 0.2036160232313086
     },
     {
       "id": "forme-longue",
       "n": 200,
-      "logloss": 1.0123953709310616,
-      "brier": 0.20186230908829647
+      "logloss": 1.0137875105562433,
+      "brier": 0.20239627970154314
     },
     {
       "id": "prudence-fortes",
       "n": 200,
-      "logloss": 1.0183970253618306,
-      "brier": 0.20319228844944523
+      "logloss": 1.019241123844366,
+      "brier": 0.20355899162044822
     },
     {
       "id": "forme-sensible",
       "n": 200,
-      "logloss": 1.0156169437015292,
-      "brier": 0.20252370841954628
+      "logloss": 1.0163638841676692,
+      "brier": 0.20293963500567017
     },
     {
       "id": "elo-doux",
       "n": 200,
-      "logloss": 1.017508871054114,
-      "brier": 0.20296794576134247
+      "logloss": 1.0183031064481098,
+      "brier": 0.20335250440045974
     },
     {
       "id": "elo-renforce",
       "n": 200,
-      "logloss": 1.0139210908016514,
-      "brier": 0.20216850922446425
+      "logloss": 1.0147027481909325,
+      "brier": 0.20256978051019156
     },
     {
       "id": "nul-frequent",
       "n": 200,
-      "logloss": 1.015030329130798,
-      "brier": 0.2024410403698553
+      "logloss": 1.0161004065590469,
+      "brier": 0.2028897727329847
     },
     {
       "id": "nul-modere",
       "n": 200,
-      "logloss": 1.0165123801646745,
-      "brier": 0.20269201747559315
+      "logloss": 1.0170179999014732,
+      "brier": 0.20303041865985122
     }
   ]
 }

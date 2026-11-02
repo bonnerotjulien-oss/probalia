@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-02T16:15:47.242Z",
+  "updatedAt": "2026-11-02T17:13:25.334Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -31,7 +31,12 @@
         }
       },
       "oddsObservedAt": "2026-10-27T07:05:39.861Z",
-      "result": null
+      "result": {
+        "home": 1,
+        "away": 5,
+        "date": "2026-10-30",
+        "settledAt": "2026-11-02T17:13:25.334Z"
+      }
     },
     {
       "id": "2026-27|olympique lyonnais|angers sco",
@@ -60,7 +65,12 @@
         }
       },
       "oddsObservedAt": "2026-10-27T07:05:39.861Z",
-      "result": null
+      "result": {
+        "home": 2,
+        "away": 0,
+        "date": "2026-11-01",
+        "settledAt": "2026-11-02T17:13:25.334Z"
+      }
     },
     {
       "id": "2026-27|fc lorient|stade brestois",
@@ -118,7 +128,12 @@
         }
       },
       "oddsObservedAt": "2026-10-27T07:05:39.861Z",
-      "result": null
+      "result": {
+        "home": 5,
+        "away": 1,
+        "date": "2026-11-01",
+        "settledAt": "2026-11-02T17:13:25.334Z"
+      }
     },
     {
       "id": "2026-27|paris fc|as monaco",
@@ -147,7 +162,12 @@
         }
       },
       "oddsObservedAt": "2026-10-27T07:05:39.861Z",
-      "result": null
+      "result": {
+        "home": 3,
+        "away": 1,
+        "date": "2026-11-01",
+        "settledAt": "2026-11-02T17:13:25.334Z"
+      }
     },
     {
       "id": "2026-27|olympique de marseille|toulouse fc",
@@ -176,7 +196,12 @@
         }
       },
       "oddsObservedAt": "2026-10-27T07:05:39.861Z",
-      "result": null
+      "result": {
+        "home": 2,
+        "away": 0,
+        "date": "2026-11-01",
+        "settledAt": "2026-11-02T17:13:25.334Z"
+      }
     },
     {
       "id": "2026-27|toulouse fc|rc strasbourg",
@@ -325,14 +350,27 @@
     }
   ],
   "summary": {
-    "n": 0,
-    "pending": 11,
-    "accuracy": null,
-    "scoreAccuracy": null,
-    "brier": null,
-    "logloss": null,
-    "calibration": [],
-    "quoted": 0,
-    "flatProfit": null
+    "n": 5,
+    "pending": 6,
+    "accuracy": 1,
+    "scoreAccuracy": 0.2,
+    "brier": 0.10749776703413635,
+    "logloss": 0.6164426612707219,
+    "quoted": 5,
+    "flatProfit": 3.91,
+    "calibration": [
+      {
+        "range": "40–60 %",
+        "n": 3,
+        "predicted": 0.47349578046495866,
+        "observed": 1
+      },
+      {
+        "range": "60–80 %",
+        "n": 2,
+        "predicted": 0.6628272659884238,
+        "observed": 1
+      }
+    ]
   }
 }
