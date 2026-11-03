@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-02T17:14:23.188Z",
+  "fetchedAt": "2026-11-03T15:21:12.468Z",
   "source": "football-data.co.uk match statistics, where available",
   "matches": [
     {
@@ -6949,6 +6949,24 @@
         "shots": 14,
         "onTarget": 7,
         "corners": 3
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "season": "2026-27",
+      "home": "fc lorient",
+      "away": "stade brestois",
+      "homeStats": {
+        "goals": 0,
+        "shots": 15,
+        "onTarget": 0,
+        "corners": 8
+      },
+      "awayStats": {
+        "goals": 2,
+        "shots": 12,
+        "onTarget": 4,
+        "corners": 2
       }
     }
   ]
