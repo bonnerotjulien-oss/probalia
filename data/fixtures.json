@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-11-02T16:15:47.035Z",
+  "fetchedAt": "2026-11-03T01:40:09.031Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -568,7 +568,7 @@
     {
       "id": 559641,
       "utcDate": "2026-11-02T19:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "FC Lorient",
       "away": "Stade Brestois 29"
     },
