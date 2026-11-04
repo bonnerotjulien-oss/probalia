@@ -1,10 +1,26 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-03T16:33:18.646Z",
+  "fetchedAt": "2026-11-04T16:35:05.283Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
+    {
+      "title": "Ligue 1 : Le programme de la J10 avec les chocs Lens-OM et Rennes-Lille",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-ligue-1-le-programme-de-la-j10-avec-les-chocs-lens-om-et-rennes-lille_VN-202611040590.html",
+      "publishedAt": "2026-11-04T13:46:22.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "La fin d’un cliché? Non, la Ligue 1 n'est pas le grand championnat où les joueurs formés au club jouent le plus",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/la-fin-d-un-cliche-non-la-ligue-1-n-est-pas-le-grand-championnat-ou-les-joueurs-formes-au-club-jouent-le-plus_AV-202611040514.html",
+      "publishedAt": "2026-11-04T12:02:25.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
     {
       "title": "Droits TV Ligue 1 : La LFP a \"senti des intérêts des plateformes américaines\"",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-droits-tv-ligue-1-la-lfp-a-senti-des-interets-des-plateformes-americaines_VN-202611030644.html",
