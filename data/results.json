@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.co.uk",
-  "fetchedAt": "2026-11-02T17:13:22.127Z",
+  "fetchedAt": "2026-11-05T15:36:39.632Z",
   "results": [
     {
       "season": "2022-23",
@@ -11026,6 +11026,14 @@
       "away": "Toulouse",
       "hg": 2,
       "ag": 0
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-02",
+      "home": "Lorient",
+      "away": "Brest",
+      "hg": 0,
+      "ag": 2
     }
   ]
 }

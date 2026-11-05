@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "trainedAt": "2026-11-02T17:13:22.171Z",
-  "totalResults": 1378,
+  "trainedAt": "2026-11-05T15:36:39.681Z",
+  "totalResults": 1379,
   "method": "chronological walk-forward, frozen candidate grid; independent final holdout; logarithmic loss + Brier safety check",
   "warning": "Validation historique uniquement, pas de garantie de rentabilité, pas de données tactiques ni de cotes",
   "status": "baseline",
@@ -25,84 +25,84 @@
     "reference": {
       "id": "reference",
       "n": 200,
-      "logloss": 1.01634180145479,
-      "brier": 0.20292129392515426
+      "logloss": 1.0135831723263182,
+      "brier": 0.20225585565306983
     },
     "selected": {
       "id": "reference",
       "n": 200,
-      "logloss": 1.01634180145479,
-      "brier": 0.20292129392515426
+      "logloss": 1.0135831723263182,
+      "brier": 0.20225585565306983
     }
   },
   "validation": {
-    "first": "2026-05-13",
-    "last": "2026-11-01",
+    "first": "2026-05-17",
+    "last": "2026-11-02",
     "reference": {
       "n": 90,
-      "logloss": 1.017555824564709,
-      "brier": 0.20248152681374088
+      "logloss": 1.0229910275748861,
+      "brier": 0.2037692076356148
     },
     "challenger": {
       "n": 90,
-      "logloss": 1.017555824564709,
-      "brier": 0.20248152681374088
+      "logloss": 1.0229910275748861,
+      "brier": 0.2037692076356148
     }
   },
   "testedCandidates": [
     {
       "id": "reference",
       "n": 200,
-      "logloss": 1.01634180145479,
-      "brier": 0.20292129392515426
+      "logloss": 1.0135831723263182,
+      "brier": 0.20225585565306983
     },
     {
       "id": "forme-recente",
       "n": 200,
-      "logloss": 1.0195136677827166,
-      "brier": 0.2036160232313086
+      "logloss": 1.01692683179695,
+      "brier": 0.20299447837429213
     },
     {
       "id": "forme-longue",
       "n": 200,
-      "logloss": 1.0137875105562433,
-      "brier": 0.20239627970154314
+      "logloss": 1.0108995694035399,
+      "brier": 0.20169601276027652
     },
     {
       "id": "prudence-fortes",
       "n": 200,
-      "logloss": 1.019241123844366,
-      "brier": 0.20355899162044822
+      "logloss": 1.0170298937726054,
+      "brier": 0.20302457136631524
     },
     {
       "id": "forme-sensible",
       "n": 200,
-      "logloss": 1.0163638841676692,
-      "brier": 0.20293963500567017
+      "logloss": 1.0131534173983074,
+      "brier": 0.20216826782237693
     },
     {
       "id": "elo-doux",
       "n": 200,
-      "logloss": 1.0183031064481098,
-      "brier": 0.20335250440045974
+      "logloss": 1.0156853301769957,
+      "brier": 0.20272093564477234
     },
     {
       "id": "elo-renforce",
       "n": 200,
-      "logloss": 1.0147027481909325,
-      "brier": 0.20256978051019156
+      "logloss": 1.0118043665473773,
+      "brier": 0.20187075282819222
     },
     {
       "id": "nul-frequent",
       "n": 200,
-      "logloss": 1.0161004065590469,
-      "brier": 0.2028897727329847
+      "logloss": 1.0133148038811632,
+      "brier": 0.2022272502255201
     },
     {
       "id": "nul-modere",
       "n": 200,
-      "logloss": 1.0170179999014732,
-      "brier": 0.20303041865985122
+      "logloss": 1.014285619119513,
+      "brier": 0.2023621779556708
     }
   ]
 }
