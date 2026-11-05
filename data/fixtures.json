@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-11-04T14:42:54.096Z",
+  "fetchedAt": "2026-11-05T00:25:47.415Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -581,14 +581,14 @@
     },
     {
       "id": 559637,
-      "utcDate": "2026-11-07T16:15:00Z",
+      "utcDate": "2026-11-07T18:00:00Z",
       "status": "TIMED",
       "home": "AJ Auxerre",
       "away": "Paris FC"
     },
     {
       "id": 559635,
-      "utcDate": "2026-11-07T19:45:00Z",
+      "utcDate": "2026-11-07T20:05:00Z",
       "status": "TIMED",
       "home": "Paris Saint-Germain FC",
       "away": "ES Troyes AC"
