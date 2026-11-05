@@ -1,10 +1,18 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-04T16:35:05.283Z",
+  "fetchedAt": "2026-11-05T16:51:03.930Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
+    {
+      "title": "Ligue 1: Auxerre-PFC décalé et PSG-Troyes retardé",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/ligue-1-auxerre-pfc-decale-et-psg-troyes-retarde_AV-202611040837.html",
+      "publishedAt": "2026-11-04T18:23:50.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
     {
       "title": "Ligue 1 : Le programme de la J10 avec les chocs Lens-OM et Rennes-Lille",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-ligue-1-le-programme-de-la-j10-avec-les-chocs-lens-om-et-rennes-lille_VN-202611040590.html",
