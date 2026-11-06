@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-11-06T14:25:16.115Z",
+  "fetchedAt": "2026-11-06T23:44:35.180Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -575,7 +575,7 @@
     {
       "id": 559638,
       "utcDate": "2026-11-06T19:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Toulouse FC",
       "away": "RC Strasbourg Alsace"
     },
