@@ -1,10 +1,34 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-07T15:08:54.431Z",
+  "fetchedAt": "2026-11-08T15:35:29.015Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
+    {
+      "title": "DIRECT. Lens-OM: suivez le dernier match de la 10e journée de Ligue 1 en live",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-lens-om-suivez-le-dernier-match-de-la-10e-journee-de-ligue-1-en-live_LS-202611080057.html",
+      "publishedAt": "2026-11-08T10:17:13.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Lens - Marseille : sur quelle chaîne TV et à quelle heure regarder le match de Ligue 1 en direct ?",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/lens-marseille-sur-quelle-chaine-tv-et-a-quelle-heure-regarder-le-match-de-ligue-1-en-direct_AN-202611080024.html",
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Rennes - Lille : à quelle heure et sur quelle chaîne regarder le match de Ligue 1 en direct ?",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/rennes-lille-a-quelle-heure-et-sur-quelle-chaine-regarder-le-match-de-ligue-1-en-direct_AN-202611080023.html",
+      "publishedAt": "2026-11-08T04:46:00.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
     {
       "title": "Lens - OM : Des efforts \"comme un 5ème défenseur\", Genesio loue les \"nets progrès\" de Paixao",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-lens-om-des-efforts-comme-un-5eme-defenseur-genesio-loue-les-nets-progres-de-paixao_VN-202611070266.html",
