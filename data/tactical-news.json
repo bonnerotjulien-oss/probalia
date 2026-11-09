@@ -1,14 +1,22 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-08T15:35:29.015Z",
+  "fetchedAt": "2026-11-09T19:07:49.596Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
     {
-      "title": "DIRECT. Lens-OM: suivez le dernier match de la 10e journée de Ligue 1 en live",
+      "title": "Lens-OM: les Marseillais poursuivent leur série et montent à la 4e place de Ligue 1, terrible semaine pour les Lensois",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-lens-om-suivez-le-dernier-match-de-la-10e-journee-de-ligue-1-en-live_LS-202611080057.html",
-      "publishedAt": "2026-11-08T10:17:13.000Z",
+      "publishedAt": "2026-11-08T22:59:05.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Rennes-Lille: le LOSC s'impose au Roazhon Park et s'empare de la deuxième place de la Ligue 1",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-rennes-lille-suivez-le-match-de-la-10e-journee-en-live_LS-202611080271.html",
+      "publishedAt": "2026-11-08T15:53:14.000Z",
       "source": "RMC Sport Ligue 1",
       "reviewed": false,
       "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
