@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.co.uk",
-  "fetchedAt": "2026-11-05T15:36:39.632Z",
+  "fetchedAt": "2026-11-09T17:38:28.614Z",
   "results": [
     {
       "season": "2022-23",
@@ -11033,6 +11033,78 @@
       "home": "Lorient",
       "away": "Brest",
       "hg": 0,
+      "ag": 2
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-06",
+      "home": "Toulouse",
+      "away": "Strasbourg",
+      "hg": 3,
+      "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-07",
+      "home": "Auxerre",
+      "away": "Paris FC",
+      "hg": 0,
+      "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-07",
+      "home": "Paris SG",
+      "away": "Troyes",
+      "hg": 1,
+      "ag": 0
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-08",
+      "home": "Rennes",
+      "away": "Lille",
+      "hg": 1,
+      "ag": 2
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-08",
+      "home": "Angers",
+      "away": "Nice",
+      "hg": 0,
+      "ag": 2
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-08",
+      "home": "Brest",
+      "away": "Lyon",
+      "hg": 2,
+      "ag": 0
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-08",
+      "home": "Le Havre",
+      "away": "Lorient",
+      "hg": 0,
+      "ag": 2
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-08",
+      "home": "Le Mans",
+      "away": "Monaco",
+      "hg": 1,
+      "ag": 1
+    },
+    {
+      "season": "2026-27",
+      "date": "2026-11-08",
+      "home": "Lens",
+      "away": "Marseille",
+      "hg": 1,
       "ag": 2
     }
   ]

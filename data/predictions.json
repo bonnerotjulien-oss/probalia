@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-09T16:37:42.597Z",
+  "updatedAt": "2026-11-09T17:38:31.850Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -235,7 +235,12 @@
         }
       },
       "oddsObservedAt": "2026-10-30T23:02:07.816Z",
-      "result": null
+      "result": {
+        "home": 3,
+        "away": 1,
+        "date": "2026-11-06",
+        "settledAt": "2026-11-09T17:38:31.850Z"
+      }
     },
     {
       "id": "2026-27|aj auxerre|paris fc",
@@ -264,7 +269,12 @@
         }
       },
       "oddsObservedAt": "2026-10-31T22:35:09.805Z",
-      "result": null
+      "result": {
+        "home": 0,
+        "away": 1,
+        "date": "2026-11-07",
+        "settledAt": "2026-11-09T17:38:31.850Z"
+      }
     },
     {
       "id": "2026-27|stade brestois|olympique lyonnais",
@@ -293,7 +303,12 @@
         }
       },
       "oddsObservedAt": "2026-11-01T22:54:28.324Z",
-      "result": null
+      "result": {
+        "home": 2,
+        "away": 0,
+        "date": "2026-11-08",
+        "settledAt": "2026-11-09T17:38:31.850Z"
+      }
     },
     {
       "id": "2026-27|le havre ac|fc lorient",
@@ -322,7 +337,12 @@
         }
       },
       "oddsObservedAt": "2026-11-01T22:54:28.324Z",
-      "result": null
+      "result": {
+        "home": 0,
+        "away": 2,
+        "date": "2026-11-08",
+        "settledAt": "2026-11-09T17:38:31.850Z"
+      }
     },
     {
       "id": "2026-27|angers sco|ogc nice",
@@ -351,19 +371,30 @@
         }
       },
       "oddsObservedAt": "2026-11-01T22:54:28.324Z",
-      "result": null
+      "result": {
+        "home": 0,
+        "away": 2,
+        "date": "2026-11-08",
+        "settledAt": "2026-11-09T17:38:31.850Z"
+      }
     }
   ],
   "summary": {
-    "n": 6,
-    "pending": 5,
-    "accuracy": 0.8333333333333334,
-    "scoreAccuracy": 0.16666666666666666,
-    "brier": 0.13720000954878567,
-    "logloss": 0.7399593454956527,
-    "quoted": 6,
-    "flatProfit": 2.91,
+    "n": 11,
+    "pending": 0,
+    "accuracy": 0.7272727272727273,
+    "scoreAccuracy": 0.09090909090909091,
+    "brier": 0.1654607368814349,
+    "logloss": 0.8561180428410137,
+    "quoted": 11,
+    "flatProfit": 5.779999999999999,
     "calibration": [
+      {
+        "range": "20–40 %",
+        "n": 5,
+        "predicted": 0.38621858329425196,
+        "observed": 0.6
+      },
       {
         "range": "40–60 %",
         "n": 4,
