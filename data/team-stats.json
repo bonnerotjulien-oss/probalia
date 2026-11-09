@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-08T14:22:50.462Z",
+  "fetchedAt": "2026-11-09T17:41:09.785Z",
   "source": "football-data.co.uk match statistics, where available",
   "matches": [
     {
@@ -6967,6 +6967,168 @@
         "shots": 12,
         "onTarget": 4,
         "corners": 2
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "season": "2026-27",
+      "home": "toulouse fc",
+      "away": "rc strasbourg",
+      "homeStats": {
+        "goals": 3,
+        "shots": 10,
+        "onTarget": 5,
+        "corners": 7
+      },
+      "awayStats": {
+        "goals": 1,
+        "shots": 9,
+        "onTarget": 4,
+        "corners": 1
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "season": "2026-27",
+      "home": "aj auxerre",
+      "away": "paris fc",
+      "homeStats": {
+        "goals": 0,
+        "shots": 7,
+        "onTarget": 2,
+        "corners": 1
+      },
+      "awayStats": {
+        "goals": 1,
+        "shots": 10,
+        "onTarget": 3,
+        "corners": 5
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "season": "2026-27",
+      "home": "paris saint germain",
+      "away": "troyes",
+      "homeStats": {
+        "goals": 1,
+        "shots": 15,
+        "onTarget": 7,
+        "corners": 5
+      },
+      "awayStats": {
+        "goals": 0,
+        "shots": 8,
+        "onTarget": 3,
+        "corners": 1
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "season": "2026-27",
+      "home": "stade rennais",
+      "away": "lille osc",
+      "homeStats": {
+        "goals": 1,
+        "shots": 15,
+        "onTarget": 2,
+        "corners": 7
+      },
+      "awayStats": {
+        "goals": 2,
+        "shots": 8,
+        "onTarget": 3,
+        "corners": 2
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "season": "2026-27",
+      "home": "angers sco",
+      "away": "ogc nice",
+      "homeStats": {
+        "goals": 0,
+        "shots": 11,
+        "onTarget": 5,
+        "corners": 6
+      },
+      "awayStats": {
+        "goals": 2,
+        "shots": 16,
+        "onTarget": 8,
+        "corners": 4
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "season": "2026-27",
+      "home": "stade brestois",
+      "away": "olympique lyonnais",
+      "homeStats": {
+        "goals": 2,
+        "shots": 13,
+        "onTarget": 6,
+        "corners": 1
+      },
+      "awayStats": {
+        "goals": 0,
+        "shots": 10,
+        "onTarget": 2,
+        "corners": 8
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "season": "2026-27",
+      "home": "le havre ac",
+      "away": "fc lorient",
+      "homeStats": {
+        "goals": 0,
+        "shots": 21,
+        "onTarget": 5,
+        "corners": 5
+      },
+      "awayStats": {
+        "goals": 2,
+        "shots": 7,
+        "onTarget": 3,
+        "corners": 0
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "season": "2026-27",
+      "home": "le mans",
+      "away": "as monaco",
+      "homeStats": {
+        "goals": 1,
+        "shots": 19,
+        "onTarget": 5,
+        "corners": 8
+      },
+      "awayStats": {
+        "goals": 1,
+        "shots": 6,
+        "onTarget": 3,
+        "corners": 7
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "season": "2026-27",
+      "home": "rc lens",
+      "away": "olympique de marseille",
+      "homeStats": {
+        "goals": 1,
+        "shots": 13,
+        "onTarget": 6,
+        "corners": 4
+      },
+      "awayStats": {
+        "goals": 2,
+        "shots": 16,
+        "onTarget": 5,
+        "corners": 6
       }
     }
   ]
