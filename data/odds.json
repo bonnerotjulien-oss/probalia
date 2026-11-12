@@ -1,10 +1,10 @@
 {
   "version": 1,
   "source": "the-odds-api.com",
-  "fetchedAt": "2026-11-11T14:33:36.407Z",
+  "fetchedAt": "2026-11-12T01:34:28.365Z",
   "market": "h2h",
   "region": "eu",
-  "remainingCredits": 479,
+  "remainingCredits": 478,
   "events": [
     {
       "home": "Troyes",
@@ -14,25 +14,25 @@
         "home": {
           "price": 2.16,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "draw": {
           "price": 3.84,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 3.66,
           "bookmaker": "Pinnacle",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         }
       },
       "consensus": {
-        "bookmakers": 18,
+        "bookmakers": 17,
         "probabilities": {
-          "home": 0.46356347122685027,
-          "draw": 0.2663024196409565,
-          "away": 0.27013410913219327
+          "home": 0.4623956498429961,
+          "draw": 0.26686834648081487,
+          "away": 0.270736003676189
         }
       }
     },
@@ -44,25 +44,25 @@
         "home": {
           "price": 6.75,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "draw": {
           "price": 5.3,
           "bookmaker": "Betfair",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         },
         "away": {
           "price": 1.5,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
-        "bookmakers": 20,
+        "bookmakers": 19,
         "probabilities": {
-          "home": 0.1560527251590705,
-          "draw": 0.18819958654183902,
-          "away": 0.6557476882990906
+          "home": 0.1563525038268095,
+          "draw": 0.18762300459217143,
+          "away": 0.656024491581019
         }
       }
     },
@@ -74,25 +74,25 @@
         "home": {
           "price": 1.44,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 5.34,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 7.8,
           "bookmaker": "Betfair",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         }
       },
       "consensus": {
-        "bookmakers": 20,
+        "bookmakers": 19,
         "probabilities": {
-          "home": 0.6797839797575437,
-          "draw": 0.18897994637259716,
-          "away": 0.13123607386985914
+          "home": 0.6813536225300932,
+          "draw": 0.18805359981830572,
+          "away": 0.13059277765160118
         }
       }
     },
@@ -104,25 +104,25 @@
         "home": {
           "price": 2.33,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "draw": {
           "price": 3.9,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "away": {
           "price": 3.11,
           "bookmaker": "Pinnacle",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         }
       },
       "consensus": {
-        "bookmakers": 20,
+        "bookmakers": 19,
         "probabilities": {
-          "home": 0.43109752110007754,
-          "draw": 0.2557057899127857,
-          "away": 0.3131966889871369
+          "home": 0.43189222681937195,
+          "draw": 0.2544022705922328,
+          "away": 0.3137055025883952
         }
       }
     },
@@ -134,21 +134,21 @@
         "home": {
           "price": 2.42,
           "bookmaker": "Pinnacle",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         },
         "draw": {
           "price": 3.6,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 3.2,
           "bookmaker": "Tipico",
-          "updatedAt": "2026-11-11T14:32:39Z"
+          "updatedAt": "2026-11-12T01:33:47Z"
         }
       },
       "consensus": {
-        "bookmakers": 19,
+        "bookmakers": 18,
         "probabilities": {
           "home": 0.40798540737738137,
           "draw": 0.28435346574787185,
@@ -162,27 +162,27 @@
       "commenceTime": "2026-11-21T19:45:00Z",
       "best": {
         "home": {
-          "price": 1.9,
-          "bookmaker": "Betfair",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "price": 1.89,
+          "bookmaker": "1xBet",
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 4.11,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 4.11,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
-        "bookmakers": 20,
+        "bookmakers": 19,
         "probabilities": {
-          "home": 0.5103295514995073,
-          "draw": 0.2432349940263885,
-          "away": 0.24643545447410414
+          "home": 0.5110113693917113,
+          "draw": 0.2428963132433329,
+          "away": 0.24609231736495574
         }
       }
     },
@@ -194,25 +194,25 @@
         "home": {
           "price": 1.44,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "draw": {
           "price": 5.5,
           "bookmaker": "Tipico",
-          "updatedAt": "2026-11-11T14:32:39Z"
+          "updatedAt": "2026-11-12T01:33:47Z"
         },
         "away": {
           "price": 9.8,
           "bookmaker": "Betfair",
-          "updatedAt": "2026-11-11T14:33:17Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         }
       },
       "consensus": {
-        "bookmakers": 20,
+        "bookmakers": 19,
         "probabilities": {
-          "home": 0.6921624833950919,
-          "draw": 0.19016989442774243,
-          "away": 0.11766762217716563
+          "home": 0.6908219371211054,
+          "draw": 0.1917383335683068,
+          "away": 0.11743972931058792
         }
       }
     },
@@ -224,25 +224,25 @@
         "home": {
           "price": 3.25,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "draw": {
           "price": 3.7,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         },
         "away": {
           "price": 2.49,
           "bookmaker": "Pinnacle",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         }
       },
       "consensus": {
-        "bookmakers": 20,
+        "bookmakers": 19,
         "probabilities": {
-          "home": 0.32612673049948165,
-          "draw": 0.27129962798072826,
-          "away": 0.40257364151979025
+          "home": 0.32750203417412527,
+          "draw": 0.266680227827502,
+          "away": 0.4058177379983727
         }
       }
     },
@@ -254,25 +254,25 @@
         "home": {
           "price": 1.48,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 5.2,
           "bookmaker": "Tipico",
-          "updatedAt": "2026-11-11T14:32:39Z"
+          "updatedAt": "2026-11-12T01:33:47Z"
         },
         "away": {
           "price": 7,
           "bookmaker": "Unibet (SE)",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:46Z"
         }
       },
       "consensus": {
-        "bookmakers": 19,
+        "bookmakers": 18,
         "probabilities": {
-          "home": 0.6614470842332614,
-          "draw": 0.19303455723542115,
-          "away": 0.1455183585313175
+          "home": 0.6639460297541574,
+          "draw": 0.19370796538188303,
+          "away": 0.14234600486395949
         }
       }
     },
@@ -282,27 +282,27 @@
       "commenceTime": "2026-11-27T19:45:00Z",
       "best": {
         "home": {
-          "price": 3.3,
-          "bookmaker": "Tipico",
-          "updatedAt": "2026-11-11T14:32:39Z"
+          "price": 3.23,
+          "bookmaker": "1xBet",
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 3.74,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 2.29,
           "bookmaker": "Pinnacle",
-          "updatedAt": "2026-11-11T14:33:16Z"
+          "updatedAt": "2026-11-12T01:34:04Z"
         }
       },
       "consensus": {
         "bookmakers": 8,
         "probabilities": {
-          "home": 0.3007037747920665,
-          "draw": 0.27831094049904026,
-          "away": 0.4209852847088932
+          "home": 0.3015873015873015,
+          "draw": 0.27619047619047615,
+          "away": 0.4222222222222222
         }
       }
     },
@@ -314,17 +314,17 @@
         "home": {
           "price": 4.67,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 4.31,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 1.76,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
@@ -344,17 +344,17 @@
         "home": {
           "price": 3.01,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 3.96,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 2.32,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
@@ -374,17 +374,17 @@
         "home": {
           "price": 4.36,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 3.81,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 1.91,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
@@ -404,17 +404,17 @@
         "home": {
           "price": 1.25,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 7.5,
           "bookmaker": "Tipico",
-          "updatedAt": "2026-11-11T14:32:39Z"
+          "updatedAt": "2026-11-12T01:33:47Z"
         },
         "away": {
           "price": 13.1,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
@@ -434,17 +434,17 @@
         "home": {
           "price": 1.69,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 4.31,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 5.18,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
@@ -464,17 +464,17 @@
         "home": {
           "price": 3.98,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 4.16,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 1.91,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
@@ -493,26 +493,26 @@
       "best": {
         "home": {
           "price": 2.69,
-          "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "bookmaker": "Pinnacle",
+          "updatedAt": "2026-11-12T01:34:04Z"
         },
         "draw": {
           "price": 3.98,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 2.55,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
         "bookmakers": 8,
         "probabilities": {
-          "home": 0.3613288830241404,
-          "draw": 0.25071800046573006,
-          "away": 0.3879531165101296
+          "home": 0.36108187149664767,
+          "draw": 0.25123022437010956,
+          "away": 0.38768790413324267
         }
       }
     },
@@ -524,17 +524,17 @@
         "home": {
           "price": 2.33,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "draw": {
           "price": 3.74,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         },
         "away": {
           "price": 3.13,
           "bookmaker": "1xBet",
-          "updatedAt": "2026-11-11T14:33:18Z"
+          "updatedAt": "2026-11-12T01:33:27Z"
         }
       },
       "consensus": {
