@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-14T13:39:46.508Z",
+  "updatedAt": "2026-11-14T23:04:15.555Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -377,11 +377,127 @@
         "date": "2026-11-08",
         "settledAt": "2026-11-09T17:38:31.850Z"
       }
+    },
+    {
+      "id": "2026-27|ogc nice|paris saint germain",
+      "createdAt": "2026-11-14T23:04:15.555Z",
+      "scheduledAt": "2026-11-21T16:15:00Z",
+      "season": "2026-27",
+      "home": "OGC Nice",
+      "away": "Paris Saint-Germain FC",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.21456565903573832,
+      "pN": 0.22717681128115302,
+      "p2": 0.5582575296831082,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.10419037077990558
+      },
+      "odds": {
+        "home": 7,
+        "draw": 5.3,
+        "away": 1.5,
+        "bookmakers": {
+          "home": "Unibet (SE)",
+          "draw": "Betfair",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-11-14T23:04:15.375Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|as monaco|aj auxerre",
+      "createdAt": "2026-11-14T23:04:15.555Z",
+      "scheduledAt": "2026-11-21T19:45:00Z",
+      "season": "2026-27",
+      "home": "AS Monaco FC",
+      "away": "AJ Auxerre",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.6178073579976597,
+      "pN": 0.20300430749741444,
+      "p2": 0.17918833450492597,
+      "score": {
+        "home": 2,
+        "away": 1,
+        "p": 0.0965584474452157
+      },
+      "odds": {
+        "home": 1.44,
+        "draw": 5.34,
+        "away": 7.8,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "1xBet",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-11-14T23:04:15.375Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|lille osc|olympique lyonnais",
+      "createdAt": "2026-11-14T23:04:15.555Z",
+      "scheduledAt": "2026-11-21T19:45:00Z",
+      "season": "2026-27",
+      "home": "Lille OSC",
+      "away": "Olympique Lyonnais",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.45844234358884306,
+      "pN": 0.28813447078560456,
+      "p2": 0.25342318562555216,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.1352175488317107
+      },
+      "odds": {
+        "home": 2.43,
+        "draw": 3.6,
+        "away": 3.15,
+        "bookmakers": {
+          "home": "Pinnacle",
+          "draw": "1xBet",
+          "away": "Unibet (SE)"
+        }
+      },
+      "oddsObservedAt": "2026-11-14T23:04:15.375Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|rc strasbourg|stade brestois",
+      "createdAt": "2026-11-14T23:04:15.555Z",
+      "scheduledAt": "2026-11-21T19:45:00Z",
+      "season": "2026-27",
+      "home": "RC Strasbourg Alsace",
+      "away": "Stade Brestois 29",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.5096523361104262,
+      "pN": 0.2387824302847943,
+      "p2": 0.2515652336047791,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.10958866711730429
+      },
+      "odds": {
+        "home": 2.33,
+        "draw": 3.9,
+        "away": 3.11,
+        "bookmakers": {
+          "home": "Unibet (SE)",
+          "draw": "Unibet (SE)",
+          "away": "Pinnacle"
+        }
+      },
+      "oddsObservedAt": "2026-11-14T23:04:15.375Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 11,
-    "pending": 0,
+    "pending": 4,
     "accuracy": 0.7272727272727273,
     "scoreAccuracy": 0.09090909090909091,
     "brier": 0.1654607368814349,
