@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-14T23:04:15.555Z",
+  "updatedAt": "2026-11-15T14:05:33.639Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -493,11 +493,40 @@
       },
       "oddsObservedAt": "2026-11-14T23:04:15.375Z",
       "result": null
+    },
+    {
+      "id": "2026-27|paris fc|angers sco",
+      "createdAt": "2026-11-15T14:05:33.639Z",
+      "scheduledAt": "2026-11-22T14:00:00Z",
+      "season": "2026-27",
+      "home": "Paris FC",
+      "away": "Angers SCO",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.6034415955819897,
+      "pN": 0.22382730804807258,
+      "p2": 0.1727310963699379,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.10594107539556262
+      },
+      "odds": {
+        "home": 1.41,
+        "draw": 5.5,
+        "away": 9.6,
+        "bookmakers": {
+          "home": "Unibet (SE)",
+          "draw": "Tipico",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-11-15T14:05:33.422Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 11,
-    "pending": 4,
+    "pending": 5,
     "accuracy": 0.7272727272727273,
     "scoreAccuracy": 0.09090909090909091,
     "brier": 0.1654607368814349,
