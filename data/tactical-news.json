@@ -1,10 +1,34 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-18T17:33:53.067Z",
+  "fetchedAt": "2026-11-19T17:38:30.235Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
+    {
+      "title": "Lyon, Lens... la folle valse des entraîneurs pendant la trêve internationale",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/lyon-lens-la-grosse-valse-des-entraineurs-pendant-la-treve-internationale_AV-202611190272.html",
+      "publishedAt": "2026-11-19T07:19:57.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Ligue 1: sonorisation des arbitres à améliorer, hors-jeu semi-automatique... dans les coulisses de la VAR, qui cherche à faire l'unanimité",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/ligue-1-sonorisation-des-arbitres-a-ameliorer-hors-jeu-semi-automatique-dans-les-coulisses-de-la-var-qui-cherche-a-faire-l-unanimite_AV-202611180903.html",
+      "publishedAt": "2026-11-18T19:06:21.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "\"Loups Garous\": un ancien arbitre de Ligue 1 et deux candidats issus du monde du sport dans le jeu de Canal+",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/loups-garous-un-ancien-arbitre-de-ligue-1-et-deux-candidats-issus-du-monde-du-sport-dans-le-jeu-de-canal_AV-202611180704.html",
+      "publishedAt": "2026-11-18T15:12:45.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
     {
       "title": "\"Un moment hors du temps\": le Paris FC maître de cérémonie de la 6e édition du tournoi des Défenseurs de l’Enfance",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/un-moment-hors-du-temps-le-paris-fc-maitre-de-ceremonie-de-la-6e-edition-du-tournoi-des-defenseurs-de-l-enfance_AN-202611110439.html",
