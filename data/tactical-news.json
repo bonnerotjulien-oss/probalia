@@ -1,10 +1,34 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-19T17:38:30.235Z",
+  "fetchedAt": "2026-11-20T17:17:10.384Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
+    {
+      "title": "La LFP dévoile \"Ligue 1 Africa\" et met le paquet sur son développement en Afrique",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/la-lfp-devoile-ligue-1-africa-et-met-le-paquet-sur-son-developpement-en-afrique_AN-202611200080.html",
+      "publishedAt": "2026-11-20T10:00:00.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Ligue 1 : Le programme complet de la J11 et le classement",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/video-ligue-1-le-programme-complet-de-la-j11-et-le-classement_VN-202611200419.html",
+      "publishedAt": "2026-11-20T09:09:40.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "\"Pas vu de petits yeux ce matin\": la Ligue 1 est-elle également contaminée par la fièvre GTA VI?",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/pas-vu-de-petits-yeux-ce-matin-la-ligue-1-est-elle-egalement-contaminee-par-la-fievre-gta-vi_AV-202611190870.html",
+      "publishedAt": "2026-11-19T17:56:58.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
     {
       "title": "Lyon, Lens... la folle valse des entraîneurs pendant la trêve internationale",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/lyon-lens-la-grosse-valse-des-entraineurs-pendant-la-treve-internationale_AV-202611190272.html",
