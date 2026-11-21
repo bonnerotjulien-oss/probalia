@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-21T14:46:40.672Z",
+  "updatedAt": "2026-11-21T23:50:49.730Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -551,11 +551,69 @@
       },
       "oddsObservedAt": "2026-11-21T00:51:08.475Z",
       "result": null
+    },
+    {
+      "id": "2026-27|le havre ac|rc strasbourg",
+      "createdAt": "2026-11-21T23:50:49.730Z",
+      "scheduledAt": "2026-11-28T19:45:00Z",
+      "season": "2026-27",
+      "home": "Le Havre AC",
+      "away": "RC Strasbourg Alsace",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.27166314052599627,
+      "pN": 0.24734303573128003,
+      "p2": 0.48099382374272304,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.11472414166011409
+      },
+      "odds": {
+        "home": 3.05,
+        "draw": 3.9,
+        "away": 2.37,
+        "bookmakers": {
+          "home": "LeoVegas (SE)",
+          "draw": "1xBet",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-11-21T23:50:49.505Z",
+      "result": null
+    },
+    {
+      "id": "2026-27|paris saint germain|fc lorient",
+      "createdAt": "2026-11-21T23:50:49.730Z",
+      "scheduledAt": "2026-11-28T19:45:00Z",
+      "season": "2026-27",
+      "home": "Paris Saint-Germain FC",
+      "away": "FC Lorient",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.571574676237504,
+      "pN": 0.24981614193406312,
+      "p2": 0.1786091818284326,
+      "score": {
+        "home": 1,
+        "away": 0,
+        "p": 0.12336421387464556
+      },
+      "odds": {
+        "home": 1.25,
+        "draw": 7.29,
+        "away": 14,
+        "bookmakers": {
+          "home": "1xBet",
+          "draw": "Pinnacle",
+          "away": "Betfair"
+        }
+      },
+      "oddsObservedAt": "2026-11-21T23:50:49.505Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 11,
-    "pending": 6,
+    "pending": 8,
     "accuracy": 0.7272727272727273,
     "scoreAccuracy": 0.09090909090909091,
     "brier": 0.1654607368814349,
