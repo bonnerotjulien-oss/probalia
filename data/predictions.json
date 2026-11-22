@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-21T23:50:49.730Z",
+  "updatedAt": "2026-11-22T14:43:09.546Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -609,11 +609,40 @@
       },
       "oddsObservedAt": "2026-11-21T23:50:49.505Z",
       "result": null
+    },
+    {
+      "id": "2026-27|aj auxerre|olympique de marseille",
+      "createdAt": "2026-11-22T14:43:09.546Z",
+      "scheduledAt": "2026-11-29T14:00:00Z",
+      "season": "2026-27",
+      "home": "AJ Auxerre",
+      "away": "Olympique de Marseille",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.3276727380278868,
+      "pN": 0.284114119028644,
+      "p2": 0.38821314294346926,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.135349238250918
+      },
+      "odds": {
+        "home": 4,
+        "draw": 4.2,
+        "away": 1.91,
+        "bookmakers": {
+          "home": "Nordic Bet",
+          "draw": "LeoVegas (SE)",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-11-22T14:43:09.356Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 11,
-    "pending": 8,
+    "pending": 9,
     "accuracy": 0.7272727272727273,
     "scoreAccuracy": 0.09090909090909091,
     "brier": 0.1654607368814349,
