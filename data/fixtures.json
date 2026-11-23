@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "football-data.org",
-  "fetchedAt": "2026-11-22T14:43:09.323Z",
+  "fetchedAt": "2026-11-23T00:21:02.960Z",
   "competition": "FL1",
   "season": 2026,
   "matches": [
@@ -680,21 +680,21 @@
     {
       "id": 559625,
       "utcDate": "2026-11-22T14:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Paris FC",
       "away": "Angers SCO"
     },
     {
       "id": 559626,
       "utcDate": "2026-11-22T16:15:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "FC Lorient",
       "away": "Stade Rennais FC 1901"
     },
     {
       "id": 559629,
       "utcDate": "2026-11-22T19:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "home": "Olympique de Marseille",
       "away": "Le Mans FC"
     },

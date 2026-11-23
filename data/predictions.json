@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-22T14:43:09.546Z",
+  "updatedAt": "2026-11-23T00:21:03.218Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -638,11 +638,40 @@
       },
       "oddsObservedAt": "2026-11-22T14:43:09.356Z",
       "result": null
+    },
+    {
+      "id": "2026-27|olympique lyonnais|as monaco",
+      "createdAt": "2026-11-23T00:21:03.218Z",
+      "scheduledAt": "2026-11-29T19:45:00Z",
+      "season": "2026-27",
+      "home": "Olympique Lyonnais",
+      "away": "AS Monaco FC",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.5207927450282565,
+      "pN": 0.23956697778937444,
+      "p2": 0.23964027718236983,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.11115321787668189
+      },
+      "odds": {
+        "home": 2.5,
+        "draw": 3.65,
+        "away": 3.15,
+        "bookmakers": {
+          "home": "Betfair",
+          "draw": "Unibet (SE)",
+          "away": "Unibet (SE)"
+        }
+      },
+      "oddsObservedAt": "2026-11-23T00:21:03.009Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 11,
-    "pending": 9,
+    "pending": 10,
     "accuracy": 0.7272727272727273,
     "scoreAccuracy": 0.09090909090909091,
     "brier": 0.1654607368814349,
