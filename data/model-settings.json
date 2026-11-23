@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "trainedAt": "2026-11-19T16:38:43.474Z",
-  "totalResults": 1388,
+  "trainedAt": "2026-11-23T19:19:41.812Z",
+  "totalResults": 1397,
   "method": "chronological walk-forward, frozen candidate grid; independent final holdout; logarithmic loss + Brier safety check",
   "warning": "Validation historique uniquement, pas de garantie de rentabilité, pas de données tactiques ni de cotes",
   "status": "baseline",
@@ -19,90 +19,90 @@
   "reason": "Le modèle de référence reste le meilleur à l’entraînement.",
   "selectedOnTraining": "reference",
   "training": {
-    "first": "2025-11-09",
-    "last": "2026-05-17",
+    "first": "2025-11-23",
+    "last": "2026-08-23",
     "n": 200,
     "reference": {
       "id": "reference",
       "n": 200,
-      "logloss": 1.0205663900682376,
-      "brier": 0.20402365056301328
+      "logloss": 1.0264869618830657,
+      "brier": 0.20541077228978794
     },
     "selected": {
       "id": "reference",
       "n": 200,
-      "logloss": 1.0205663900682376,
-      "brier": 0.20402365056301328
+      "logloss": 1.0264869618830657,
+      "brier": 0.20541077228978794
     }
   },
   "validation": {
-    "first": "2026-08-21",
-    "last": "2026-11-08",
+    "first": "2026-08-28",
+    "last": "2026-11-22",
     "reference": {
       "n": 90,
-      "logloss": 0.9935561416372085,
-      "brier": 0.1968000641145621
+      "logloss": 1.0149354377265352,
+      "brier": 0.20183663503323374
     },
     "challenger": {
       "n": 90,
-      "logloss": 0.9935561416372085,
-      "brier": 0.1968000641145621
+      "logloss": 1.0149354377265352,
+      "brier": 0.20183663503323374
     }
   },
   "testedCandidates": [
     {
       "id": "reference",
       "n": 200,
-      "logloss": 1.0205663900682376,
-      "brier": 0.20402365056301328
+      "logloss": 1.0264869618830657,
+      "brier": 0.20541077228978794
     },
     {
       "id": "forme-recente",
       "n": 200,
-      "logloss": 1.0236076677276829,
-      "brier": 0.20468843050580596
+      "logloss": 1.0303130136932213,
+      "brier": 0.2062615743960561
     },
     {
       "id": "forme-longue",
       "n": 200,
-      "logloss": 1.0183883347707805,
-      "brier": 0.20358006605184278
+      "logloss": 1.023656570642446,
+      "brier": 0.20482119969609136
     },
     {
       "id": "prudence-fortes",
       "n": 200,
-      "logloss": 1.022480292961138,
-      "brier": 0.20444456688697774
+      "logloss": 1.0286006410347388,
+      "brier": 0.2058745499911077
     },
     {
       "id": "forme-sensible",
       "n": 200,
-      "logloss": 1.0212400657596061,
-      "brier": 0.2041717064272011
+      "logloss": 1.0270081670543838,
+      "brier": 0.20552275002312403
     },
     {
       "id": "elo-doux",
       "n": 200,
-      "logloss": 1.022111877876565,
-      "brier": 0.20436767220570587
+      "logloss": 1.0281696410165992,
+      "brier": 0.20579184456212712
     },
     {
       "id": "elo-renforce",
       "n": 200,
-      "logloss": 1.019356377314354,
-      "brier": 0.2037598417316524
+      "logloss": 1.0251397986459314,
+      "brier": 0.20510958878079
     },
     {
       "id": "nul-frequent",
       "n": 200,
-      "logloss": 1.0206311735424607,
-      "brier": 0.20403555125954267
+      "logloss": 1.0261001198063227,
+      "brier": 0.2053411230684284
     },
     {
       "id": "nul-modere",
       "n": 200,
-      "logloss": 1.0209346195431939,
-      "brier": 0.20408932218054496
+      "logloss": 1.0273181266954865,
+      "brier": 0.20555824009791898
     }
   ]
 }

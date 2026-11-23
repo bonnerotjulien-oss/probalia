@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-23T18:27:56.607Z",
+  "updatedAt": "2026-11-23T19:19:46.163Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -405,7 +405,12 @@
         }
       },
       "oddsObservedAt": "2026-11-14T23:04:15.375Z",
-      "result": null
+      "result": {
+        "home": 2,
+        "away": 3,
+        "date": "2026-11-21",
+        "settledAt": "2026-11-23T19:19:46.163Z"
+      }
     },
     {
       "id": "2026-27|as monaco|aj auxerre",
@@ -434,7 +439,12 @@
         }
       },
       "oddsObservedAt": "2026-11-14T23:04:15.375Z",
-      "result": null
+      "result": {
+        "home": 1,
+        "away": 1,
+        "date": "2026-11-21",
+        "settledAt": "2026-11-23T19:19:46.163Z"
+      }
     },
     {
       "id": "2026-27|lille osc|olympique lyonnais",
@@ -463,7 +473,12 @@
         }
       },
       "oddsObservedAt": "2026-11-14T23:04:15.375Z",
-      "result": null
+      "result": {
+        "home": 0,
+        "away": 1,
+        "date": "2026-11-21",
+        "settledAt": "2026-11-23T19:19:46.163Z"
+      }
     },
     {
       "id": "2026-27|rc strasbourg|stade brestois",
@@ -492,7 +507,12 @@
         }
       },
       "oddsObservedAt": "2026-11-14T23:04:15.375Z",
-      "result": null
+      "result": {
+        "home": 0,
+        "away": 1,
+        "date": "2026-11-21",
+        "settledAt": "2026-11-23T19:19:46.163Z"
+      }
     },
     {
       "id": "2026-27|paris fc|angers sco",
@@ -521,7 +541,12 @@
         }
       },
       "oddsObservedAt": "2026-11-15T14:05:33.422Z",
-      "result": null
+      "result": {
+        "home": 4,
+        "away": 0,
+        "date": "2026-11-22",
+        "settledAt": "2026-11-23T19:19:46.163Z"
+      }
     },
     {
       "id": "2026-27|stade brestois|paris fc",
@@ -670,14 +695,14 @@
     }
   ],
   "summary": {
-    "n": 11,
-    "pending": 10,
-    "accuracy": 0.7272727272727273,
-    "scoreAccuracy": 0.09090909090909091,
-    "brier": 0.1654607368814349,
-    "logloss": 0.8561180428410137,
-    "quoted": 11,
-    "flatProfit": 5.779999999999999,
+    "n": 16,
+    "pending": 5,
+    "accuracy": 0.625,
+    "scoreAccuracy": 0.0625,
+    "brier": 0.18263881643226462,
+    "logloss": 0.9282884333707678,
+    "quoted": 16,
+    "flatProfit": 3.6899999999999995,
     "calibration": [
       {
         "range": "20–40 %",
@@ -687,15 +712,15 @@
       },
       {
         "range": "40–60 %",
-        "n": 4,
-        "predicted": 0.4784313044504149,
-        "observed": 0.75
+        "n": 7,
+        "predicted": 0.4914396324548624,
+        "observed": 0.5714285714285714
       },
       {
         "range": "60–80 %",
-        "n": 2,
-        "predicted": 0.6628272659884238,
-        "observed": 1
+        "n": 4,
+        "predicted": 0.6367258713891243,
+        "observed": 0.75
       }
     ]
   }
