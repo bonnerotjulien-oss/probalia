@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-25T17:24:31.913Z",
+  "updatedAt": "2026-11-26T02:17:23.769Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
