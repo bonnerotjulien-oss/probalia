@@ -1,7 +1,7 @@
 {
   "version": 1,
   "source": "PROBALIA",
-  "updatedAt": "2026-11-27T16:49:23.867Z",
+  "updatedAt": "2026-11-28T02:02:22.717Z",
   "forecastPolicy": "Immutable pre-match 1N2, first available prediction retained; no retroactive market reconstruction",
   "records": [
     {
@@ -692,11 +692,40 @@
       },
       "oddsObservedAt": "2026-11-23T00:21:03.009Z",
       "result": null
+    },
+    {
+      "id": "2026-27|toulouse fc|paris saint germain",
+      "createdAt": "2026-11-28T02:02:22.717Z",
+      "scheduledAt": "2026-12-04T19:45:00Z",
+      "season": "2026-27",
+      "home": "Toulouse FC",
+      "away": "Paris Saint-Germain FC",
+      "modelVersion": "4.5.0-walk-forward-audited:reference",
+      "p1": 0.18737418607495374,
+      "pN": 0.2189786161533339,
+      "p2": 0.5936471977717124,
+      "score": {
+        "home": 1,
+        "away": 1,
+        "p": 0.10124571409754855
+      },
+      "odds": {
+        "home": 6.4,
+        "draw": 5.03,
+        "away": 1.53,
+        "bookmakers": {
+          "home": "LeoVegas (SE)",
+          "draw": "1xBet",
+          "away": "1xBet"
+        }
+      },
+      "oddsObservedAt": "2026-11-28T02:02:22.495Z",
+      "result": null
     }
   ],
   "summary": {
     "n": 16,
-    "pending": 5,
+    "pending": 6,
     "accuracy": 0.625,
     "scoreAccuracy": 0.0625,
     "brier": 0.18263881643226462,
