@@ -1,10 +1,42 @@
 {
   "version": 1,
-  "fetchedAt": "2026-11-27T18:27:13.766Z",
+  "fetchedAt": "2026-11-28T17:11:23.440Z",
   "sources": [
     "RMC Sport Ligue 1"
   ],
   "articles": [
+    {
+      "title": "\"Il faut se dire que ça peut arriver à tout moment\": comment les entraîneurs de Ligue 1 vivent la grande instabilité sur les bancs des clubs français",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/il-faut-se-dire-que-ca-peut-arriver-a-tout-moment-comment-les-entraineurs-de-ligue-1-vivent-la-grande-instabilite-sur-les-bancs-des-clubs-francais_AV-202611280309.html",
+      "publishedAt": "2026-11-28T14:02:38.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Luis Enrique seul \"survivant\" de la saison passée: l'inquiétante et inarrêtable valse des entraîneurs en Ligue 1",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/luis-enrique-seul-survivant-de-la-saison-passee-l-inquietante-et-inarretable-valse-des-entraineurs-en-ligue-1_AV-202611280227.html",
+      "publishedAt": "2026-11-28T09:18:39.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "Le Mans - Lille : sur quelle chaîne et à quelle heure regarder le match de Ligue 1 en direct ?",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/le-mans-lille-sur-quelle-chaine-et-a-quelle-heure-regarder-le-match-de-ligue-1-en-direct_AN-202611280032.html",
+      "publishedAt": "2026-11-28T05:30:00.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
+    {
+      "title": "PSG - Lorient : sur quelle chaîne TV et à quelle heure regarder le match de Ligue 1 en direct ?",
+      "url": "https://rmcsport.bfmtv.com/football/ligue-1/psg-lorient-sur-quelle-chaine-tv-et-a-quelle-heure-regarder-le-match-de-ligue-1-en-direct_AN-202611280031.html",
+      "publishedAt": "2026-11-28T05:20:00.000Z",
+      "source": "RMC Sport Ligue 1",
+      "reviewed": false,
+      "note": "À lire et vérifier : ce titre ne constitue pas une observation tactique."
+    },
     {
       "title": "DIRECT. Brest-Paris FC: suivez en live le match d'ouverture de la 12e journée de Ligue 1",
       "url": "https://rmcsport.bfmtv.com/football/ligue-1/direct-brest-paris-fc-suivez-en-live-le-match-d-ouverture-de-la-12e-journee-de-ligue-1_LS-202611270682.html",
